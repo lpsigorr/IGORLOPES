@@ -1,0 +1,15 @@
+---
+import Base from "../../../layouts/Base.astro";
+import CaseStudy from "../../../components/CaseStudy.astro";
+import { cases } from "../../../data/projects";
+import { LANGS, type Lang } from "../../../config";
+import { tx } from "../../../i18n";
+export function getStaticPaths() {
+  return LANGS.flatMap((lang) => cases.map((project) => ({ params: { lang, slug: project.slug }, props: { project } })));
+}
+const lang = Astro.params.lang as Lang;
+const { project } = Astro.props;
+---
+<Base lang={lang} path={`/work/${project.slug}/`} title={project.name} description={`${project.name}. ${tx(project.where, lang)} ${tx(project.roles, lang)}.`} image={project.cover?.src}>
+  <CaseStudy lang={lang} project={project} />
+</Base>

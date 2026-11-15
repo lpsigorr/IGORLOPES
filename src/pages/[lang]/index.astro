@@ -1,0 +1,11 @@
+---
+import Base from "../../layouts/Base.astro";
+import Home from "../../components/Home.astro";
+import { langPaths } from "../../i18n";
+import type { Lang } from "../../config";
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+<Base lang={lang} path="/" image="star/loop-poster.webp">
+  <Home lang={lang} />
+</Base>

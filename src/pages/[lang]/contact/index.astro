@@ -1,0 +1,35 @@
+---
+import Base from "../../../layouts/Base.astro";
+import { SITE, type Lang } from "../../../config";
+import { langPaths, t } from "../../../i18n";
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+<Base lang={lang} path="/contact/" title={t(lang, "contact.title")} description={t(lang, "contact.lead")} footer="plain">
+  <header class="page-head" data-theme="light">
+    <h1>{t(lang, "contact.title")}</h1>
+    <p>{t(lang, "contact.lead")}</p>
+  </header>
+  <section class="contact" data-theme="light">
+    <p class="contact__aside">{SITE.fullName}<br>{t(lang, "hero.title")}, {t(lang, "city")}</p>
+    <form method="post" action={SITE.formEndpoint || undefined} data-endpoint={SITE.formEndpoint}
+      data-sending={t(lang, "status.sending")} data-ok={t(lang, "status.ok")} data-error={t(lang, "status.error")} data-notready={t(lang, "status.notready")}>
+      <div class="ff"><label for="f-name">{t(lang, "f.name")}</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="ff"><label for="f-email">{t(lang, "f.email")}</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="ff"><label for="f-company">{t(lang, "f.company")}</label><input id="f-company" name="company" type="text" autocomplete="organization"></div>
+      <div class="ff"><label for="f-topic">{t(lang, "f.topic")}</label>
+        <select id="f-topic" name="topic">
+          <option>{t(lang, "f.topic.design")}</option>
+          <option>{t(lang, "f.topic.web")}</option>
+          <option>{t(lang, "f.topic.film")}</option>
+          <option>{t(lang, "f.topic.objects")}</option>
+          <option>{t(lang, "f.topic.unsure")}</option>
+        </select>
+      </div>
+      <div class="ff"><label for="f-message">{t(lang, "f.message")}</label><textarea id="f-message" name="message" required></textarea></div>
+      <button class="form__send" data-widen="parent" type="submit">{t(lang, "f.send")}</button>
+      <p class="form__status" data-status role="status" aria-live="polite"></p>
+      <p class="form__note">{t(lang, "f.privacy")}</p>
+    </form>
+  </section>
+</Base>

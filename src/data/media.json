@@ -1,0 +1,604 @@
+{
+ "arcade/cabinet-side.webp": {
+  "w": 1536,
+  "h": 2048,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "arcade/cabinet.webp": {
+  "w": 1536,
+  "h": 2048,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "bees/scene-0.webp": {
+  "w": 1280,
+  "h": 1280,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "bees/scene-1.webp": {
+  "w": 1280,
+  "h": 1280,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "bees/scene-2.webp": {
+  "w": 1280,
+  "h": 1280,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "bees/scene-3.webp": {
+  "w": 1280,
+  "h": 1280,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "bees/scene-4.webp": {
+  "w": 1280,
+  "h": 1280,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "igor/cutout.webp": {
+  "w": 695,
+  "h": 1273,
+  "v": []
+ },
+ "igor/portrait.webp": {
+  "w": 1200,
+  "h": 1500,
+  "v": [
+   640
+  ]
+ },
+ "lab/accumulation-room.webp": {
+  "w": 2048,
+  "h": 1166,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/corridor.webp": {
+  "w": 2048,
+  "h": 1165,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/eregum-pack.webp": {
+  "w": 2048,
+  "h": 1448,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/eregum.webp": {
+  "w": 1448,
+  "h": 2048,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "lab/forgotten-ideas.webp": {
+  "w": 2048,
+  "h": 1166,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/mbdtf.webp": {
+  "w": 2048,
+  "h": 1152,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/roast-and-ritual.webp": {
+  "w": 2048,
+  "h": 1166,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/soldias.webp": {
+  "w": 2048,
+  "h": 1166,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "numberone/calc-1.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/calc-2.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/calc-3.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/calc-4.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/calc-5.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/calc-summary.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/mobile-home.webp": {
+  "w": 750,
+  "h": 1624,
+  "v": []
+ },
+ "numberone/numberone-1.webp": {
+  "w": 2048,
+  "h": 1536,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "numberone/numberone-2.webp": {
+  "w": 2048,
+  "h": 1365,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "numberone/numberone-3.webp": {
+  "w": 2048,
+  "h": 1365,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "numberone/site-figures.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/site-fleet.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/site-home.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/site-process.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "numberone/site-services.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "prolux/mobile-services.webp": {
+  "w": 750,
+  "h": 1624,
+  "v": []
+ },
+ "prolux/site-contact.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "prolux/site-home-fr.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "prolux/site-home-nl.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "prolux/site-services.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "prolux/site-work-2.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "prolux/site-work.webp": {
+  "w": 800,
+  "h": 500,
+  "v": [
+   640
+  ]
+ },
+ "sparx/app-memorize.webp": {
+  "w": 970,
+  "h": 449,
+  "v": [
+   640
+  ]
+ },
+ "sparx/app-menu.webp": {
+  "w": 971,
+  "h": 448,
+  "v": [
+   640
+  ]
+ },
+ "sparx/app-reflex.webp": {
+  "w": 974,
+  "h": 451,
+  "v": [
+   640
+  ]
+ },
+ "sparx/app-rounds.webp": {
+  "w": 970,
+  "h": 446,
+  "v": [
+   640
+  ]
+ },
+ "sparx/app-scores.webp": {
+  "w": 970,
+  "h": 449,
+  "v": [
+   640
+  ]
+ },
+ "sparx/app-welcome.webp": {
+  "w": 965,
+  "h": 444,
+  "v": [
+   640
+  ]
+ },
+ "sparx/gym.webp": {
+  "w": 1672,
+  "h": 941,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "sparx/mag-boxing.webp": {
+  "w": 1100,
+  "h": 1100,
+  "v": [
+   640
+  ]
+ },
+ "sparx/mag-cover.webp": {
+  "w": 1100,
+  "h": 1100,
+  "v": [
+   640
+  ]
+ },
+ "sparx/mag-features.webp": {
+  "w": 1100,
+  "h": 1100,
+  "v": [
+   640
+  ]
+ },
+ "sparx/mark-boxer.webp": {
+  "w": 700,
+  "h": 733,
+  "v": []
+ },
+ "sparx/mark-wordmark.webp": {
+  "w": 1400,
+  "h": 628,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "sparx/product.webp": {
+  "w": 1400,
+  "h": 1978,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/alphabet.webp": {
+  "w": 1200,
+  "h": 1696,
+  "v": [
+   640
+  ]
+ },
+ "star/assets.webp": {
+  "w": 1200,
+  "h": 1696,
+  "v": [
+   640
+  ]
+ },
+ "star/city-beach.webp": {
+  "w": 1025,
+  "h": 1534,
+  "v": [
+   640
+  ]
+ },
+ "star/city-belt.webp": {
+  "w": 1536,
+  "h": 1024,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/city-cage.webp": {
+  "w": 1448,
+  "h": 1086,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/city-crossing.webp": {
+  "w": 1535,
+  "h": 1024,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/city-shibuya.webp": {
+  "w": 1600,
+  "h": 900,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/city-studio.webp": {
+  "w": 1025,
+  "h": 1535,
+  "v": [
+   640
+  ]
+ },
+ "star/film-poster.webp": {
+  "w": 1280,
+  "h": 720,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/flat-beanie-red-star.webp": {
+  "w": 900,
+  "h": 801,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-belt-buckle-red-star.webp": {
+  "w": 900,
+  "h": 223,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-hoodie-jeans-a-star-is-born.webp": {
+  "w": 900,
+  "h": 1711,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-jersey-black-red-back.webp": {
+  "w": 900,
+  "h": 657,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-jersey-black-red-front.webp": {
+  "w": 900,
+  "h": 672,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-jersey-red-white-front.webp": {
+  "w": 900,
+  "h": 653,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-layered-tee-back.webp": {
+  "w": 900,
+  "h": 831,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-layered-tee-front.webp": {
+  "w": 900,
+  "h": 831,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-tee-a-star-is-born.webp": {
+  "w": 900,
+  "h": 846,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-tee-hand.webp": {
+  "w": 900,
+  "h": 845,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-tee-poster-black.webp": {
+  "w": 900,
+  "h": 845,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-tee-star-drip.webp": {
+  "w": 900,
+  "h": 845,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-tee-tokyo-tower.webp": {
+  "w": 900,
+  "h": 847,
+  "v": [
+   640
+  ]
+ },
+ "star/flat-tote.webp": {
+  "w": 900,
+  "h": 1125,
+  "v": [
+   640
+  ]
+ },
+ "star/loop-poster.webp": {
+  "w": 1280,
+  "h": 720,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/poster.webp": {
+  "w": 1400,
+  "h": 1876,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "star/social-poster.webp": {
+  "w": 720,
+  "h": 1280,
+  "v": []
+ },
+ "star/tokyo-night.webp": {
+  "w": 1200,
+  "h": 1600,
+  "v": [
+   640
+  ]
+ },
+ "star/tokyo-shinjuku.webp": {
+  "w": 1200,
+  "h": 1600,
+  "v": [
+   640
+  ]
+ },
+ "star/tokyo-tower.webp": {
+  "w": 1200,
+  "h": 1600,
+  "v": [
+   640
+  ]
+ },
+ "star/tokyo-vending.webp": {
+  "w": 1200,
+  "h": 1600,
+  "v": [
+   640
+  ]
+ }
+}

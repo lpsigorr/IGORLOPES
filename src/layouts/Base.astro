@@ -1,0 +1,65 @@
+---
+import "../styles/base.css";
+import "../styles/site.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { LANGS, SITE, url, type Lang } from "../config";
+import { t } from "../i18n";
+import displayFont from "../assets/fonts/anybody-latin-standard-normal.woff2?url";
+import textFont from "../assets/fonts/hanken-grotesk-latin-wght-normal.woff2?url";
+
+interface Props {
+  lang: Lang;
+  path: string; // path after the language, e.g. "/work/star/"
+  title?: string;
+  description?: string;
+  image?: string;
+  footer?: boolean | "plain"; // "plain": only the last line, without the call to send a brief
+}
+const { lang, path, title, description = t(lang, "meta.home"), image, footer = true } = Astro.props;
+const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | ${SITE.title}`;
+const canonical = new URL(url(`/${lang}${path}`), Astro.site).href;
+const ogImage = image ? new URL(url("/media/" + image), Astro.site).href : undefined;
+---
+<!doctype html>
+<html lang={lang} data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{fullTitle}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  {LANGS.map((l) => <link rel="alternate" hreflang={l} href={new URL(url(`/${l}${path}`), Astro.site).href}>)}
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={canonical}>
+  {ogImage && <meta property="og:image" content={ogImage}>}
+  <meta name="theme-color" content="#0C7C59">
+  <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml">
+  <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href={textFont} as="font" type="font/woff2" crossorigin>
+  <noscript><style>[data-reveal] { opacity: 1 !important; transform: none !important; }</style></noscript>
+  <script is:inline>
+    // Before the first paint: tell the styles whether things may move and whether there is a mouse,
+    // so nothing flashes in and out while the page loads.
+    (function () {
+      var c = document.documentElement.classList;
+      c.add(matchMedia("(prefers-reduced-motion: reduce)").matches ? "is-still" : "is-moving");
+      if (matchMedia("(hover: hover) and (pointer: fine)").matches) c.add("has-mouse");
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">{t(lang, "skip")}</a>
+  <Header lang={lang} path={path} />
+  <main id="main" tabindex="-1">
+    <slot />
+  </main>
+  {footer && <Footer lang={lang} cta={footer !== "plain"} />}
+  <slot name="after" />
+  <script>
+    import "../scripts/engine";
+  </script>
+</body>
+</html>

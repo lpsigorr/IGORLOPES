@@ -1,0 +1,28 @@
+---
+// The project index: big names in rows. Hovering a row shows its preview next to the cursor.
+import Pic from "./Pic.astro";
+import { cases } from "../data/projects";
+import { url, type Lang } from "../config";
+import { t, tx } from "../i18n";
+interface Props { lang: Lang; heading?: "h1" | "h2" }
+const { lang, heading = "h2" } = Astro.props;
+const H = heading;
+---
+<section class="work" data-theme="dark" id="work" aria-labelledby="work-title">
+  <div class="work__head">
+    <H id="work-title">{t(lang, "work.title")}</H>
+    <span>{t(lang, "work.count", { n: cases.length })}</span>
+  </div>
+  <ul class="rows">
+    {cases.map((p) => (
+      <li class="row" data-preview={p.slug}>
+        <a href={url(`/${lang}/work/${p.slug}/`)} data-cursor={`${t(lang, "work.open")} ${p.name}`}>
+          {p.cover && <Pic class="row__thumb" src={p.cover.src} alt="" sizes="100vw" />}
+          <span class="row__name" data-widen="self" style={`view-transition-name: name-${p.slug}`}>{p.name}</span>
+          <span class="row__what">{tx(p.where, lang)}{p.preview?.stat && <span class="row__stat">{p.preview.stat.num} {tx(p.preview.stat.label, lang)}</span>}</span>
+          <span class="row__roles">{tx(p.roles, lang)}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

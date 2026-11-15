@@ -1,0 +1,13 @@
+---
+import Base from "../../../layouts/Base.astro";
+import LabGrid from "../../../components/LabGrid.astro";
+import { langPaths, t } from "../../../i18n";
+import type { Lang } from "../../../config";
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+<Base lang={lang} path="/lab/" title={t(lang, "lab.title")} description={t(lang, "lab.lead")}>
+  <div class="lab-page" data-theme="dark">
+    <LabGrid lang={lang} heading="h1" />
+  </div>
+</Base>

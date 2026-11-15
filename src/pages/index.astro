@@ -1,0 +1,20 @@
+---
+// The root sends visitors to their language: French or Dutch browsers go to /fr/ or /nl/, everyone else to /en/.
+import { url } from "../config";
+const en = url("/en/");
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Igor Lopes</title>
+  <meta http-equiv="refresh" content={`0; url=${en}`}>
+  <link rel="canonical" href={en}>
+  <script is:inline define:vars={{ base: url("/") }}>
+    var l = (navigator.languages && navigator.languages[0] || navigator.language || "en").slice(0, 2).toLowerCase();
+    location.replace(base + (l === "fr" || l === "nl" ? l : "en") + "/");
+  </script>
+</head>
+<body><a href={en}>Igor Lopes</a></body>
+</html>

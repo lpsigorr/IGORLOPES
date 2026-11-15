@@ -1,0 +1,19 @@
+---
+import Base from "../../../layouts/Base.astro";
+import WorkRows from "../../../components/WorkRows.astro";
+import Previews from "../../../components/Previews.astro";
+import LabGrid from "../../../components/LabGrid.astro";
+import { langPaths, t } from "../../../i18n";
+import type { Lang } from "../../../config";
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+<Base lang={lang} path="/work/" title={t(lang, "nav.work")}>
+  <header class="page-head work-head" data-theme="light">
+    <h1>{t(lang, "nav.work")}</h1>
+    <p>{t(lang, "about.short2")}</p>
+  </header>
+  <WorkRows lang={lang} />
+  <LabGrid lang={lang} />
+  <Previews lang={lang} slot="after" />
+</Base>

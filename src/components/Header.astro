@@ -1,0 +1,24 @@
+---
+import { LANGS, url, type Lang } from "../config";
+import { t, LANG_NAMES } from "../i18n";
+interface Props { lang: Lang; path: string }
+const { lang, path } = Astro.props;
+const here = (p: string) => path.startsWith(p) ? "page" : undefined;
+---
+<header class="top">
+  <a class="top__mark" href={url(`/${lang}/`)} aria-label={t(lang, "nav.home")}>Igor Lopes</a>
+  <nav class="top__nav" id="nav" aria-label="Main">
+    <a href={url(`/${lang}/work/`)} aria-current={here("/work/")}>{t(lang, "nav.work")}</a>
+    <a href={url(`/${lang}/lab/`)} aria-current={here("/lab/")}>{t(lang, "nav.lab")}</a>
+    <a href={url(`/${lang}/about/`)} aria-current={here("/about/")}>{t(lang, "nav.about")}</a>
+    <a href={url(`/${lang}/contact/`)} aria-current={here("/contact/")}>{t(lang, "nav.contact")}</a>
+  </nav>
+  <div class="top__tools">
+    <div class="top__lang" role="group" aria-label={t(lang, "nav.lang")}>
+      {LANGS.map((l) => (
+        <a href={url(`/${l}${path}`)} hreflang={l} lang={l} aria-current={l === lang ? "true" : "false"}>{LANG_NAMES[l]}</a>
+      ))}
+    </div>
+    <button class="top__menu" type="button" aria-expanded="false" aria-controls="nav">{t(lang, "nav.menu")}</button>
+  </div>
+</header>

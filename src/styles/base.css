@@ -1,0 +1,114 @@
+/* Base: reset, structure and behaviour. Colours, fonts and the character of the site are in site.css. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-tap-highlight-color: transparent; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
+body { margin: 0; overflow-x: clip; }
+img, video { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h1, h2, h3, p, figure, blockquote, ul, ol, dl, dd { margin: 0; }
+p, li, dd { text-wrap: pretty; }
+main:focus { outline: none; }
+ul, ol { padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 1rem; top: -4rem; z-index: 300; padding: .6rem 1rem; background: #000; color: #fff; text-decoration: none; }
+.skip:focus { top: 1rem; }
+
+:root { --side: clamp(1rem, 2.2vw, 2rem); }
+
+/* Page to page: a soft cross-fade, no script needed */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .4s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+::view-transition-group(*) { animation-duration: .55s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+/* ---------- top bar ---------- */
+.top {
+  position: fixed; inset: 0 0 auto 0; z-index: 60;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: start;
+  padding: var(--side); pointer-events: none;
+}
+.top > * { pointer-events: auto; }
+.top { transition: transform .5s cubic-bezier(.2,.7,.2,1), background-color .3s, color .3s; }
+html.top-away .top { transform: translateY(-105%); }
+html.is-scrolled:not(.top-bare) .top { background: var(--top-bg, transparent); }
+.top a { text-decoration: none; }
+/* links get a taller touch area than they look */
+.top a, .top__menu { padding: .7rem .45rem; margin: -.7rem -.45rem; }
+.top__nav { display: flex; gap: 1.6rem; }
+.top__tools { justify-self: end; display: flex; gap: 1.4rem; align-items: center; }
+.top__lang { display: flex; gap: .7rem; }
+.top__menu { display: none; }
+@media (max-width: 759px) {
+  .top { grid-template-columns: 1fr auto; }
+  .top__nav { display: none; }
+  .top__menu { display: block; }
+  .menu-open .top__nav {
+    display: flex; flex-direction: column; gap: .4rem;
+    position: fixed; inset: 0; z-index: -1; padding: 6rem var(--side) var(--side); justify-content: flex-end;
+  }
+}
+
+/* ---------- pinned sequence ---------- */
+.seq { position: relative; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; contain: layout paint; }
+.field { position: absolute; inset: 0; pointer-events: none; }
+.stage .flood, .stage .giant, .stage .word, .stage .outro { pointer-events: none; }
+/* A piece of work in the sequence. --w is its width in hundredths of the screen; on wide, low screens
+   it follows the height instead, so a piece is never taller than the screen. */
+.fly {
+  position: absolute; left: 50%; top: 50%;
+  width: min(calc(var(--w, 20) * 1vw), calc(var(--w, 20) * 1.6svh)); translate: -50% -50%; margin: 0;
+  visibility: hidden; opacity: 0; backface-visibility: hidden;
+}
+.fly img, .fly video { width: 100%; height: auto; }
+@media (max-width: 699px) {
+  .fly { width: min(calc(var(--w, 20) * 1.9vw), calc(var(--w, 20) * 1.5svh)); }
+  .fly[data-m="0"] { display: none; }
+}
+
+/* ---------- cursor ---------- */
+.has-cursor, .has-cursor * { cursor: none !important; }
+.has-cursor input, .has-cursor textarea { cursor: text !important; }
+.cur { position: fixed; left: 0; top: 0; z-index: 400; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity .2s; will-change: transform; }
+.cur.is-on { opacity: 1; }
+.cur.is-typing { opacity: 0; }
+.cur__dot { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+.cur.is-link .cur__dot { transform: scale(2.4); }
+.cur.is-down .cur__dot { transform: scale(.7); }
+.cur.is-link.is-down .cur__dot { transform: scale(1.9); }
+.cur__label { position: absolute; left: 18px; top: 14px; white-space: nowrap; font-size: .75rem; opacity: 0; transform: translateY(4px); transition: opacity .2s, transform .3s cubic-bezier(.2,.7,.2,1); }
+.cur.has-label .cur__label { opacity: 1; transform: none; }
+
+/* a line of display type, locked by the engine so hover can widen it without re-wrapping */
+.ln { display: block; white-space: nowrap; }
+
+/* ---------- hover preview ----------
+   Follows the cursor; the engine keeps it whole on screen. Pictures keep their own shape. */
+.preview {
+  --pw: clamp(14rem, 22vw, 22rem);
+  position: fixed; left: 0; top: 0; z-index: 50; width: 0; height: 0;
+  pointer-events: none; opacity: 0; transition: opacity .25s; will-change: transform;
+}
+.preview.is-on { opacity: 1; }
+.preview > * { position: absolute; left: 0; top: 0; translate: -50% -32%; width: var(--pw); opacity: 0; transform: scale(.94); transition: opacity .25s, transform .4s cubic-bezier(.2,.7,.2,1); }
+.preview > img, .preview > video { width: auto; height: auto; max-width: var(--pw); max-height: min(52svh, 30rem); }
+.preview > .is-on { opacity: 1; transform: none; }
+@media (hover: none) { .preview { display: none; } }
+
+/* ---------- reveal ---------- */
+.is-moving [data-reveal] { opacity: 0; transform: translateY(1.2rem); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.is-moving [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* ---------- reduced motion ---------- */
+.is-still .seq { height: auto !important; }
+.is-still .stage { position: relative; height: auto; min-height: 100vh; overflow: visible; contain: none; }
+.is-still .field { position: relative; inset: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 1rem; padding: 2rem var(--side); }
+.is-still .fly { position: relative; left: auto; top: auto; width: auto; translate: none; visibility: visible; opacity: 1; }
+.is-still .fly img, .is-still .fly video { max-height: 70svh; width: auto; max-width: 100%; }
+.is-still .hide-still { display: none !important; }
+.is-still .reel { position: relative; }

@@ -1,0 +1,36 @@
+---
+import Base from "../../../layouts/Base.astro";
+import Pic from "../../../components/Pic.astro";
+import { SITE, type Lang } from "../../../config";
+import { langPaths, t, type UIKey } from "../../../i18n";
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+// Only what Igor has told; the text of each line is in src/i18n.ts (about.k.* and about.v.*).
+const TOOLS = "React, Vite, Astro, Node.js, Supabase, After Effects, Premiere Pro, ESP32, Arduino, 3D printing";
+const facts: { k: UIKey; v: UIKey | string }[] = [
+  { k: "about.k.disciplines", v: "about.v.disciplines" },
+  { k: "about.k.tools", v: TOOLS },
+  { k: "about.k.languages", v: "about.v.languages" },
+  { k: "about.k.experience", v: "about.v.experience" },
+  { k: "about.k.education", v: "about.v.education" },
+  { k: "about.k.based", v: "about.v.based" },
+];
+const val = (v: UIKey | string) => (v.startsWith("about.v.") ? t(lang, v as UIKey) : v);
+---
+<Base lang={lang} path="/about/" title={t(lang, "about.title")} description={t(lang, "about.short1")} image="igor/portrait.webp">
+  <header class="page-head" data-theme="light">
+    <h1>{t(lang, "about.title")}</h1>
+  </header>
+  <section class="about" data-theme="light">
+    <figure class="about__photo" data-reveal>
+      <Pic src="igor/cutout.webp" alt={SITE.fullName} sizes="(max-width: 899px) 60vw, 26vw" priority />
+    </figure>
+    <div class="about__text">
+      <p class="about__lead" data-reveal>{t(lang, "about.short1")}</p>
+      <p data-reveal>{t(lang, "about.short2")}</p>
+      <dl class="facts" data-reveal>
+        {facts.map((f) => <div><dt>{t(lang, f.k)}</dt><dd>{val(f.v)}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,91 @@
+---
+// Home. A quiet page with one small green square. Scroll: the square floods the screen and the name
+// stretches across it. Then the disciplines, one word at a time, while the work comes out of the middle
+// piece by piece. Then the index. One thing at a time holds the screen.
+import WorkRows from "./WorkRows.astro";
+import Previews from "./Previews.astro";
+import Pic from "./Pic.astro";
+import { lab } from "../data/projects";
+import { SITE, media, url, type Lang } from "../config";
+import { t, tx } from "../i18n";
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+// The work that comes out of the middle. x, y: where it lands, from the centre, in half-screens (the engine keeps it whole on screen).
+// a, b: when it shows (0 to 1 of the scroll). r: tilt. w: width, in hundredths of the screen.
+const fly = [
+  { video: "star/loop.mp4", poster: "star/loop-poster.webp", w: 34, f: "x=-.42;y=-.2;a=0.27;b=0.43;r=-2", name: "STAR", what: { en: "Brand film", fr: "Film de marque", nl: "Merkfilm" } },
+  { src: "sparx/mag-cover.webp", w: 17, f: "x=.56;y=.36;a=0.306;b=0.466;r=4", name: "SPARX", what: { en: "Editorial", fr: "Édition", nl: "Editorial" }, alt: "SPARX magazine cover" },
+  { src: "numberone/numberone-2.webp", w: 26, f: "x=.6;y=-.48;a=0.342;b=0.502;r=-3", name: "Number One", what: { en: "Photography", fr: "Photographie", nl: "Fotografie" }, alt: "Number One delivery van" },
+  { src: "star/poster.webp", w: 16, f: "x=-.72;y=.5;a=0.378;b=0.538;r=3", name: "STAR", what: { en: "Poster", fr: "Affiche", nl: "Affiche" }, alt: "STAR poster" },
+  { src: "arcade/cabinet.webp", w: 14, f: "x=.12;y=.62;a=0.414;b=0.574;r=-4", name: "EHB Arcade", what: { en: "Cabinet", fr: "Borne", nl: "Kast" }, alt: "EHB Arcade cabinet" },
+  { src: "lab/mbdtf.webp", w: 30, f: "x=-.3;y=-.62;a=0.45;b=0.61;r=2", name: "MBDTF", what: { en: "Motion", fr: "Motion", nl: "Motion" }, alt: "Collage animation frame", m: 0 },
+  { src: "sparx/gym.webp", w: 32, f: "x=.42;y=.08;a=0.486;b=0.646;r=-1", name: "SPARX", what: { en: "Product", fr: "Produit", nl: "Product" }, alt: "SPARX in a boxing gym" },
+  { src: "lab/eregum.webp", w: 13, f: "x=-.66;y=-.08;a=0.522;b=0.682;r=5", name: "Eregum", what: { en: "Identity", fr: "Identité", nl: "Identiteit" }, alt: "Eregum logo" },
+  { src: "star/flat-jersey-red-white-front.webp", w: 15, f: "x=.72;y=.56;a=0.558;b=0.718;r=-5", name: "STAR", what: { en: "Apparel", fr: "Vêtements", nl: "Kleding" }, alt: "STAR jersey", m: 0 },
+  { src: "bees/scene-4.webp", w: 22, f: "x=-.18;y=.48;a=0.594;b=0.754;r=2", name: "World Without Bees", what: { en: "Installation", fr: "Installation", nl: "Installatie" }, alt: "World Without Bees landscape" },
+  { src: "numberone/site-home.webp", w: 30, f: "x=.34;y=-.52;a=0.63;b=0.79;r=-2", name: "Number One", what: { en: "Website", fr: "Site web", nl: "Website" }, alt: "Number One website" },
+  { src: "star/alphabet.webp", w: 17, f: "x=-.56;y=.22;a=0.666;b=0.826;r=3", name: "STAR", what: { en: "Typeface", fr: "Typographie", nl: "Lettertype" }, alt: "STAR alphabet", m: 0 },
+  { src: "sparx/mark-boxer.webp", w: 14, f: "x=.6;y=-.06;a=0.702;b=0.862;r=-3", name: "SPARX", what: { en: "Mark", fr: "Symbole", nl: "Beeldmerk" }, alt: "SPARX boxer mark" },
+  { src: "lab/corridor.webp", w: 26, f: "x=-.1;y=-.34;a=0.738;b=0.898;r=1", name: "Infinite Corridor", what: { en: "Web", fr: "Web", nl: "Web" }, alt: "The Infinite Corridor", m: 0 },
+];
+const words = t(lang, "words").split("|");
+// one word at a time, in the middle of the screen
+const wordTimes = [[.3, .41], [.41, .52], [.52, .63], [.63, .74], [.74, .85]];
+---
+<section class="seq" data-theme="light" data-theme-switch="flood:.5:dark" data-bare data-seq="tunnel" data-ramps="hero:0:.05,flood:.02:.12,name:.05:.24,gone:.25:.31,end:.87:.97" aria-label={SITE.fullName}>
+  <div class="stage">
+    <div class="hero">
+      <h1 class="sr-only">{SITE.fullName}, {SITE.title}</h1>
+      <p class="hero__line">{t(lang, "hero.line")}</p>
+      <div class="hero__foot">
+        <p class="hero__who"><strong>{SITE.fullName}</strong>{t(lang, "hero.title")}, {t(lang, "city")}</p>
+        <span class="hero__scroll" aria-hidden="true">{t(lang, "hero.scroll")}<i></i></span>
+        <p class="hero__langs">{t(lang, "hero.langs")}</p>
+      </div>
+    </div>
+
+    <div class="flood hide-still" aria-hidden="true"></div>
+    <p class="giant" data-fit="100" aria-hidden="true">Igor Lopes</p>
+
+    <div class="field">
+      {fly.map((it, n) => (
+        <figure class="fly" style={`--w:${it.w}`} data-fly={it.f} data-m={it.m === 0 ? "0" : undefined}>
+          {it.video ? (
+            <video data-autoplay muted loop playsinline preload="metadata" width="1280" height="720" poster={media(it.poster!)} aria-hidden="true"><source src={media(it.video)} type="video/mp4"></video>
+          ) : (
+            <Pic src={it.src!} alt={it.alt!} sizes={`(max-width: 699px) ${Math.round(it.w * 1.9)}vw, ${it.w}vw`} eager={n < 4} />
+          )}
+          <figcaption><span>{it.name}</span><span>{tx(it.what, lang)}</span></figcaption>
+        </figure>
+      ))}
+      {words.map((w, i) => (
+        <p class="fly word hide-still" data-fly={`word=1;a=${wordTimes[i][0]};b=${wordTimes[i][1]}`} aria-hidden="true">{w}</p>
+      ))}
+    </div>
+
+    <div class="outro">
+      <h2>{t(lang, "outro.title")}</h2>
+      <p>{t(lang, "outro.text")}</p>
+    </div>
+  </div>
+</section>
+
+<WorkRows lang={lang} />
+
+<section class="more" data-theme="dark" aria-label={t(lang, "lab.title")}>
+  <div class="more__lab">
+    <h2><a href={url(`/${lang}/lab/`)}>{t(lang, "lab.title")}</a></h2>
+    <ul>
+      {lab.map((p) => <li><a href={url(`/${lang}/lab/`)}>{p.name}</a></li>)}
+    </ul>
+  </div>
+  <div class="more__about">
+    <h2>{t(lang, "about.title")}</h2>
+    <p>{t(lang, "about.short1")}</p>
+    <p>{t(lang, "about.short2")}</p>
+    <a class="more__link" href={url(`/${lang}/about/`)}>{t(lang, "about.more")}</a>
+  </div>
+</section>
+
+<Previews lang={lang} />

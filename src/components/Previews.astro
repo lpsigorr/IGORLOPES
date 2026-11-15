@@ -1,0 +1,19 @@
+---
+// Floating previews for the project index (computers only).
+import Pic from "./Pic.astro";
+import { cases } from "../data/projects";
+import { media, type Lang } from "../config";
+import { pic } from "../media";
+import { tx } from "../i18n";
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+<div class="preview" aria-hidden="true">
+  {cases.map((p) => p.preview?.video ? (
+    <video data-key={p.slug} muted loop playsinline preload="none" width={p.preview.image ? pic(p.preview.image).width : undefined} height={p.preview.image ? pic(p.preview.image).height : undefined} poster={p.preview.image ? media(p.preview.image) : undefined}><source src={media(p.preview.video)} type="video/mp4"></video>
+  ) : p.preview?.image ? (
+    <Pic key={p.slug} src={p.preview.image} alt="" sizes="22rem" />
+  ) : p.preview?.stat ? (
+    <div data-key={p.slug} class="preview__stat">{p.preview.stat.num}<small>{tx(p.preview.stat.label, lang)}</small></div>
+  ) : null)}
+</div>

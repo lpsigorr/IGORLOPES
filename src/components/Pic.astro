@@ -1,0 +1,9 @@
+---
+// One picture. Loads the copy that fits the screen and always knows its true size, so nothing jumps while loading.
+import { pic } from "../media";
+interface Props { src: string; alt: string; sizes?: string; class?: string; eager?: boolean; priority?: boolean; key?: string }
+const { src, alt, sizes, class: cls, eager = false, priority = false, key } = Astro.props;
+const p = pic(src, sizes);
+---
+<img class={cls} src={p.src} srcset={p.srcset} sizes={p.sizes} width={p.width} height={p.height} alt={alt} data-key={key}
+  loading={eager || priority ? undefined : "lazy"} decoding="async" fetchpriority={priority ? "high" : undefined}>

@@ -1,0 +1,161 @@
+---
+// One case study page. The opening (reel) stays put while the page slides over it.
+// Pictures are never cut and never larger than the screen: rows share one height, and the opening
+// picture only fills the whole screen where the screen has roughly its shape. Elsewhere it is shown whole.
+import Pic from "./Pic.astro";
+import { CREDIT_NAME, nextCase, type Block, type Project } from "../data/projects";
+import { media, url, type Lang } from "../config";
+import { pic } from "../media";
+import { t, tx } from "../i18n";
+interface Props { lang: Lang; project: Project }
+const { lang, project: p } = Astro.props;
+const lead = p.blocks?.find((b) => b.type === "lead") as Extract<Block, { type: "lead" }> | undefined;
+const blocks = (p.blocks || []).filter((b) => b.type !== "lead");
+const next = nextCase(p.slug);
+const nextPic = next.cover ? pic(next.cover.src) : null;
+const isLight = (hex: string) => {
+  const n = parseInt(hex.slice(1), 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6;
+};
+// Opening picture: full screen only while that cuts off less than a fifth of it.
+const heroAr = p.hero?.image ? pic(p.hero.image.src).ar : 0;
+const ratio = (n: number) => `${Math.round(n * 1000)}/1000`;
+const heroFill = heroAr
+  ? `@media (min-aspect-ratio: ${ratio(heroAr * 0.8)}) and (max-aspect-ratio: ${ratio(heroAr / 0.8)}) { .reel--${p.slug} .reel__media { inset: 0; height: 100%; object-fit: cover; } }`
+  : "";
+// A row of pictures: every picture gets the same height. --sum is the row's total width-to-height, --cap the smallest picture height in real pixels.
+const row = (srcs: string[]) => {
+  const ps = srcs.map((s) => pic(s));
+  const sum = ps.reduce((n, x) => n + x.ar, 0);
+  return { ps, sum, style: `--sum:${sum.toFixed(4)};--n:${ps.length};--cap:${Math.min(...ps.map((x) => x.height))}px` };
+};
+const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max(10, Math.round((ar / sum) * 96))}vw`;
+---
+<article class="case">
+  {heroFill && <style is:inline set:html={heroFill}></style>}
+  <section class:list={["reel", `reel--${p.slug}`]} data-theme="dark" data-bare aria-label={p.name}>
+    {p.hero?.video ? (
+      <video class="reel__media reel__media--film" data-autoplay muted loop playsinline preload="auto" poster={p.hero.poster ? media(p.hero.poster) : undefined} aria-hidden="true">
+        <source src={media(p.hero.video)} type="video/mp4">
+      </video>
+    ) : p.hero?.image ? (
+      <Pic class="reel__media" src={p.hero.image.src} alt={tx(p.hero.image.alt, lang)} sizes="100vw" priority />
+    ) : (
+      <div class="reel__plain" aria-hidden="true"></div>
+    )}
+    <h1 class:list={["reel__name", { "is-star": p.hero?.nameFont === "star" }]} style={`view-transition-name: name-${p.slug}`}>{p.name}</h1>
+    <p class="reel__tag"><span>{tx(p.tag, lang)}</span>{p.place && <span>{tx(p.place, lang)}</span>}</p>
+  </section>
+
+  <div class="case__body" data-theme="light">
+    <section class="case__intro">
+      {lead && <h2 class="case__lead" data-reveal>{tx(lead.line, lang)}</h2>}
+      <div class="case__side" data-reveal>
+        {lead?.text && <p>{tx(lead.text, lang)}</p>}
+        {p.links && (
+          <p class="case__links">{p.links.map((l) => <a href={l.href} target="_blank" rel="noopener">{tx(l.label, lang)}</a>)}</p>
+        )}
+      </div>
+    </section>
+
+    {p.credits && (
+      <section class="credits" aria-labelledby={`credits-${p.slug}`}>
+        <h2 id={`credits-${p.slug}`} class="credits__title">{t(lang, "case.credits")}</h2>
+        <dl class="credits__list">
+          {p.credits.map((c) => (
+            <div class="credits__row" data-reveal>
+              <dt>{tx(c.role, lang)}</dt>
+              <dd>{c.name || CREDIT_NAME}</dd>
+            </div>
+          ))}
+        </dl>
+        {p.client && <p class="credits__client" data-reveal>{tx(p.client, lang)}</p>}
+      </section>
+    )}
+
+    {blocks.map((b) => {
+      if (b.type === "quote") return <blockquote class="case__quote" lang="en" data-reveal>{b.text}</blockquote>;
+      if (b.type === "specimen") return <p class:list={["case__specimen", { "is-star": b.font === "star" }]} style={b.color ? `color:${b.color}` : undefined} lang="en" data-reveal>{b.text}</p>;
+      if (b.type === "label") return <p class="case__label" data-reveal>{tx(b.text, lang)}</p>;
+      if (b.type === "colors") return (
+        <ul class="case__colors" data-reveal>
+          {b.items.map((c) => <li class:list={{ "is-light": isLight(c.hex) }} style={`--c:${c.hex}`}><span>{tx(c.name, lang)}</span><span>{c.hex}</span></li>)}
+        </ul>
+      );
+      if (b.type === "points") return (
+        <ul class="case__points">
+          {b.items.map((it) => <li data-reveal><h3>{tx(it.title, lang)}</h3><p>{tx(it.text, lang)}</p></li>)}
+        </ul>
+      );
+      if (b.type === "stats") return (
+        <div class="case__stats">
+          <ul>{b.items.map((s) => <li data-reveal><span class="case__num">{tx(s.num, lang)}</span><span>{tx(s.label, lang)}</span></li>)}</ul>
+          {b.note && <p class="case__cap">{tx(b.note, lang)}</p>}
+        </div>
+      );
+      if (b.type === "films") {
+        const sum = b.items.reduce((n, f) => n + f.w / f.h, 0);
+        return (
+          <section class="case__films" style={`--sum:${sum.toFixed(4)};--n:${b.items.length}`}>
+            <div class="films">
+              {b.items.map((f) => (
+                <video controls playsinline preload="none" poster={media(f.poster)} width={f.w} height={f.h} style={`--ar:${(f.w / f.h).toFixed(4)}`} aria-label={tx(f.label, lang)}>
+                  <source src={media(f.src)} type="video/mp4">
+                </video>
+              ))}
+            </div>
+            {b.caption && <p class="case__cap">{tx(b.caption, lang)}</p>}
+          </section>
+        );
+      }
+      if (b.type === "screens") return (
+        <section class:list={["shots", `shots--${b.layout}`]}>
+          <div class="shots__grid">
+            {b.items.map((sc) => sc.frame === "phone" ? (
+              <figure class="phone" data-reveal>
+                <Pic src={sc.src} alt={tx(sc.alt, lang)} sizes="(max-width: 599px) 60vw, 240px" />
+              </figure>
+            ) : (
+              <figure class="browser" data-reveal>
+                <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i>{sc.url && <span>{sc.url}</span>}</div>
+                <Pic src={sc.src} alt={tx(sc.alt, lang)} />
+              </figure>
+            ))}
+          </div>
+          {b.caption && <p class="case__cap">{tx(b.caption, lang)}</p>}
+        </section>
+      );
+      if (b.type === "images") {
+        const r = row(b.items.map((im) => im.src));
+        const tiles = b.layout === "flats" || b.layout === "screens";
+        return (
+          <section class:list={["pics", `pics--${b.layout}`, { "pics--paper": b.paper, "pics--row": !tiles }]} style={r.style}>
+            <div class="pics__grid">
+              {b.items.map((im, n) => (
+                <figure data-reveal style={`--ar:${r.ps[n].ar.toFixed(4)}`}>
+                  <Pic src={im.src} alt={tx(im.alt, lang)} sizes={b.layout === "flats" ? "(max-width: 699px) 40vw, 260px" : b.layout === "screens" ? "(max-width: 699px) 100vw, 46vw" : share(r.ps[n].ar, r.sum)} />
+                </figure>
+              ))}
+            </div>
+            {b.caption && <p class="case__cap">{tx(b.caption, lang)}</p>}
+          </section>
+        );
+      }
+      return null;
+    })}
+
+    {p.end && <p class="case__end" data-reveal>{tx(p.end, lang)}</p>}
+    {p.footnote && <p class="case__foot">{tx(p.footnote, lang)}</p>}
+  </div>
+
+  <a class="next" href={url(`/${lang}/work/${next.slug}/`)} data-theme="dark" data-bare data-cursor={`${t(lang, "work.open")} ${next.name}`}>
+    <span class="next__label">{t(lang, "case.next")}</span>
+    {next.cover && nextPic ? (
+      <span class="next__thumb" style={`--ar:${nextPic.ar.toFixed(4)};--nw:${nextPic.width}px`}>
+        <Pic src={next.cover.src} alt="" sizes="(max-width: 699px) 70vw, 34vw" />
+      </span>
+    ) : <span class="next__thumb next__thumb--plain" aria-hidden="true"></span>}
+    <span class="next__name" data-widen="self">{next.name}</span>
+  </a>
+</article>

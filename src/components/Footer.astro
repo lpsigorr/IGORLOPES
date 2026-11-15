@@ -1,0 +1,24 @@
+---
+import { SITE, url, type Lang } from "../config";
+import { t } from "../i18n";
+interface Props { lang: Lang; cta?: boolean } // cta: the big "Send a brief" line (not on the contact page itself)
+const { lang, cta = true } = Astro.props;
+---
+<footer class:list={["foot", { "foot--plain": !cta }]} data-theme="dark">
+  {cta && (
+    <div class="foot__cta">
+      <p>{t(lang, "cta.text")}</p>
+      <a class="foot__big" data-widen="beside" href={url(`/${lang}/contact/`)}>{t(lang, "cta.button")}</a>
+    </div>
+  )}
+  <div class="foot__line">
+    <span>{t(lang, "footer.where")}</span>
+    <span class="foot__links">
+      <a href={url(`/${lang}/work/`)}>{t(lang, "nav.work")}</a>
+      <a href={url(`/${lang}/lab/`)}>{t(lang, "nav.lab")}</a>
+      <a href={url(`/${lang}/about/`)}>{t(lang, "nav.about")}</a>
+      <a href={SITE.github} rel="me">GitHub</a>
+      <a href="#main">{t(lang, "footer.top")}</a>
+    </span>
+  </div>
+</footer>
