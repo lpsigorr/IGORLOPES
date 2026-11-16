@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# old versions set aside during an update
+_backup*/
+_to_delete/
