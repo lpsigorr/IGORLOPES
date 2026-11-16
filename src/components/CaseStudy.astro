@@ -30,11 +30,14 @@ const row = (srcs: string[]) => {
   const sum = ps.reduce((n, x) => n + x.ar, 0);
   return { ps, sum, style: `--sum:${sum.toFixed(4)};--n:${ps.length};--cap:${Math.min(...ps.map((x) => x.height))}px` };
 };
+// Large type: a hyphenated word ("chewing-gum") stays on one line.
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const whole = (s: string) => esc(s).replace(/\S+-\S+/g, (w) => `<span class="nb">${w}</span>`);
 const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max(10, Math.round((ar / sum) * 96))}vw`;
 ---
 <article class="case">
   {heroFill && <style is:inline set:html={heroFill}></style>}
-  <section class:list={["reel", `reel--${p.slug}`]} data-theme="dark" data-bare aria-label={p.name}>
+  <section class:list={["reel", `reel--${p.slug}`]} style={p.coverBg ? `background:${p.coverBg}` : undefined} data-theme="dark" data-bare aria-label={p.name}>
     {p.hero?.video ? (
       <video class="reel__media reel__media--film" data-autoplay muted loop playsinline preload="auto" poster={p.hero.poster ? media(p.hero.poster) : undefined} aria-hidden="true">
         <source src={media(p.hero.video)} type="video/mp4">
@@ -50,7 +53,7 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
 
   <div class="case__body" data-theme="light">
     <section class="case__intro">
-      {lead && <h2 class="case__lead" data-reveal>{tx(lead.line, lang)}</h2>}
+      {lead && <h2 class="case__lead" data-reveal set:html={whole(tx(lead.line, lang))}></h2>}
       <div class="case__side" data-reveal>
         {lead?.text && <p>{tx(lead.text, lang)}</p>}
         {p.links && (
@@ -145,7 +148,7 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
       return null;
     })}
 
-    {p.end && <p class="case__end" data-reveal>{tx(p.end, lang)}</p>}
+    {p.end && <p class="case__end" data-reveal set:html={whole(tx(p.end, lang))}></p>}
     {p.footnote && <p class="case__foot">{tx(p.footnote, lang)}</p>}
   </div>
 

@@ -1,7 +1,7 @@
 ---
 import Pic from "./Pic.astro";
 import { lab } from "../data/projects";
-import type { Lang } from "../config";
+import { url, type Lang } from "../config";
 import { t, tx } from "../i18n";
 interface Props { lang: Lang; heading?: "h1" | "h2"; lead?: boolean }
 const { lang, heading = "h2", lead = true } = Astro.props;
@@ -28,7 +28,9 @@ const H = heading;
       );
       return (
         <li class="lab__item" data-reveal>
-          {p.link ? <a href={p.link.href} target="_blank" rel="noopener" data-cursor={t(lang, p.link.label === "watch" ? "lab.watch" : "lab.visit")}>{inner}</a> : <div>{inner}</div>}
+          {p.link ? <a href={p.link.href} target="_blank" rel="noopener" data-cursor={t(lang, p.link.label === "watch" ? "lab.watch" : "lab.visit")}>{inner}</a>
+            : p.blocks ? <a href={url(`/${lang}/work/${p.slug}/`)} data-cursor={`${t(lang, "work.open")} ${p.name}`}>{inner}</a>
+            : <div>{inner}</div>}
         </li>
       );
     })}

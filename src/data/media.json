@@ -15,15 +15,16 @@
    1024
   ]
  },
- "arcade/detail.webp": {
-  "w": 1700,
-  "h": 915,
+ "arcade/front.webp": {
+  "w": 1932,
+  "h": 2576,
   "v": [
    640,
-   1024
+   1024,
+   1600
   ]
  },
- "arcade/front.webp": {
+ "arcade/lettering.webp": {
   "w": 1932,
   "h": 2576,
   "v": [
@@ -95,6 +96,13 @@
    640,
    1024,
    1600
+  ]
+ },
+ "lab/eregum-box.webp": {
+  "w": 1024,
+  "h": 1024,
+  "v": [
+   640
   ]
  },
  "lab/eregum-pack.webp": {

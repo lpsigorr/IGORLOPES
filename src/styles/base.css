@@ -87,6 +87,7 @@ html.is-scrolled:not(.top-bare) .top { background: var(--top-bg, transparent); }
 
 /* a line of display type, locked by the engine so hover can widen it without re-wrapping */
 .ln { display: block; white-space: nowrap; }
+.nb { white-space: nowrap; }
 
 /* ---------- hover preview ----------
    Follows the cursor; the engine keeps it whole on screen. Pictures keep their own shape. */

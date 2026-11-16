@@ -25,7 +25,7 @@ export type Project = {
   where: L; // one line: what it is
   roles: L; // short list for the index
   cover?: Img; // image for lists and previews (none = a typographic tile)
-  coverBg?: string; // lab only: the cover is shown whole on this colour instead of filling its tile
+  coverBg?: string; // the cover's own background colour: it is shown whole on it, in the lab grid and at the top of its page
   preview?: { video?: string; image?: string; stat?: { num: string; label: L } };
   // Case study page
   hero?: { video?: string; poster?: string; image?: Img; nameFont?: "star" };
@@ -298,8 +298,8 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "One machine: wood, wires and a game.", fr: "Une machine : du bois, des câbles et un jeu.", nl: "Eén machine: hout, kabels en een spel." },
         text: { en: "A full arcade machine that brings craft, electronics and software together, with a game made for it. The joystick and buttons answer the game the way a classic cabinet should.", fr: "Une borne d'arcade complète qui réunit fabrication, électronique et logiciel, avec un jeu créé pour elle. Le joystick et les boutons répondent au jeu comme sur une vraie borne.", nl: "Een volledige arcadekast die vakmanschap, elektronica en software samenbrengt, met een spel dat ervoor gemaakt is. De joystick en knoppen reageren zoals bij een klassieke kast." } },
-      { type: "images", layout: "wide", items: [ i("arcade/detail.webp", { en: "The stencilled lettering on the cabinet", fr: "Le lettrage au pochoir sur la borne", nl: "De gesjabloneerde belettering op de kast" }) ] },
-      { type: "images", layout: "two", items: [
+      { type: "images", layout: "three", items: [
+        i("arcade/lettering.webp", { en: "The stencilled lettering on the cabinet", fr: "Le lettrage au pochoir sur la borne", nl: "De gesjabloneerde belettering op de kast" }),
         i("arcade/front.webp", { en: "The cabinet, front", fr: "La borne, de face", nl: "De kast, vooraanzicht" }),
         i("arcade/cabinet-side.webp", { en: "The cabinet, side", fr: "La borne, de côté", nl: "De kast, zijaanzicht" }),
       ] },
@@ -353,7 +353,26 @@ export const projects: Project[] = [
     roles: { en: "Motion", fr: "Motion", nl: "Motion" }, cover: i("lab/mbdtf.webp", { en: "Collage animation frame", fr: "Image de l'animation en collage", nl: "Beeld uit de collageanimatie" }), link: { label: "watch", href: "https://youtu.be/hAqJbdYw_u8" } },
   { slug: "eregum", name: "Eregum", kind: "lab",
     where: { en: "A fictional chewing gum brand: name, logo, packaging and posters.", fr: "Une marque fictive de chewing-gum : nom, logo, emballage et affiches.", nl: "Een fictief kauwgommerk: naam, logo, verpakking en affiches." },
-    roles: { en: "Identity, packaging", fr: "Identité, emballage", nl: "Identiteit, verpakking" }, cover: i("lab/eregum.webp", { en: "The Eregum logo", fr: "Le logo Eregum", nl: "Het Eregum-logo" }), coverBg: "#000000" },
+    roles: { en: "Identity, packaging", fr: "Identité, emballage", nl: "Identiteit, verpakking" }, cover: i("lab/eregum.webp", { en: "The Eregum logo", fr: "Le logo Eregum", nl: "Het Eregum-logo" }), coverBg: "#000000",
+    // a lab entry with blocks gets its own page (same template as a case study) and is clickable in the lab
+    hero: { image: i("lab/eregum.webp", { en: "The Eregum logo", fr: "Le logo Eregum", nl: "Het Eregum-logo" }) },
+    tag: { en: "Brand identity and packaging", fr: "Identité de marque et emballage", nl: "Merkidentiteit en verpakking" },
+    credits: [
+      { role: { en: "Concept and name", fr: "Concept et nom", nl: "Concept en naam" } },
+      { role: { en: "Logo", fr: "Logo", nl: "Logo" } },
+      { role: { en: "Packaging", fr: "Emballage", nl: "Verpakking" } },
+      { role: { en: "Posters and Instagram visuals", fr: "Affiches et visuels Instagram", nl: "Affiches en Instagram-beelden" } },
+    ],
+    blocks: [
+      { type: "lead",
+        line: { en: "A chewing gum brand, invented from scratch.", fr: "Une marque de chewing-gum, inventée de A à Z.", nl: "Een kauwgommerk, van nul bedacht." },
+        text: { en: "A fictional brand built from nothing: name, concept, logo, packaging and promotional material. Of several directions, the most provocative one won: EREGUM, a gum designed to improve sexual performance, directly inspired by Viagra. That one idea gave every design decision a clear direction.", fr: "Une marque fictive partie de rien : nom, concept, logo, emballage et supports promotionnels. Parmi plusieurs pistes, la plus provocante l'a emporté : EREGUM, un chewing-gum conçu pour améliorer les performances sexuelles, directement inspiré du Viagra. Cette seule idée a donné une direction claire à chaque choix de design.", nl: "Een fictief merk, opgebouwd vanuit het niets: naam, concept, logo, verpakking en promotiemateriaal. Van de verschillende richtingen won de meest provocerende: EREGUM, een kauwgom die seksuele prestaties moet verbeteren, rechtstreeks geïnspireerd op Viagra. Dat ene idee gaf elke ontwerpkeuze een duidelijke richting." } },
+      { type: "images", layout: "two", items: [
+        i("lab/eregum-box.webp", { en: "The Eregum box with one sachet", fr: "La boîte Eregum avec un sachet", nl: "De Eregum-doos met één zakje" }),
+        i("lab/eregum-pack.webp", { en: "The packaging laid flat", fr: "L'emballage à plat", nl: "De verpakking, uitgevouwen" }),
+      ], caption: { en: "The packaging takes its cue from condom boxes. The gum comes in small sachets of ten pieces.", fr: "L'emballage s'inspire des boîtes de préservatifs. Les chewing-gums sont glissés dans de petits sachets de dix pièces.", nl: "De verpakking is geïnspireerd op condoomdoosjes. De kauwgom zit in kleine zakjes van tien stuks." } },
+    ],
+    end: { en: "A fictional product, a complete brand.", fr: "Un produit fictif, une marque complète.", nl: "Een fictief product, een compleet merk." } },
   { slug: "soldias", name: "SOLDIAS", kind: "lab",
     where: { en: "A brand and its site, built on endurance and loyalty.", fr: "Une marque et son site, bâtis sur l'endurance et la loyauté.", nl: "Een merk en zijn website, gebouwd op uithouding en loyaliteit." },
     roles: { en: "Identity, web", fr: "Identité, web", nl: "Identiteit, web" }, cover: i("lab/soldias.webp", { en: "The SOLDIAS website", fr: "Le site SOLDIAS", nl: "De SOLDIAS-website" }), link: { label: "visit", href: "https://lpsigorr.github.io/soldias/#/" } },
@@ -364,6 +383,8 @@ export const projects: Project[] = [
 
 export const cases = projects.filter((p) => p.kind === "case");
 export const lab = projects.filter((p) => p.kind === "lab");
+/** Every project that has its own page: the case studies, and lab entries that have blocks. */
+export const pages = projects.filter((p) => p.kind === "case" || p.blocks);
 
 export function nextCase(slug: string): Project {
   const idx = cases.findIndex((p) => p.slug === slug);
