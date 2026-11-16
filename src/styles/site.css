@@ -57,20 +57,26 @@ html[data-theme="dark"] .top { color: var(--cream); }
 .hero__langs { justify-self: end; text-align: right; max-width: 22ch; }
 @media (max-width: 699px) { .hero__foot { grid-template-columns: 1fr 1fr; } .hero__scroll { display: none; } }
 
-.flood { position: absolute; left: 50%; top: calc(50% + 3.4rem); width: 14px; height: 14px; margin: -7px 0 0 -7px; background: var(--accent);
-  transform: scale(calc(1 + var(--flood, 0) * 260)); will-change: transform; }
+/* the whole screen in green, cut down to a 14px square until the scroll opens it */
+.flood { position: absolute; inset: 0; background: var(--accent);
+  clip-path: inset(calc(50% + 3.4rem - 7px) calc(50% - 7px) calc(50% - 3.4rem - 7px) calc(50% - 7px)); }
 .giant { position: absolute; left: 50%; top: 50%; white-space: nowrap; color: var(--ink);
   font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .78; letter-spacing: -.01em; font-size: 13vw; /* the engine sets the exact size so the name spans the screen at its widest */
-  font-stretch: calc((50 + var(--name, 0) * 50) * 1%);
+  font-stretch: 100%;
   translate: -50% -50%;
-  transform: skewX(calc(var(--v, 0) * -8deg)) scale(calc(.96 + var(--p, 0) * .05));
-  opacity: calc(min(1, var(--name, 0) * 4) * (1 - var(--gone, 0))); contain: layout style; }
+  /* the letters rise out of this line: anything outside it is cut */
+  padding: .14em 0 .1em; overflow: clip; contain: layout style; }
+.giant .char, .word .char { will-change: transform; }
 
 .fly { color: var(--cream); }
-.fly img, .fly video { box-shadow: 0 1.2rem 2.6rem rgba(10, 30, 22, .28); }
-.fly figcaption { display: flex; justify-content: space-between; gap: 1em; margin-top: .5em; font-size: clamp(.72rem, .78vw, .85rem); font-weight: 600; white-space: nowrap; }
+.fly__m { overflow: hidden; }
+.fly__m img, .fly__m video { display: block; transform-origin: 50% 60%; }
+.fly figcaption { overflow: clip;
+  display: flex; justify-content: space-between; gap: 1em; margin-top: .5em; font-size: clamp(.72rem, .78vw, .85rem); font-weight: 600; white-space: nowrap; }
+.fly figcaption span { display: inline-block; }
 .fly figcaption span:last-child { font-weight: 400; }
-.word { width: auto; white-space: nowrap; font-family: var(--display); font-weight: 900; font-stretch: 78%; font-size: min(13vw, 30svh); line-height: .8; text-transform: uppercase; color: var(--cream); }
+.word { width: auto; white-space: nowrap; font-family: var(--display); font-weight: 900; font-stretch: 78%; font-size: min(13vw, 30svh); line-height: .8; text-transform: uppercase; color: var(--cream);
+  padding: .14em 0 .1em; overflow: clip; }
 
 .outro { position: absolute; inset: auto var(--side) var(--side); display: grid; grid-template-columns: 1fr minmax(0, 26rem); align-items: end; gap: 2rem;
   opacity: var(--end, 0); transform: translateY(calc((1 - var(--end, 0)) * 3rem)); color: var(--cream); }

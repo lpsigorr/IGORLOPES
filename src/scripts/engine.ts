@@ -6,9 +6,13 @@
    - Scroll speed as --v (signed) and --av (absolute), 0 to 1, set on the sequence only.
    - Custom cursor, hover previews, header colour per section, videos that only play while visible.
    - prefers-reduced-motion: no pinning, no flying, everything still.
-   One clock runs everything (a single requestAnimationFrame), and only transform and opacity change
+   One clock runs everything (GSAP's ticker), and only transform, opacity and clipping change
    while scrolling, so the page stays smooth. */
 import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const root = document.documentElement;
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -23,7 +27,6 @@ const smooth = (e0: number, e1: number, x: number) => {
   const t = clamp((x - e0) / (e1 - e0), 0, 1);
   return t * t * (3 - 2 * t);
 };
-const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
 /* ---------- smooth scroll ---------- */
 const lenis = !reduce && fine ? new Lenis({ lerp: 0.1 }) : null;
@@ -42,7 +45,7 @@ document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
 
 /* ---------- sequences ---------- */
 type Fly = { el: HTMLElement; word: boolean; x: number; y: number; r: number; a: number; b: number; w: number; h: number; vis: boolean | null };
-type Seq = { el: HTMLElement; stage: HTMLElement | null; sw: number; sh: number; wordW: number; wordH: number; ramps: { name: string; a: number; b: number; last: string }[]; items: Fly[]; p: number; top: number; h: number };
+type Seq = { el: HTMLElement; stage: HTMLElement | null; sw: number; sh: number; wordW: number; wordH: number; ramps: { name: string; a: number; b: number; last: string }[]; items: Fly[]; p: number; top: number; h: number; tl?: gsap.core.Timeline };
 
 // the width without the scrollbar, so nothing is measured against space that is not there
 let vw = root.clientWidth, vh = window.innerHeight;
@@ -90,59 +93,101 @@ function measure() {
   });
   setupWiden();
   themeDirty = true;
+  if (built) { ScrollTrigger.refresh(); redraws.forEach((f) => f()); }
 }
 
-/* A piece of work comes out of the middle of the screen, grows to its real size where it belongs,
-   rests there, then lets go. It is kept whole on screen the entire time. */
+/* The sequence is one GSAP timeline, scrubbed by the scroll with a short catch-up so it glides
+   instead of jumping with every wheel step. Pieces open like a curtain where they belong (no zoom),
+   drift upward at their own pace, and close the same way. Words and the name rise letter by letter
+   out of their own line. Everything is placed so it is whole on screen and never crosses the word. */
 const PAD = 12;
-function place(it: Fly, t: number, q: Seq) {
-  const sw = q.sw, sh = q.sh;
-  if (it.word) {
-    // a word of the sequence: rises into the middle, holds, leaves upward
-    const y = (1 - easeOut(clamp(t / 0.3, 0, 1))) * it.h * 0.45 - smooth(0.78, 1, t) * it.h * 0.35;
-    it.el.style.transform = `translate3d(0,${y.toFixed(1)}px,0)`;
-    it.el.style.opacity = (smooth(0, 0.18, t) * (1 - smooth(0.8, 1, t))).toFixed(3);
-    return;
-  }
-  const grow = easeOut(clamp(t / 0.6, 0, 1));
-  const push = smooth(0.6, 1, t);
-  const s = lerp(0.08, 1, grow) + push * 0.06;
-  const k = lerp(0.1, 1, grow) + push * 0.04;
-  const rot = it.r * (1.6 - grow * 0.6);
-  // the space a tilted piece takes is a little larger than the piece itself
+const redraws: (() => void)[] = [];
+function spot(it: Fly, q: Seq, drift: number) {
+  const sw = q.sw, sh = q.sh, rot = it.r * 0.6;
   const sin = Math.abs(Math.sin((rot * Math.PI) / 180)), cos = Math.cos((rot * Math.PI) / 180);
-  const bw = (it.w * cos + it.h * sin) * s, bh = (it.h * cos + it.w * sin) * s;
+  const bw = it.w * cos + it.h * sin, bh = it.h * cos + it.w * sin;
   const roomX = Math.max(0, sw / 2 - bw / 2 - PAD), roomY = Math.max(0, sh / 2 - bh / 2 - PAD);
-  const x = clamp(it.x * sw * 0.5 * k, -roomX, roomX);
-  let y = it.y * sh * 0.5 * k;
-  // the word in the middle stays readable: a piece that would cross it sits above or below it instead
+  const x = clamp(it.x * sw * 0.5, -roomX, roomX);
+  let y = clamp(it.y * sh * 0.5 + drift, -roomY, roomY);
   if (q.wordH && Math.abs(x) - bw / 2 < q.wordW / 2) {
     const clear = q.wordH / 2 + bh / 2 + PAD;
-    if (Math.abs(y) < clear) y = (it.y >= 0 ? 1 : -1) * clear;
+    const side = it.y >= 0 ? 1 : -1;
+    if (side * y < clear) y = side * Math.min(clear, roomY);
   }
-  y = clamp(y, -roomY, roomY);
-  it.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(4)})`;
-  it.el.style.opacity = (smooth(0, 0.1, t) * (1 - smooth(0.82, 1, t))).toFixed(3);
+  return { x, y, rot };
 }
 
-function updateSeq(s: Seq, scrollY: number) {
-  const p = clamp((scrollY - s.top) / s.h, 0, 1);
+function build(q: Seq) {
+  const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
+  tl.set({}, {}, 1); // the timeline runs from 0 to 1, like the scroll
+
+  // the green square opens into the whole screen
+  const flood = q.el.querySelector<HTMLElement>(".flood");
+  if (flood) {
+    const f = { v: 0 };
+    const draw = () => {
+      const rem = parseFloat(getComputedStyle(root).fontSize) || 16;
+      const k = 1 - f.v, cx = q.sw / 2, cy = q.sh / 2 + 3.4 * rem, r = 7;
+      flood.style.clipPath = `inset(${((cy - r) * k).toFixed(1)}px ${((q.sw - cx - r) * k).toFixed(1)}px ${((q.sh - cy - r) * k).toFixed(1)}px ${((cx - r) * k).toFixed(1)}px)`;
+    };
+    redraws.push(draw);
+    tl.to(f, { v: 1, ease: "expo.inOut", duration: 0.1, onUpdate: draw }, 0.02);
+  }
+
+  // the name rises letter by letter, holds, then leaves upward
+  const giant = q.el.querySelector<HTMLElement>(".giant");
+  if (giant) {
+    const chars = SplitText.create(giant, { type: "chars" }).chars;
+    tl.fromTo(chars, { yPercent: 140 }, { yPercent: 0, ease: "expo.out", duration: 0.12, stagger: { amount: 0.05 } }, 0.07);
+    tl.to(chars, { yPercent: -140, ease: "expo.in", duration: 0.045, stagger: { amount: 0.02 } }, 0.215);
+  }
+
+  for (const it of q.items) {
+    const a = it.a, len = it.b - it.a;
+    if (it.word) {
+      const chars = SplitText.create(it.el, { type: "chars" }).chars;
+      tl.set(it.el, { autoAlpha: 1 }, a);
+      tl.fromTo(chars, { yPercent: 140 }, { yPercent: 0, ease: "expo.out", duration: len * 0.4, stagger: { amount: len * 0.12 } }, a);
+      tl.to(chars, { yPercent: -140, ease: "expo.in", duration: len * 0.24, stagger: { amount: len * 0.06 } }, a + len * 0.74);
+      tl.set(it.el, { autoAlpha: 0 }, it.b);
+      continue;
+    }
+    const media = it.el.querySelector(".fly__m > *");
+    const caps = it.el.querySelectorAll("figcaption span");
+    // the position is worked out from the screen as it is now, so a resize never leaves a piece behind
+    const m = { v: 0 };
+    const draw = () => {
+      const d = q.sh * 0.07 * (1 - 2 * m.v); // drifts upward while it is on screen
+      const o = spot(it, q, d);
+      gsap.set(it.el, { xPercent: -50, yPercent: -50, x: o.x, y: o.y, rotation: o.rot });
+    };
+    draw(); redraws.push(draw);
+    tl.set(it.el, { autoAlpha: 1 }, a);
+    tl.to(m, { v: 1, duration: len, onUpdate: draw }, a);
+    tl.fromTo(it.el, { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "power4.out", duration: len * 0.34 }, a);
+    if (media) tl.fromTo(media, { scale: 1.32 }, { scale: 1, ease: "power3.out", duration: len * 0.6 }, a);
+    if (caps.length) tl.fromTo(caps, { yPercent: 110 }, { yPercent: 0, ease: "expo.out", duration: len * 0.2, stagger: len * 0.03 }, a + len * 0.16);
+    tl.to(it.el, { clipPath: "inset(0% 0% 100% 0%)", ease: "power3.in", duration: len * 0.22 }, a + len * 0.78);
+    if (media) tl.to(media, { scale: 1.08, ease: "power3.in", duration: len * 0.22 }, a + len * 0.78);
+    tl.set(it.el, { autoAlpha: 0 }, it.b);
+  }
+
+  q.tl = tl;
+  ScrollTrigger.create({
+    trigger: q.el, start: "top top", end: "bottom bottom",
+    animation: tl, scrub: fine ? 0.7 : 1,
+  });
+}
+
+// the ramps (CSS variables) follow the smoothed timeline, not the raw scroll
+function updateSeq(s: Seq) {
+  const p = s.tl ? s.tl.progress() : 0;
   if (Math.abs(p - s.p) < 0.0003) return;
   s.p = p;
   s.el.style.setProperty("--p", p.toFixed(4));
   for (const r of s.ramps) {
     const val = smooth(r.a, r.b, p).toFixed(3);
     if (val !== r.last) { s.el.style.setProperty("--" + r.name, val); r.last = val; }
-  }
-  if (reduce) return;
-  for (const it of s.items) {
-    const t = (p - it.a) / (it.b - it.a);
-    if (t <= 0 || t >= 1) {
-      if (it.vis !== false) { it.el.style.visibility = "hidden"; it.el.style.willChange = "auto"; it.vis = false; }
-      continue;
-    }
-    if (it.vis !== true) { it.el.style.visibility = "visible"; it.el.style.willChange = "transform, opacity"; it.vis = true; }
-    place(it, t, s);
   }
 }
 
@@ -376,7 +421,7 @@ function frame(time: number) {
       for (const s of seqs) { s.el.style.setProperty("--v", sv); s.el.style.setProperty("--av", sav); }
       lastV = sv; lastAv = sav;
     }
-    for (const s of seqs) updateSeq(s, y);
+    for (const s of seqs) updateSeq(s);
   }
 
   if (moved) {
@@ -401,16 +446,20 @@ function frame(time: number) {
     const by = clamp(py, pvH * 0.32 + PAD, Math.max(pvH * 0.32 + PAD, vh - pvH * 0.68 - PAD));
     pv.style.transform = `translate3d(${bx.toFixed(1)}px,${by.toFixed(1)}px,0) rotate(${tilt.toFixed(2)}deg)`;
   }
-  requestAnimationFrame(frame);
 }
 
+let built = false;
 measure();
+if (!reduce) { seqs.forEach(build); built = true; }
 updateTheme();
 let resizeTimer = 0;
 window.addEventListener("resize", () => { window.clearTimeout(resizeTimer); resizeTimer = window.setTimeout(measure, 80); });
 window.addEventListener("load", measure);
 document.fonts?.ready.then(measure);
-requestAnimationFrame(frame);
+// one clock: GSAP's ticker drives Lenis, ScrollTrigger and everything else here
+if (lenis) lenis.on("scroll", ScrollTrigger.update);
+gsap.ticker.lagSmoothing(0);
+gsap.ticker.add((t) => frame(t * 1000));
 
 /* ---------- contact form ---------- */
 const form = document.querySelector<HTMLFormElement>("form[data-endpoint]");

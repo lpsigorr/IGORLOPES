@@ -51,11 +51,11 @@ const wordTimes = [[.3, .41], [.41, .52], [.52, .63], [.63, .74], [.74, .85]];
     <div class="field">
       {fly.map((it, n) => (
         <figure class="fly" style={`--w:${it.w}`} data-fly={it.f} data-m={it.m === 0 ? "0" : undefined}>
-          {it.video ? (
+          <div class="fly__m">{it.video ? (
             <video data-autoplay muted loop playsinline preload="metadata" width="1280" height="720" poster={media(it.poster!)} aria-hidden="true"><source src={media(it.video)} type="video/mp4"></video>
           ) : (
             <Pic src={it.src!} alt={it.alt!} sizes={`(max-width: 699px) ${Math.round(it.w * 1.9)}vw, ${it.w}vw`} eager={n < 4} />
-          )}
+          )}</div>
           <figcaption><span>{it.name}</span><span>{tx(it.what, lang)}</span></figcaption>
         </figure>
       ))}
