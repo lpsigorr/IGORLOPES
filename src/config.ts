@@ -16,7 +16,7 @@ export const SITE = {
   formEndpoint: "https://formspree.io/f/maeoelpk",
 };
 
-/** Builds a link that works with the GitHub Pages base path. url("/en/work/") -> "/IGORLOPES/en/work/" */
+/** Builds a link that works with the GitHub Pages base path. url("/en/work/") -> "/en/work/" */
 export function url(path = "/"): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   const p = path.startsWith("/") ? path : "/" + path;
