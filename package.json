@@ -10,7 +10,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "images": "node tools/images.mjs"
+    "images": "node tools/images.mjs",
+    "deploy": "astro build && npx --yes gh-pages -d dist --dotfiles"
   },
   "dependencies": {
     "astro": "^7.4.12",

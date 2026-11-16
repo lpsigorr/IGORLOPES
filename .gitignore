@@ -5,3 +5,4 @@ dist/
 
 # old versions set aside during an update
 _backup*/
+_to_delete/
