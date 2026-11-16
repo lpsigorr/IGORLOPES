@@ -14,6 +14,7 @@ const lang = Astro.params.lang as Lang;
     <p class="contact__aside">{SITE.fullName}<br>{t(lang, "hero.title")}, {t(lang, "city")}</p>
     <form method="post" action={SITE.formEndpoint || undefined} data-endpoint={SITE.formEndpoint}
       data-sending={t(lang, "status.sending")} data-ok={t(lang, "status.ok")} data-error={t(lang, "status.error")} data-notready={t(lang, "status.notready")}>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" hidden>
       <div class="ff"><label for="f-name">{t(lang, "f.name")}</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
       <div class="ff"><label for="f-email">{t(lang, "f.email")}</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
       <div class="ff"><label for="f-company">{t(lang, "f.company")}</label><input id="f-company" name="company" type="text" autocomplete="organization"></div>

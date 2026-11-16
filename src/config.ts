@@ -10,8 +10,10 @@ export const SITE = {
   title: "Creative Technologist",
   city: "Brussels",
   github: "https://github.com/lpsigorr",
-  // Where the contact form sends to (for example a Formspree URL). Empty = form shows "not connected yet".
-  formEndpoint: "",
+  linkedin: "https://www.linkedin.com/in/lpsigorr/",
+  instagram: "https://www.instagram.com/lpsigorr/",
+  // Where the contact form sends to (Formspree). Empty = the form says it is not connected yet.
+  formEndpoint: "https://formspree.io/f/maeoelpk",
 };
 
 /** Builds a link that works with the GitHub Pages base path. url("/en/work/") -> "/IGORLOPES/en/work/" */

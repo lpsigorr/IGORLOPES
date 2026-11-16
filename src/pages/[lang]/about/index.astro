@@ -17,13 +17,13 @@ const facts: { k: UIKey; v: UIKey | string }[] = [
 ];
 const val = (v: UIKey | string) => (v.startsWith("about.v.") ? t(lang, v as UIKey) : v);
 ---
-<Base lang={lang} path="/about/" title={t(lang, "about.title")} description={t(lang, "about.short1")} image="igor/portrait.webp">
+<Base lang={lang} path="/about/" title={t(lang, "about.title")} description={t(lang, "about.short1")} image="igor/studio.webp">
   <header class="page-head" data-theme="light">
     <h1>{t(lang, "about.title")}</h1>
   </header>
   <section class="about" data-theme="light">
     <figure class="about__photo" data-reveal>
-      <Pic src="igor/cutout.webp" alt={SITE.fullName} sizes="(max-width: 899px) 60vw, 26vw" priority />
+      <Pic src="igor/studio.webp" alt={SITE.fullName} sizes="(max-width: 899px) 100vw, 40vw" priority />
     </figure>
     <div class="about__text">
       <p class="about__lead" data-reveal>{t(lang, "about.short1")}</p>

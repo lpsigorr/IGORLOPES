@@ -19,7 +19,7 @@ interface Props {
 const { lang, path, title, description = t(lang, "meta.home"), image, footer = true } = Astro.props;
 const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | ${SITE.title}`;
 const canonical = new URL(url(`/${lang}${path}`), Astro.site).href;
-const ogImage = image ? new URL(url("/media/" + image), Astro.site).href : undefined;
+const ogImage = new URL(url("/media/" + (image || "star/loop-poster.webp")), Astro.site).href; // every page has a picture when shared
 ---
 <!doctype html>
 <html lang={lang} data-theme="light">
@@ -34,7 +34,8 @@ const ogImage = image ? new URL(url("/media/" + image), Astro.site).href : undef
   <meta property="og:description" content={description}>
   <meta property="og:type" content="website">
   <meta property="og:url" content={canonical}>
-  {ogImage && <meta property="og:image" content={ogImage}>}
+  <meta property="og:image" content={ogImage}>
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0C7C59">
   <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml">
   <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin>

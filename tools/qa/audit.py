@@ -8,6 +8,8 @@ SLUGS = ['star','sparx','number-one','prolux','ehb-arcade','world-without-bees']
 PAGES = ['/', '/work/', '/lab/', '/about/', '/contact/'] + [f'/work/{s}/' for s in SLUGS]
 VIEWS = [(320,568),(360,740),(390,844),(430,932),(844,390),(768,1024),(1024,768),(1280,720),(1366,768),(1440,900),(1920,1080),(2560,1440)]
 LANGS = ['en','fr','nl']
+import os
+RM = os.environ.get('RM')  # RM=1: test with reduced motion switched on
 flt = sys.argv[1] if len(sys.argv) > 1 else ''
 JS = r"""
 () => {
@@ -83,7 +85,7 @@ async def main():
         async def one(w,h):
           async with sem:
               touch = w < 760 or (w==844)
-              ctx = await b.new_context(viewport={'width':w,'height':h}, has_touch=touch, is_mobile=touch, device_scale_factor=1)
+              ctx = await b.new_context(viewport={'width':w,'height':h}, has_touch=touch, is_mobile=touch, device_scale_factor=1, reduced_motion='reduce' if RM else 'no-preference')
               pg = await ctx.new_page()
               errs = []
               pg.on('console', lambda m: errs.append('console: '+m.text[:160]) if m.type=='error' else None)

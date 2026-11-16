@@ -1,15 +1,35 @@
 ---
+// Shown for any address that does not exist. It reads the language from the address (/fr/..., /nl/...).
 import "../styles/base.css";
 import "../styles/site.css";
 import { url } from "../config";
 ---
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Not found | Igor Lopes</title><link rel="icon" href={url("/favicon.svg")}></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Not found | Igor Lopes</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0C7C59">
+  <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml">
+</head>
 <body>
   <main class="lost">
-    <h1>Nothing here.</h1>
-    <p><a href={url("/en/")}>Back home</a></p>
+    <h1 id="lost-title">Nothing here.</h1>
+    <p><a id="lost-home" href={url("/en/")}>Back home</a></p>
   </main>
+  <script is:inline define:vars={{ base: url("/") }}>
+    var words = { fr: ["Rien ici.", "Retour à l'accueil", "Page introuvable"], nl: ["Hier is niets.", "Terug naar home", "Pagina niet gevonden"] };
+    var lang = (location.pathname.slice(base.length).split("/")[0] || "").toLowerCase();
+    if (!words[lang]) { var l = (navigator.language || "en").slice(0, 2).toLowerCase(); lang = words[l] ? l : "en"; }
+    if (words[lang]) {
+      document.documentElement.lang = lang;
+      document.getElementById("lost-title").textContent = words[lang][0];
+      document.getElementById("lost-home").textContent = words[lang][1];
+      document.title = words[lang][2] + " | Igor Lopes";
+    }
+    document.getElementById("lost-home").href = base + lang + "/";
+  </script>
 </body>
 </html>

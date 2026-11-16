@@ -114,12 +114,12 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
           <div class="shots__grid">
             {b.items.map((sc) => sc.frame === "phone" ? (
               <figure class="phone" data-reveal>
-                <Pic src={sc.src} alt={tx(sc.alt, lang)} sizes="(max-width: 599px) 60vw, 240px" />
+                <Pic src={sc.src} alt={tx(sc.alt, lang)} sizes="(max-width: 599px) 60vw, 25vw" />
               </figure>
             ) : (
               <figure class="browser" data-reveal>
                 <div class="browser__bar" aria-hidden="true"><i></i><i></i><i></i>{sc.url && <span>{sc.url}</span>}</div>
-                <Pic src={sc.src} alt={tx(sc.alt, lang)} />
+                <Pic src={sc.src} alt={tx(sc.alt, lang)} sizes={{ one: "(max-width: 1100px) 100vw, 1100px", two: "(max-width: 599px) 100vw, 50vw", three: "(max-width: 599px) 100vw, (max-width: 899px) 50vw, 33vw", pair: "(max-width: 599px) 100vw, 75vw" }[b.layout]} />
               </figure>
             ))}
           </div>

@@ -298,7 +298,11 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "One machine: wood, wires and a game.", fr: "Une machine : du bois, des câbles et un jeu.", nl: "Eén machine: hout, kabels en een spel." },
         text: { en: "A full arcade machine that brings craft, electronics and software together, with a game made for it. The joystick and buttons answer the game the way a classic cabinet should.", fr: "Une borne d'arcade complète qui réunit fabrication, électronique et logiciel, avec un jeu créé pour elle. Le joystick et les boutons répondent au jeu comme sur une vraie borne.", nl: "Een volledige arcadekast die vakmanschap, elektronica en software samenbrengt, met een spel dat ervoor gemaakt is. De joystick en knoppen reageren zoals bij een klassieke kast." } },
-      { type: "images", layout: "wide", items: [ i("arcade/cabinet-side.webp", { en: "The cabinet, side", fr: "La borne, de côté", nl: "De kast, zijaanzicht" }) ] },
+      { type: "images", layout: "wide", items: [ i("arcade/detail.webp", { en: "The stencilled lettering on the cabinet", fr: "Le lettrage au pochoir sur la borne", nl: "De gesjabloneerde belettering op de kast" }) ] },
+      { type: "images", layout: "two", items: [
+        i("arcade/front.webp", { en: "The cabinet, front", fr: "La borne, de face", nl: "De kast, vooraanzicht" }),
+        i("arcade/cabinet-side.webp", { en: "The cabinet, side", fr: "La borne, de côté", nl: "De kast, zijaanzicht" }),
+      ] },
     ],
     end: { en: "A working machine, ready to play.", fr: "Une machine qui fonctionne, prête à jouer.", nl: "Een werkende machine, klaar om te spelen." },
   },

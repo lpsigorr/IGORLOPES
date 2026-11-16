@@ -42,7 +42,7 @@ document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
 
 /* ---------- sequences ---------- */
 type Fly = { el: HTMLElement; word: boolean; x: number; y: number; r: number; a: number; b: number; w: number; h: number; vis: boolean | null };
-type Seq = { el: HTMLElement; stage: HTMLElement | null; sw: number; sh: number; ramps: { name: string; a: number; b: number; last: string }[]; items: Fly[]; p: number; top: number; h: number };
+type Seq = { el: HTMLElement; stage: HTMLElement | null; sw: number; sh: number; wordW: number; wordH: number; ramps: { name: string; a: number; b: number; last: string }[]; items: Fly[]; p: number; top: number; h: number };
 
 // the width without the scrollbar, so nothing is measured against space that is not there
 let vw = root.clientWidth, vh = window.innerHeight;
@@ -59,7 +59,7 @@ const seqs: Seq[] = Array.from(document.querySelectorAll<HTMLElement>("[data-seq
     });
     return { el: it, word: !!o.word, x: o.x || 0, y: o.y || 0, r: o.r || 0, a: o.a || 0, b: isNaN(o.b) ? 1 : o.b, w: 0, h: 0, vis: null } as Fly;
   });
-  return { el, stage: el.querySelector<HTMLElement>(".stage"), sw: 0, sh: 0, ramps, items, p: -1, top: 0, h: 1 };
+  return { el, stage: el.querySelector<HTMLElement>(".stage"), sw: 0, sh: 0, wordW: 0, wordH: 0, ramps, items, p: -1, top: 0, h: 1 };
 });
 
 // Text that must span the screen exactly at its widest ([data-fit="<font-stretch at its widest>"]).
@@ -84,6 +84,8 @@ function measure() {
     s.h = Math.max(1, s.el.offsetHeight - vh);
     s.sw = s.stage?.offsetWidth || vw; s.sh = s.stage?.offsetHeight || vh;
     s.items.forEach((it) => { it.w = it.el.offsetWidth; it.h = it.el.offsetHeight; });
+    const words = s.items.filter((it) => it.word);
+    s.wordW = Math.max(0, ...words.map((it) => it.w)); s.wordH = Math.max(0, ...words.map((it) => it.h));
     s.p = -1;
   });
   setupWiden();
@@ -93,7 +95,8 @@ function measure() {
 /* A piece of work comes out of the middle of the screen, grows to its real size where it belongs,
    rests there, then lets go. It is kept whole on screen the entire time. */
 const PAD = 12;
-function place(it: Fly, t: number, sw: number, sh: number) {
+function place(it: Fly, t: number, q: Seq) {
+  const sw = q.sw, sh = q.sh;
   if (it.word) {
     // a word of the sequence: rises into the middle, holds, leaves upward
     const y = (1 - easeOut(clamp(t / 0.3, 0, 1))) * it.h * 0.45 - smooth(0.78, 1, t) * it.h * 0.35;
@@ -110,7 +113,14 @@ function place(it: Fly, t: number, sw: number, sh: number) {
   const sin = Math.abs(Math.sin((rot * Math.PI) / 180)), cos = Math.cos((rot * Math.PI) / 180);
   const bw = (it.w * cos + it.h * sin) * s, bh = (it.h * cos + it.w * sin) * s;
   const roomX = Math.max(0, sw / 2 - bw / 2 - PAD), roomY = Math.max(0, sh / 2 - bh / 2 - PAD);
-  const x = clamp(it.x * sw * 0.5 * k, -roomX, roomX), y = clamp(it.y * sh * 0.5 * k, -roomY, roomY);
+  const x = clamp(it.x * sw * 0.5 * k, -roomX, roomX);
+  let y = it.y * sh * 0.5 * k;
+  // the word in the middle stays readable: a piece that would cross it sits above or below it instead
+  if (q.wordH && Math.abs(x) - bw / 2 < q.wordW / 2) {
+    const clear = q.wordH / 2 + bh / 2 + PAD;
+    if (Math.abs(y) < clear) y = (it.y >= 0 ? 1 : -1) * clear;
+  }
+  y = clamp(y, -roomY, roomY);
   it.el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(4)})`;
   it.el.style.opacity = (smooth(0, 0.1, t) * (1 - smooth(0.82, 1, t))).toFixed(3);
 }
@@ -132,7 +142,7 @@ function updateSeq(s: Seq, scrollY: number) {
       continue;
     }
     if (it.vis !== true) { it.el.style.visibility = "visible"; it.el.style.willChange = "transform, opacity"; it.vis = true; }
-    place(it, t, s.sw, s.sh);
+    place(it, t, s);
   }
 }
 

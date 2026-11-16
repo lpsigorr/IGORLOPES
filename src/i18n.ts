@@ -142,9 +142,9 @@ const ui = {
   "about.k.tools": { en: "Tools", fr: "Outils", nl: "Tools" },
   "about.k.languages": { en: "Languages", fr: "Langues", nl: "Talen" },
   "about.v.languages": {
-    en: "Portuguese, French, Dutch, English. Basic Japanese.",
-    fr: "Portugais, français, néerlandais, anglais. Notions de japonais.",
-    nl: "Portugees, Frans, Nederlands, Engels. Basiskennis Japans.",
+    en: "Portuguese, French, Dutch, English.",
+    fr: "Portugais, français, néerlandais, anglais.",
+    nl: "Portugees, Frans, Nederlands, Engels.",
   },
   "about.k.experience": { en: "Experience", fr: "Expérience", nl: "Ervaring" },
   "about.v.experience": {

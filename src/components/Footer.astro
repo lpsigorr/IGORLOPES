@@ -17,7 +17,9 @@ const { lang, cta = true } = Astro.props;
       <a href={url(`/${lang}/work/`)}>{t(lang, "nav.work")}</a>
       <a href={url(`/${lang}/lab/`)}>{t(lang, "nav.lab")}</a>
       <a href={url(`/${lang}/about/`)}>{t(lang, "nav.about")}</a>
-      <a href={SITE.github} rel="me">GitHub</a>
+      <a href={SITE.linkedin} rel="me noopener">LinkedIn</a>
+      <a href={SITE.instagram} rel="me noopener">Instagram</a>
+      <a href={SITE.github} rel="me noopener">GitHub</a>
       <a href="#main">{t(lang, "footer.top")}</a>
     </span>
   </div>

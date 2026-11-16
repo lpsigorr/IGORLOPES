@@ -247,7 +247,7 @@ html[data-theme="dark"] .top { color: var(--cream); }
   .films video { flex: none; max-width: calc(var(--fit) * var(--ar)); }
 }
 
-.case__end { font-family: var(--display); font-weight: 900; font-stretch: 58%; text-transform: uppercase; font-size: clamp(2.8rem, min(8vw, 18svh), 9rem); line-height: .86; max-width: 17ch; text-wrap: balance; }
+.case__end { font-family: var(--display); font-weight: 900; font-stretch: 58%; text-transform: uppercase; font-size: clamp(2.8rem, min(8vw, 18svh), 9rem); line-height: .86; max-width: 22ch; text-wrap: balance; }
 .case__foot { margin-top: -10vh; font-size: .85rem; opacity: .8; max-width: 60ch; }
 
 /* the next project: its cover as a small print, its name large */
@@ -266,12 +266,12 @@ html[data-theme="dark"] .top { color: var(--cream); }
 }
 
 /* Screenshots of the real sites, framed as a browser window or a phone.
-   Shown at their real size at most (800 px wide), so they stay sharp. */
+   They are captured at twice the density and shown at 1100 px wide at most, so they stay sharp. */
 .shots__grid { display: grid; gap: var(--gap); align-items: start; }
-.shots--one { max-width: min(800px, calc((var(--fit) - 2rem) * 1.6)); }
-.shots--two { max-width: calc(1600px + var(--gap)); }
-.shots--three { max-width: calc(2400px + 2 * var(--gap)); }
-.shots--pair { max-width: min(1056px, calc(var(--fit) * 1.9)); }
+.shots--one { max-width: min(1100px, calc((var(--fit) - 2rem) * 1.6)); }
+.shots--two { max-width: calc(2200px + var(--gap)); }
+.shots--three { max-width: calc(3300px + 2 * var(--gap)); }
+.shots--pair { max-width: min(1424px, calc(var(--fit) * 1.9)); }
 .shots--one .shots__grid { grid-template-columns: minmax(0, 1fr); }
 .shots--two .shots__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .shots--three .shots__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -285,7 +285,7 @@ html[data-theme="dark"] .top { color: var(--cream); }
 .phone img { display: block; width: 100%; height: auto; border-radius: 9% / 4.2%; }
 @media (max-width: 899px) {
   .shots--three .shots__grid { grid-template-columns: 1fr 1fr; }
-  .shots--pair { max-width: min(1056px, calc(var(--fit) * 1.38)); }
+  .shots--pair { max-width: min(1424px, calc(var(--fit) * 1.38)); }
   .shots--pair .shots__grid { grid-template-columns: 1fr 2.2fr; }
 }
 @media (max-width: 599px) {
@@ -298,8 +298,10 @@ html[data-theme="dark"] .top { color: var(--cream); }
 
 /* ---------- about ---------- */
 .about { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 1.6rem; padding: 0 var(--side) 14vh; background: var(--bone); }
-.about__photo { grid-column: 1 / span 5; position: relative; width: min(100%, calc(var(--fit) * .8)); background: var(--accent); aspect-ratio: 4 / 5; overflow: hidden; }
-.about__photo img { position: absolute; left: 50%; bottom: 0; translate: -50% 0; height: 94%; width: auto; max-width: none; }
+/* the portrait is black and white; colour comes back on hover */
+.about__photo { grid-column: 1 / span 5; width: min(100%, calc(var(--fit) * .8)); }
+.about__photo img { display: block; width: 100%; height: auto; filter: grayscale(1) contrast(1.05); transition: filter .4s var(--ease); }
+.about__photo:hover img { filter: none; }
 .about__text { grid-column: 7 / span 6; display: grid; gap: 3rem; align-content: start; }
 .about__text .about__lead { font-family: var(--display); font-weight: 800; font-stretch: 64%; text-transform: uppercase; font-size: clamp(2rem, 4vw, 4.2rem); line-height: .92; }
 .about__text p { max-width: 46ch; font-size: 1.05rem; }
@@ -324,6 +326,7 @@ html[data-theme="dark"] .top { color: var(--cream); }
 
 /* ---------- 404 ---------- */
 .lost { min-height: 100vh; display: grid; place-content: center; text-align: center; gap: 2rem; background: var(--accent); color: var(--cream); padding: var(--side); }
+.lost a { display: inline-block; padding: .6rem; font-weight: 600; text-underline-offset: .25em; }
 .lost h1 { font-family: var(--display); font-weight: 900; font-stretch: 55%; text-transform: uppercase; font-size: clamp(4rem, 14vw, 14rem); line-height: .8; }
 
 /* ---------- cursor: always visible ----------
