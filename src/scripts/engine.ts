@@ -430,3 +430,9 @@ if (form) {
     } catch { say("error"); }
   });
 }
+
+// Remember a language picked by hand, so the root page stops sending French and Dutch browsers away.
+document.addEventListener("click", (e) => {
+  const a = (e.target as Element | null)?.closest?.("[data-lang-pick]");
+  if (a) try { localStorage.setItem("lang", a.getAttribute("data-lang-pick") || "en"); } catch {}
+});

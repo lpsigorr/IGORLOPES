@@ -3,7 +3,7 @@ Reports: console errors, failed requests, horizontal overflow, cropped / oversiz
 display text leaving the screen, tiny text, small tap targets."""
 import sys, asyncio, json
 from playwright.async_api import async_playwright
-B = 'http://localhost:4321/IGORLOPES'
+B = 'http://localhost:4321'
 SLUGS = ['star','sparx','number-one','prolux','ehb-arcade','world-without-bees','eregum']
 PAGES = ['/', '/work/', '/lab/', '/about/', '/contact/'] + [f'/work/{s}/' for s in SLUGS]
 VIEWS = [(320,568),(360,740),(390,844),(430,932),(844,390),(768,1024),(1024,768),(1280,720),(1366,768),(1440,900),(1920,1080),(2560,1440)]
@@ -94,7 +94,7 @@ async def main():
               pg.on('response', lambda r: errs.append(f'http {r.status}: '+r.url.split('IGORLOPES')[-1]) if r.status>=400 else None)
               for lang in LANGS:
                   for pa in PAGES:
-                      u = f'/{lang}{pa}'
+                      u = '/' if (lang == 'en' and pa == '/') else f'/{lang}{pa}'
                       if flt and flt not in u and flt not in f'{w}x{h}': continue
                       if lang != 'en' and (w,h) not in [(320,568),(390,844),(1024,768),(1440,900)]: continue
                       errs.clear()

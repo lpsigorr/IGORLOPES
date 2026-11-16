@@ -1,20 +1,17 @@
 ---
-// The root sends visitors to their language: French or Dutch browsers go to /fr/ or /nl/, everyone else to /en/.
+// The root is the English home. A French or Dutch browser that has never picked a language is sent to /fr/ or /nl/.
+import Base from "../layouts/Base.astro";
+import Home from "../components/Home.astro";
 import { url } from "../config";
-const en = url("/en/");
 ---
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Igor Lopes</title>
-  <meta http-equiv="refresh" content={`0; url=${en}`}>
-  <link rel="canonical" href={en}>
-  <script is:inline define:vars={{ base: url("/") }}>
-    var l = (navigator.languages && navigator.languages[0] || navigator.language || "en").slice(0, 2).toLowerCase();
-    location.replace(base + (l === "fr" || l === "nl" ? l : "en") + "/");
-  </script>
-</head>
-<body><a href={en}>Igor Lopes</a></body>
-</html>
+<Base lang="en" path="/" image="star/loop-poster.webp">
+<script slot="head" is:inline define:vars={{ base: url("/") }}>
+  try {
+    if (!localStorage.getItem("lang")) {
+      var l = (navigator.languages && navigator.languages[0] || navigator.language || "en").slice(0, 2).toLowerCase();
+      if (l === "fr" || l === "nl") location.replace(base + l + "/");
+    }
+  } catch (e) {}
+</script>
+  <Home lang="en" />
+</Base>

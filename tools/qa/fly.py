@@ -14,7 +14,7 @@ async def main():
         b=await p.chromium.launch(executable_path='/usr/bin/google-chrome')
         for w,h in VIEWS:
             ctx=await b.new_context(viewport={'width':w,'height':h},has_touch=w<760,is_mobile=w<760)
-            pg=await ctx.new_page(); await pg.goto('http://localhost:4321/IGORLOPES/en/'); await pg.wait_for_timeout(900)
+            pg=await ctx.new_page(); await pg.goto('http://localhost:4321/en/'); await pg.wait_for_timeout(900)
             bad=set(); mx=0
             for k in range(0,101):
                 await pg.evaluate("(fr)=>{const s=document.querySelector('[data-seq]');const top=s.getBoundingClientRect().top+scrollY;window.scrollTo(0, top+(s.offsetHeight-innerHeight)*fr)}",k/100)

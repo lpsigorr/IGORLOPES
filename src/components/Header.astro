@@ -16,7 +16,7 @@ const here = (p: string) => path.startsWith(p) ? "page" : undefined;
   <div class="top__tools">
     <div class="top__lang" role="group" aria-label={t(lang, "nav.lang")}>
       {LANGS.map((l) => (
-        <a href={url(`/${l}${path}`)} hreflang={l} lang={l} aria-current={l === lang ? "true" : "false"}>{LANG_NAMES[l]}</a>
+        <a href={url(`/${l}${path}`)} data-lang-pick={l} hreflang={l} lang={l} aria-current={l === lang ? "true" : "false"}>{LANG_NAMES[l]}</a>
       ))}
     </div>
     <button class="top__menu" type="button" aria-expanded="false" aria-controls="nav">{t(lang, "nav.menu")}</button>

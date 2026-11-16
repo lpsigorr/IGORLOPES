@@ -20,7 +20,8 @@ export const SITE = {
 export function url(path = "/"): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   const p = path.startsWith("/") ? path : "/" + path;
-  return base + p;
+  // The English home lives at the root: "/en/" -> "/".
+  return base + (p === `/${DEFAULT_LANG}/` ? "/" : p);
 }
 
 /** Path to a file in public/media. media("star/poster.webp") */

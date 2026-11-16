@@ -28,6 +28,7 @@ const ogImage = new URL(url("/media/" + (image || "star/loop-poster.webp")), Ast
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{fullTitle}</title>
   <meta name="description" content={description}>
+  <slot name="head" />
   <link rel="canonical" href={canonical}>
   {LANGS.map((l) => <link rel="alternate" hreflang={l} href={new URL(url(`/${l}${path}`), Astro.site).href}>)}
   <meta property="og:title" content={fullTitle}>
