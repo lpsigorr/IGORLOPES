@@ -4,7 +4,7 @@ display text leaving the screen, tiny text, small tap targets."""
 import sys, asyncio, json
 from playwright.async_api import async_playwright
 B = 'http://localhost:4321'
-SLUGS = ['star','sparx','number-one','prolux','ehb-arcade','world-without-bees','eregum']
+SLUGS = ['star','sparx','number-one','prolux','ehb-arcade','world-without-bees','eregum','silo','mordida']
 PAGES = ['/', '/work/', '/lab/', '/about/', '/contact/'] + [f'/work/{s}/' for s in SLUGS]
 VIEWS = [(320,568),(360,740),(390,844),(430,932),(844,390),(768,1024),(1024,768),(1280,720),(1366,768),(1440,900),(1920,1080),(2560,1440)]
 LANGS = ['en','fr','nl']

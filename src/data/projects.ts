@@ -25,6 +25,7 @@ export type Project = {
   where: L; // one line: what it is
   roles: L; // short list for the index
   cover?: Img; // image for lists and previews (none = a typographic tile)
+  heroWhole?: boolean; // the opening picture is never cropped to fill the screen (boards with text on them)
   coverBg?: string; // the cover's own background colour: it is shown whole on it, in the lab grid and at the top of its page
   preview?: { video?: string; image?: string; stat?: { num: string; label: L } };
   // Case study page
@@ -339,6 +340,63 @@ export const projects: Project[] = [
   },
 
   // Lab
+  { slug: "mordida", name: "Mordida Records", kind: "lab", heroWhole: true,
+    where: { en: "A small-batch hot sauce and chili crisp brand, dressed like a record shop.", fr: "Une marque de sauce piquante et de chili crisp en petites séries, habillée comme un disquaire.", nl: "Een merk van hete saus en chili crisp in kleine oplages, gekleed als een platenzaak." },
+    roles: { en: "Identity, packaging", fr: "Identité, emballage", nl: "Identiteit, verpakking" }, cover: i("lab/mordida.webp", { en: "The mordida wordmark, Flavor. On repeat., and the cobalt record emblem", fr: "Le logotype mordida, Flavor. On repeat., et l'emblème disque cobalt", nl: "Het mordida-woordmerk, Flavor. On repeat., en het kobaltblauwe platenembleem" }), coverBg: "#302016",
+    hero: { image: i("lab/mordida.webp", { en: "The mordida wordmark, Flavor. On repeat., and the cobalt record emblem", fr: "Le logotype mordida, Flavor. On repeat., et l'emblème disque cobalt", nl: "Het mordida-woordmerk, Flavor. On repeat., en het kobaltblauwe platenembleem" }) },
+    tag: { en: "Brand concept and identity system", fr: "Concept de marque et système d'identité", nl: "Merkconcept en identiteitssysteem" },
+    credits: [
+      { role: { en: "Concept and name", fr: "Concept et nom", nl: "Concept en naam" } },
+      { role: { en: "Wordmark and record emblem", fr: "Logotype et emblème disque", nl: "Woordmerk en platenembleem" } },
+      { role: { en: "Palette and typography", fr: "Palette et typographie", nl: "Palet en typografie" } },
+      { role: { en: "Labels and tear seals", fr: "Étiquettes et scellés", nl: "Etiketten en scheurzegels" } },
+      { role: { en: "Mailer and e-commerce hero", fr: "Boîte d'envoi et visuel e-commerce", nl: "Verzenddoos en e-commerce-hero" } },
+    ],
+    blocks: [
+      { type: "lead",
+        line: { en: "A record shop for hot sauce.", fr: "Un disquaire pour la sauce piquante.", nl: "Een platenzaak voor hete saus." },
+        text: { en: "Mordida, Spanish for bite, is a small-batch brand of fermented hot sauce and roasted chili crisp. It turns away from macho novelty sauces and sterile wellness jars alike, and borrows the ritual, the liner-note detail and the collectible energy of a vintage record shop instead. Every flavour is a release, and every jar is made to stay out on the table and get passed around.", fr: "Mordida, « morsure » en espagnol, est une marque de sauce piquante fermentée et de chili crisp grillé, en petites séries. Elle tourne le dos autant aux sauces gadget au ton macho qu'aux bocaux bien-être aseptisés, et emprunte plutôt le rituel, le détail des notes de pochette et l'esprit de collection d'un disquaire vintage. Chaque saveur est une sortie, et chaque pot est fait pour rester sur la table et passer de main en main.", nl: "Mordida, Spaans voor beet, is een merk van gefermenteerde hete saus en geroosterde chili crisp in kleine oplages. Het keert zich af van macho gimmicksauzen en van steriele wellnesspotjes, en leent in de plaats het ritueel, de hoesnotities en de verzamelwoede van een vintage platenzaak. Elke smaak is een release, en elk potje is gemaakt om op tafel te blijven staan en rond te gaan." } },
+      { type: "images", layout: "wide", items: [ i("lab/mordida-palette.webp", { en: "The five colours, Cacao, Turmeric, Sleeve, Cobalt and Vermilion, and the type: Fraunces Black Italic, DM Mono and Inter", fr: "Les cinq couleurs, Cacao, Turmeric, Sleeve, Cobalt et Vermilion, et la typographie : Fraunces Black Italic, DM Mono et Inter", nl: "De vijf kleuren, Cacao, Turmeric, Sleeve, Cobalt en Vermilion, en de letters: Fraunces Black Italic, DM Mono en Inter" }) ],
+        caption: { en: "Record-shop warmth with a cobalt interruption. Fraunces Black Italic for the wordmark, DM Mono for the liner notes.", fr: "La chaleur d'un disquaire, interrompue par du cobalt. Fraunces Black Italic pour le logotype, DM Mono pour les notes de pochette.", nl: "De warmte van een platenzaak, onderbroken door kobaltblauw. Fraunces Black Italic voor het woordmerk, DM Mono voor de hoesnotities." } },
+      { type: "images", layout: "wide", items: [ i("lab/mordida-pack.webp", { en: "Side A, Smoked Pineapple Habanero, and Side B, Black Garlic Chili Crisp, with their wrap labels and tear seals", fr: "Face A, Smoked Pineapple Habanero, et face B, Black Garlic Chili Crisp, avec leurs étiquettes et scellés", nl: "Kant A, Smoked Pineapple Habanero, en kant B, Black Garlic Chili Crisp, met hun etiketten en scheurzegels" }) ],
+        caption: { en: "The first pressing: two flavours, two sides. Each label has a track list, a pairing and a five-dot heat meter, closed by a cobalt tear seal.", fr: "Le premier pressage : deux saveurs, deux faces. Chaque étiquette porte une liste des titres, un accord et une jauge de piquant à cinq points, fermée par un scellé cobalt.", nl: "De eerste persing: twee smaken, twee kanten. Elk etiket heeft een tracklist, een combinatie en een hittemeter met vijf bolletjes, afgesloten met een kobaltblauwe scheurzegel." } },
+      { type: "images", layout: "two", items: [
+        i("lab/mordida-bottles.webp", { en: "The hot sauce bottle and the chili crisp jar on a wooden table", fr: "La bouteille de sauce piquante et le pot de chili crisp sur une table en bois", nl: "De fles hete saus en het potje chili crisp op een houten tafel" }),
+        i("lab/mordida-box.webp", { en: "The Double Release mailer, open, with both jars inside", fr: "La boîte Double Release ouverte, avec les deux pots", nl: "De Double Release-verzenddoos, open, met beide potjes" }),
+      ] },
+      { type: "images", layout: "wide", items: [ i("lab/mordida-mailer.webp", { en: "The two-tone mailer, The deep cuts., and the e-commerce hero, Put a little soul on it.", fr: "La boîte d'envoi bicolore, The deep cuts., et le visuel e-commerce, Put a little soul on it.", nl: "De tweekleurige verzenddoos, The deep cuts., en de e-commerce-hero, Put a little soul on it." }) ],
+        caption: { en: "The Double Release mailer and the shop: Fermented heat. Roasted crunch.", fr: "La boîte Double Release et la boutique : Fermented heat. Roasted crunch.", nl: "De Double Release-verzenddoos en de webshop: Fermented heat. Roasted crunch." } },
+    ],
+    end: { en: "Flavour. On repeat.", fr: "La saveur, en boucle.", nl: "Smaak. Op repeat." } },
+  { slug: "silo", name: "Silo", kind: "lab", heroWhole: true,
+    where: { en: "A distraction-free desktop workspace for deep solo work: identity and product concept.", fr: "Un espace de travail sans distraction pour le travail en solo : identité et concept produit.", nl: "Een werkplek zonder afleiding voor diep solowerk: identiteit en productconcept." },
+    roles: { en: "Identity, product", fr: "Identité, produit", nl: "Identiteit, product" }, cover: i("lab/silo-cover.webp", { en: "The Silo symbol and the line A quieter place to work", fr: "Le symbole Silo et la phrase A quieter place to work", nl: "Het Silo-symbool en de zin A quieter place to work" }),
+    hero: { image: i("lab/silo.webp", { en: "The Silo symbol, the line A quieter place to work, and the four colours", fr: "Le symbole Silo, la phrase A quieter place to work et les quatre couleurs", nl: "Het Silo-symbool, de zin A quieter place to work en de vier kleuren" }) },
+    tag: { en: "Brand identity and product concept", fr: "Identité de marque et concept produit", nl: "Merkidentiteit en productconcept" },
+    credits: [
+      { role: { en: "Concept", fr: "Concept", nl: "Concept" } },
+      { role: { en: "Symbol system and app icon", fr: "Système de symboles et icône d'app", nl: "Symboolsysteem en app-icoon" } },
+      { role: { en: "Palette and typography", fr: "Palette et typographie", nl: "Palet en typografie" } },
+      { role: { en: "Desktop interface", fr: "Interface desktop", nl: "Desktopinterface" } },
+      { role: { en: "Stationery", fr: "Papeterie", nl: "Drukwerk" } },
+    ],
+    blocks: [
+      { type: "lead",
+        line: { en: "A quiet room with good light.", fr: "Une pièce calme, avec une bonne lumière.", nl: "Een stille kamer met goed licht." },
+        text: { en: "A desktop workspace for writers, researchers and founders who spend hours in dense PDFs, articles and notes, and turn them into clear writing. Most tools are either sterile spreadsheets or noisy AI workspaces full of notifications. Silo strips the clutter away, so it feels closer to a wooden desk with heavy paper and a sharp pencil.", fr: "Un espace de travail pour les auteurs, chercheurs et fondateurs qui passent des heures dans des PDF denses, des articles et des notes, et en tirent un texte clair. La plupart des outils sont soit des tableurs stériles, soit des espaces IA bruyants, pleins de notifications. Silo retire tout le superflu, pour se rapprocher d'un bureau en bois, d'un papier épais et d'un crayon bien taillé.", nl: "Een werkplek voor schrijvers, onderzoekers en oprichters die urenlang in dichte pdf's, artikels en notities zitten en er heldere tekst van maken. De meeste tools zijn ofwel steriele spreadsheets, ofwel drukke AI-werkplekken vol meldingen. Silo haalt alle ruis weg, zodat het aanvoelt als een houten bureau met dik papier en een scherp potlood." } },
+      { type: "images", layout: "wide", items: [ i("lab/silo-desk.webp", { en: "The Silo workspace on a laptop", fr: "L'espace de travail Silo sur un ordinateur portable", nl: "De Silo-werkplek op een laptop" }) ],
+        caption: { en: "Warm paper tones and soft charcoal instead of harsh black and white, with Focus Blue for the one thing that matters.", fr: "Des tons de papier chaud et un charbon doux au lieu d'un noir et blanc agressif, avec le Focus Blue pour la seule chose qui compte.", nl: "Warme papiertinten en zacht antraciet in plaats van hard zwart-wit, met Focus Blue voor het enige dat telt." } },
+      { type: "images", layout: "two", items: [
+        i("lab/silo-product.webp", { en: "The Silo interface: notes on the left, one note open on the right, a focus session at the bottom", fr: "L'interface Silo : les notes à gauche, une note ouverte à droite, une session de concentration en bas", nl: "De Silo-interface: notities links, één open notitie rechts, een focussessie onderaan" }),
+        i("lab/silo-symbol.webp", { en: "The Silo app icon and the clear space around the symbol", fr: "L'icône d'app Silo et l'espace libre autour du symbole", nl: "Het Silo-app-icoon en de vrije ruimte rond het symbool" }),
+      ], caption: { en: "An aperture motif: a quiet room opening onto clear space.", fr: "Un motif d'ouverture : une pièce calme qui s'ouvre sur un espace dégagé.", nl: "Een diafragmamotief: een stille kamer die opengaat naar vrije ruimte." } },
+      { type: "images", layout: "two", items: [
+        i("lab/silo-type.webp", { en: "Typography: Work in peace, set in Inter", fr: "Typographie : Work in peace, en Inter", nl: "Typografie: Work in peace, in Inter" }),
+        i("lab/silo-pattern.webp", { en: "The symbol repeated as a pattern, and the line Find your quiet", fr: "Le symbole répété en motif, et la phrase Find your quiet", nl: "Het symbool herhaald als patroon, en de zin Find your quiet" }),
+      ], caption: { en: "Inter on a Swiss-inspired grid, with short, calm messages.", fr: "Inter sur une grille d'inspiration suisse, avec des messages courts et calmes.", nl: "Inter op een Zwitsers geïnspireerd raster, met korte, rustige boodschappen." } },
+      { type: "images", layout: "wide", items: [ i("lab/silo-world.webp", { en: "Silo cards and a badge on a charcoal background", fr: "Des cartes Silo et un badge sur fond charbon", nl: "Silo-kaarten en een badge op een antraciet achtergrond" }) ] },
+    ],
+    end: { en: "Less noise. More focus.", fr: "Moins de bruit. Plus de concentration.", nl: "Minder ruis. Meer focus." } },
   { slug: "infinite-corridor", name: "The Infinite Corridor", kind: "lab",
     where: { en: "An endless corridor of doors, each opening onto a small surreal world.", fr: "Un couloir sans fin, dont chaque porte ouvre sur un petit monde surréaliste.", nl: "Een eindeloze gang vol deuren, die elk openen op een kleine surrealistische wereld." },
     roles: { en: "Web", fr: "Web", nl: "Web" }, cover: i("lab/corridor.webp", { en: "The Infinite Corridor", fr: "The Infinite Corridor", nl: "The Infinite Corridor" }), link: { label: "visit", href: "https://lpsigorr.github.io/corridor/" } },

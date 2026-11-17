@@ -175,7 +175,11 @@ html[data-theme="dark"] .top { color: var(--cream); }
 /* The opening picture is shown whole, against the right edge. It fills the screen only on screens of
    roughly its own shape (each page sets that range itself). A film always fills the screen. */
 .reel__media { position: absolute; inset: var(--bar) 0 0 0; width: 100%; height: calc(100% - var(--bar)); object-fit: contain; object-position: 100% 50%; }
-.reel__media--film { inset: 0; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.reel__media { max-width: var(--mw, none); max-height: var(--mh, none); left: auto; }
+/* a board shown whole sits at the top, so the title below it never covers its text */
+.reel--whole .reel__media { object-position: 100% 0; }
+@media (orientation: landscape) { .reel--whole .reel__media { width: 58%; } .reel--band .reel__media { width: min(58%, calc(30svh * var(--ar))); } } /* the title keeps the left side */
+.reel__media--film { max-width: none; max-height: none; inset: 0; height: 100%; object-fit: cover; object-position: 50% 50%; }
 @media (orientation: portrait) { .reel__media { object-position: 50% 24%; } }
 /* a little shade under the menu and under the name, so both read on any picture */
 .reel::before { content: ""; position: absolute; z-index: 1; inset: 0 0 auto 0; height: 9rem; background: linear-gradient(to bottom, rgba(10,10,10,.45), rgba(10,10,10,0)); pointer-events: none; }

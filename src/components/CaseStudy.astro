@@ -20,8 +20,10 @@ const isLight = (hex: string) => {
 };
 // Opening picture: full screen only while that cuts off less than a fifth of it.
 const heroAr = p.hero?.image ? pic(p.hero.image.src).ar : 0;
+// the opening picture is never shown larger than its real pixels
+const heroMax = p.hero?.image && !p.hero?.video ? `--mw:${pic(p.hero.image.src).width}px;--mh:${pic(p.hero.image.src).height}px;--ar:${heroAr.toFixed(3)}` : "";
 const ratio = (n: number) => `${Math.round(n * 1000)}/1000`;
-const heroFill = heroAr
+const heroFill = heroAr && !p.heroWhole
   ? `@media (min-aspect-ratio: ${ratio(heroAr * 0.8)}) and (max-aspect-ratio: ${ratio(heroAr / 0.8)}) { .reel--${p.slug} .reel__media { inset: 0; height: 100%; object-fit: cover; } }`
   : "";
 // A row of pictures: every picture gets the same height. --sum is the row's total width-to-height, --cap the smallest picture height in real pixels.
@@ -37,7 +39,7 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
 ---
 <article class="case">
   {heroFill && <style is:inline set:html={heroFill}></style>}
-  <section class:list={["reel", `reel--${p.slug}`]} style={p.coverBg ? `background:${p.coverBg}` : undefined} data-theme="dark" data-bare aria-label={p.name}>
+  <section class:list={["reel", `reel--${p.slug}`, { "reel--whole": p.heroWhole, "reel--band": p.heroWhole && heroAr > 2 }]} style={[p.coverBg ? `background:${p.coverBg}` : "", heroMax].filter(Boolean).join(";") || undefined} data-theme="dark" data-bare aria-label={p.name}>
     {p.hero?.video ? (
       <video class="reel__media reel__media--film" data-autoplay muted loop playsinline preload="auto" poster={p.hero.poster ? media(p.hero.poster) : undefined} aria-hidden="true">
         <source src={media(p.hero.video)} type="video/mp4">

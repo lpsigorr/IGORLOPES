@@ -140,6 +140,56 @@
    1600
   ]
  },
+ "lab/mordida-bottles.webp": {
+  "w": 1200,
+  "h": 896,
+  "v": [
+   640
+  ]
+ },
+ "lab/mordida-box.webp": {
+  "w": 1200,
+  "h": 896,
+  "v": [
+   640
+  ]
+ },
+ "lab/mordida-mailer.webp": {
+  "w": 3040,
+  "h": 1175,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/mordida-pack.webp": {
+  "w": 3040,
+  "h": 1448,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/mordida-palette.webp": {
+  "w": 3040,
+  "h": 688,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
+ "lab/mordida.webp": {
+  "w": 2880,
+  "h": 1040,
+  "v": [
+   640,
+   1024,
+   1600
+  ]
+ },
  "lab/roast-and-ritual.webp": {
   "w": 2048,
   "h": 1166,
@@ -147,6 +197,69 @@
    640,
    1024,
    1600
+  ]
+ },
+ "lab/silo-cover.webp": {
+  "w": 1528,
+  "h": 870,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "lab/silo-desk.webp": {
+  "w": 1200,
+  "h": 896,
+  "v": [
+   640
+  ]
+ },
+ "lab/silo-pattern.webp": {
+  "w": 1528,
+  "h": 1160,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "lab/silo-product.webp": {
+  "w": 1528,
+  "h": 1160,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "lab/silo-symbol.webp": {
+  "w": 1528,
+  "h": 1160,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "lab/silo-type.webp": {
+  "w": 1528,
+  "h": 1160,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "lab/silo-world.webp": {
+  "w": 1528,
+  "h": 1160,
+  "v": [
+   640,
+   1024
+  ]
+ },
+ "lab/silo.webp": {
+  "w": 1528,
+  "h": 1160,
+  "v": [
+   640,
+   1024
   ]
  },
  "lab/soldias.webp": {
