@@ -260,11 +260,13 @@ html[data-theme="dark"] .top { color: var(--cream); }
 }
 .case__films { max-width: calc(var(--fit) * var(--sum) + (var(--n) - 1) * var(--gap)); }
 .films { display: flex; align-items: flex-start; gap: var(--gap); }
+.films .yt { flex: var(--ar) 1 0; min-width: 0; width: 100%; height: auto; aspect-ratio: var(--ar); border: 0; display: block; background: #000; }
 .films video { flex: var(--ar) 1 0; min-width: 0; width: 100%; height: auto; aspect-ratio: var(--ar); background: var(--ink); }
 @media (max-width: 699px) {
   .case__films { max-width: none; }
   .films { flex-direction: column; align-items: center; }
   .films video { flex: none; max-width: calc(var(--fit) * var(--ar)); }
+  .films .yt { flex: none; max-width: calc(var(--fit) * var(--ar)); }
 }
 
 .case__end { font-family: var(--display); font-weight: 900; font-stretch: 58%; text-transform: uppercase; font-size: clamp(2.8rem, min(8vw, 18svh), 9rem); line-height: .86; max-width: 22ch; text-wrap: balance; }

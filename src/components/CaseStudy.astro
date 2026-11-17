@@ -39,7 +39,7 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
 ---
 <article class="case">
   {heroFill && <style is:inline set:html={heroFill}></style>}
-  <section class:list={["reel", `reel--${p.slug}`, { "reel--whole": p.heroWhole, "reel--band": p.heroWhole && heroAr > 2 }]} style={[p.coverBg ? `background:${p.coverBg}` : "", heroMax].filter(Boolean).join(";") || undefined} data-theme="dark" data-bare aria-label={p.name}>
+  <section class:list={["reel", `reel--${p.slug}`, { "reel--whole": p.heroWhole, "reel--band": p.heroWhole && heroAr > 1.5 }]} style={[p.coverBg ? `background:${p.coverBg}` : "", heroMax].filter(Boolean).join(";") || undefined} data-theme="dark" data-bare aria-label={p.name}>
     {p.hero?.video ? (
       <video class="reel__media reel__media--film" data-autoplay muted loop playsinline preload="auto" poster={p.hero.poster ? media(p.hero.poster) : undefined} aria-hidden="true">
         <source src={media(p.hero.video)} type="video/mp4">
@@ -109,6 +109,19 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
                   <source src={media(f.src)} type="video/mp4">
                 </video>
               ))}
+            </div>
+            {b.caption && <p class="case__cap">{tx(b.caption, lang)}</p>}
+          </section>
+        );
+      }
+      if (b.type === "youtube") {
+        const ar = b.ar ?? 16 / 9;
+        // youtube-nocookie: no tracking cookies until the visitor presses play
+        return (
+          <section class="case__films" style={`--sum:${ar.toFixed(4)};--n:1`} data-reveal>
+            <div class="films">
+              <iframe class="yt" src={`https://www.youtube-nocookie.com/embed/${b.id}?rel=0`} title={tx(b.title, lang)} loading="lazy" style={`--ar:${ar.toFixed(4)}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
             </div>
             {b.caption && <p class="case__cap">{tx(b.caption, lang)}</p>}
           </section>

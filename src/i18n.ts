@@ -78,14 +78,14 @@ const ui = {
   },
   "about.short2": {
     en: "Design, code, video, motion and prototyping in the same hands, so nothing gets lost between the idea and the result.",
-    fr: "Design, code, vidéo, motion et prototypage dans les mêmes mains : rien ne se perd entre l'idée et le résultat.",
+    fr: "Design, code, vidéo, motion et prototypage dans les mêmes mains : rien ne se perd entre l'idée et le résultat.",
     nl: "Design, code, video, motion en prototyping in één paar handen, zodat er niets verloren gaat tussen het idee en het resultaat.",
   },
   "about.more": { en: "More about Igor", fr: "En savoir plus sur Igor", nl: "Meer over Igor" },
 
   "cta.text": {
     en: "Working on something that needs design, code, film or a physical object? Send a brief.",
-    fr: "Un projet qui demande du design, du code, du film ou un objet physique ? Envoyez un brief.",
+    fr: "Un projet qui demande du design, du code, du film ou un objet physique ? Envoyez un brief.",
     nl: "Werkt u aan iets dat design, code, film of een fysiek object nodig heeft? Stuur een briefing.",
   },
   "cta.button": { en: "Send a brief", fr: "Envoyer un brief", nl: "Stuur een briefing" },
@@ -106,7 +106,7 @@ const ui = {
   "f.name": { en: "Your name", fr: "Votre nom", nl: "Uw naam" },
   "f.email": { en: "Email", fr: "E-mail", nl: "E-mail" },
   "f.company": { en: "Studio or company (optional)", fr: "Studio ou entreprise (facultatif)", nl: "Studio of bedrijf (optioneel)" },
-  "f.topic": { en: "What is it about?", fr: "De quoi s'agit-il ?", nl: "Waarover gaat het?" },
+  "f.topic": { en: "What is it about?", fr: "De quoi s'agit-il ?", nl: "Waarover gaat het?" },
   "f.topic.design": { en: "Direction and identity", fr: "Direction et identité", nl: "Regie en identiteit" },
   "f.topic.web": { en: "Web and code", fr: "Web et code", nl: "Web en code" },
   "f.topic.film": { en: "Film and motion", fr: "Film et motion", nl: "Film en motion" },
@@ -135,9 +135,9 @@ const ui = {
 
   "about.k.disciplines": { en: "Disciplines", fr: "Disciplines", nl: "Disciplines" },
   "about.v.disciplines": {
-    en: "Creative direction, brand identity, web and code, video and motion, physical prototyping",
-    fr: "Direction créative, identité de marque, web et code, vidéo et motion, prototypage physique",
-    nl: "Creatieve regie, merkidentiteit, web en code, video en motion, fysieke prototyping",
+    en: "Creative direction, brand identity, graphic design, UX/UI design, web development, product design, video and motion, physical prototyping",
+    fr: "Direction créative, identité de marque, design graphique, design UX/UI, développement web, design produit, vidéo et motion, prototypage physique",
+    nl: "Creatieve regie, merkidentiteit, grafisch ontwerp, UX/UI-design, webontwikkeling, productontwerp, video en motion, fysieke prototyping",
   },
   "about.k.tools": { en: "Tools", fr: "Outils", nl: "Tools" },
   "about.k.languages": { en: "Languages", fr: "Langues", nl: "Talen" },
@@ -145,12 +145,6 @@ const ui = {
     en: "Portuguese, French, Dutch, English.",
     fr: "Portugais, français, néerlandais, anglais.",
     nl: "Portugees, Frans, Nederlands, Engels.",
-  },
-  "about.k.experience": { en: "Experience", fr: "Expérience", nl: "Ervaring" },
-  "about.v.experience": {
-    en: "Digital all-rounder, IT and digitalization, FB Logistics group, 2026",
-    fr: "Digital all-rounder, IT et digitalisation, groupe FB Logistics, 2026",
-    nl: "Digital all-rounder, IT en digitalisering, FB Logistics-groep, 2026",
   },
   "about.k.education": { en: "Education", fr: "Formation", nl: "Opleiding" },
   "about.v.education": {

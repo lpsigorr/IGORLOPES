@@ -6,12 +6,11 @@ import { langPaths, t, type UIKey } from "../../../i18n";
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
 // Only what Igor has told; the text of each line is in src/i18n.ts (about.k.* and about.v.*).
-const TOOLS = "React, Vite, Astro, Node.js, Supabase, After Effects, Premiere Pro, ESP32, Arduino, 3D printing";
+const TOOLS = "HTML, CSS, JavaScript, React, Vite, Astro, Node.js, Supabase, Gmail API, Claude API, Figma, Photoshop, Canva, After Effects, Premiere Pro, CapCut, ESP32, Arduino, 3D printing";
 const facts: { k: UIKey; v: UIKey | string }[] = [
   { k: "about.k.disciplines", v: "about.v.disciplines" },
   { k: "about.k.tools", v: TOOLS },
   { k: "about.k.languages", v: "about.v.languages" },
-  { k: "about.k.experience", v: "about.v.experience" },
   { k: "about.k.education", v: "about.v.education" },
   { k: "about.k.based", v: "about.v.based" },
 ];

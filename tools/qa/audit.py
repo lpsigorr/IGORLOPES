@@ -4,7 +4,7 @@ display text leaving the screen, tiny text, small tap targets."""
 import sys, asyncio, json
 from playwright.async_api import async_playwright
 B = 'http://localhost:4321'
-SLUGS = ['star','sparx','number-one','prolux','ehb-arcade','world-without-bees','eregum','silo','mordida']
+SLUGS = ['star','sparx','number-one','prolux','ehb-arcade','world-without-bees','eregum','silo','mordida','cigusic','tame-impala']
 PAGES = ['/', '/work/', '/lab/', '/about/', '/contact/'] + [f'/work/{s}/' for s in SLUGS]
 VIEWS = [(320,568),(360,740),(390,844),(430,932),(844,390),(768,1024),(1024,768),(1280,720),(1366,768),(1440,900),(1920,1080),(2560,1440)]
 LANGS = ['en','fr','nl']
@@ -90,7 +90,7 @@ async def main():
               errs = []
               pg.on('console', lambda m: errs.append('console: '+m.text[:160]) if m.type=='error' else None)
               pg.on('pageerror', lambda e: errs.append('pageerror: '+str(e)[:160]))
-              pg.on('requestfailed', lambda r: errs.append('failed: '+r.url.split('IGORLOPES')[-1]) if not r.url.endswith('.mp4') else None)
+              pg.on('requestfailed', lambda r: errs.append('failed: '+r.url.split('IGORLOPES')[-1]) if not (r.url.endswith('.mp4') or 'youtube' in r.url) else None)
               pg.on('response', lambda r: errs.append(f'http {r.status}: '+r.url.split('IGORLOPES')[-1]) if r.status>=400 else None)
               for lang in LANGS:
                   for pa in PAGES:
