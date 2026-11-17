@@ -78,18 +78,18 @@ html[data-theme="dark"] .top { color: var(--cream); }
 .word { width: auto; white-space: nowrap; font-family: var(--display); font-weight: 900; font-stretch: 78%; font-size: min(13vw, 30svh); line-height: .8; text-transform: uppercase; color: var(--cream);
   padding: .14em 0 .1em; overflow: clip; }
 
-.outro { position: absolute; inset: auto var(--side) var(--side); display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 26rem); grid-template-areas: "me h p"; align-items: end; gap: 2rem;
+.outro { position: absolute; inset: auto var(--side) var(--side); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, clamp(26rem, 36vw, 36rem)); grid-template-areas: "h me" "h p"; align-items: end; gap: 2rem;
   opacity: var(--end, 0); transform: translateY(calc((1 - var(--end, 0)) * 3rem)); color: var(--cream); }
 .outro h2 { font-family: var(--display); font-weight: 900; font-stretch: 58%; text-transform: uppercase; font-size: clamp(3.2rem, min(11vw, 22svh), 12rem); line-height: .82; color: var(--cream); max-width: 9ch; }
 .outro p { font-size: clamp(1.05rem, 1.3vw, 1.4rem); line-height: 1.4; }
 /* the photo opens upward with the outro, in black and white; colour on hover, like on the About page */
 .outro__me { grid-area: me; margin: 0; pointer-events: auto; clip-path: inset(calc((1 - var(--end, 0)) * 100%) 0 0 0); }
-.outro__me img { display: block; height: min(46svh, 32rem); width: auto; max-width: 100%; filter: grayscale(1) contrast(1.05); transition: filter .4s var(--ease); }
+.outro__me img { display: block; height: min(58svh, 40rem); width: auto; max-width: 100%; filter: grayscale(1) contrast(1.05); transition: filter .4s var(--ease); }
 .outro__me:hover img { filter: none; }
 .outro h2 { grid-area: h; } .outro p { grid-area: p; }
-/* medium screens: the text goes under the title, beside the photo */
-@media (max-width: 1279px) { .outro { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "me h" "me p"; } .outro p { max-width: 26rem; } }
-@media (max-width: 899px) and (orientation: landscape) { .outro__me img { height: min(62svh, 20rem); } }
+/* the title on the left; on the right, the photo above the text */
+.outro__me { justify-self: start; }
+@media (max-width: 899px) and (orientation: landscape) { .outro__me img { height: min(40svh, 20rem); } }
 /* phones held upright: photo above the title */
 @media (max-width: 899px) and (orientation: portrait) { .outro { grid-template-columns: 1fr; grid-template-areas: "me" "h" "p"; gap: 1.4rem; } .outro__me img { height: min(30svh, 20rem); } }
 
