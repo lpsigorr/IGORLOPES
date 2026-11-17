@@ -7,7 +7,7 @@ export const DEFAULT_LANG: Lang = "en";
 export const SITE = {
   name: "Igor Lopes",
   fullName: "Igor Lopes Oliveira",
-  title: "Creative Technologist",
+  title: "Product Developer",
   city: "Brussels",
   github: "https://github.com/lpsigorr",
   linkedin: "https://www.linkedin.com/in/lpsigorr/",

@@ -175,7 +175,7 @@ function build(q: Seq) {
   q.tl = tl;
   ScrollTrigger.create({
     trigger: q.el, start: "top top", end: "bottom bottom",
-    animation: tl, scrub: fine ? 0.7 : 1,
+    animation: tl, scrub: fine ? 1.1 : 1.3,
   });
 }
 

@@ -29,9 +29,9 @@ const ui = {
   "nav.menu": { en: "Menu", fr: "Menu", nl: "Menu" },
 
   "meta.home": {
-    en: "Igor Lopes Oliveira, creative technologist in Brussels. Design, code, video, motion and prototyping in the same hands.",
-    fr: "Igor Lopes Oliveira, creative technologist à Bruxelles. Design, code, vidéo, motion et prototypage dans les mêmes mains.",
-    nl: "Igor Lopes Oliveira, creative technologist in Brussel. Design, code, video, motion en prototyping in één paar handen.",
+    en: "Igor Lopes Oliveira, product developer in Brussels. Design, code, video, motion and prototyping in the same hands.",
+    fr: "Igor Lopes Oliveira, développeur produit à Bruxelles. Design, code, vidéo, motion et prototypage dans les mêmes mains.",
+    nl: "Igor Lopes Oliveira, productontwikkelaar in Brussel. Design, code, video, motion en prototyping in één paar handen.",
   },
 
   "hero.line": {
@@ -45,7 +45,7 @@ const ui = {
     fr: "Travaille en français, néerlandais, anglais et portugais",
     nl: "Werkt in het Frans, Nederlands, Engels en Portugees",
   },
-  "hero.title": { en: "Creative Technologist", fr: "Creative Technologist", nl: "Creative Technologist" },
+  "hero.title": { en: "Product Developer", fr: "Développeur produit", nl: "Productontwikkelaar" },
   "city": { en: "Brussels", fr: "Bruxelles", nl: "Brussel" },
 
   "words": { en: "Direction|Identity|Code|Film|Objects", fr: "Direction|Identité|Code|Film|Objets", nl: "Regie|Identiteit|Code|Film|Objecten" },
@@ -72,9 +72,9 @@ const ui = {
 
   "about.title": { en: "About", fr: "À propos", nl: "Over" },
   "about.short1": {
-    en: "Igor Lopes Oliveira, creative technologist. Born and raised in Brussels.",
-    fr: "Igor Lopes Oliveira, creative technologist. Né et élevé à Bruxelles.",
-    nl: "Igor Lopes Oliveira, creative technologist. Geboren en getogen in Brussel.",
+    en: "Igor Lopes Oliveira, product developer. Born and raised in Brussels.",
+    fr: "Igor Lopes Oliveira, développeur produit. Né et élevé à Bruxelles.",
+    nl: "Igor Lopes Oliveira, productontwikkelaar. Geboren en getogen in Brussel.",
   },
   "about.short2": {
     en: "Design, code, video, motion and prototyping in the same hands, so nothing gets lost between the idea and the result.",
