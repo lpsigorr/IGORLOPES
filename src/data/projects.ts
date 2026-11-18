@@ -33,6 +33,7 @@ export type Project = {
   hero?: { video?: string; poster?: string; image?: Img; nameFont?: "star" };
   tag?: L;
   place?: L;
+  year?: string;
   credits?: { role: L; name?: string }[]; // name defaults to Igor
   client?: L;
   links?: { label: L; href: string }[];
@@ -41,6 +42,8 @@ export type Project = {
   footnote?: L;
   // Lab entries
   link?: { label: "visit" | "watch"; href: string };
+  context?: "school" | "case"; // a school project, or a self-initiated case study
+  hidden?: boolean; // kept in the code, not shown on the site
 };
 
 const IGOR = "Igor Lopes Oliveira";
@@ -57,14 +60,15 @@ export const projects: Project[] = [
     slug: "star",
     name: "STAR",
     kind: "case",
-    where: { en: "Streetwear collection, Tokyo. With and for YF Agency.", fr: "Collection streetwear, Tokyo. Avec et pour YF Agency.", nl: "Streetwearcollectie, Tokio. Met en voor YF Agency." },
+    where: { en: "Streetwear collection for Soudesune, a YF Agency label.", fr: "Collection streetwear pour Soudesune, un label de YF Agency.", nl: "Streetwearcollectie voor Soudesune, een label van YF Agency." },
     roles: { en: "Direction, identity, typeface, film", fr: "Direction, identité, typographie, film", nl: "Regie, identiteit, lettertype, film" },
     cover: i("star/loop-poster.webp", { en: "Still from the STAR brand film", fr: "Image du film de marque STAR", nl: "Beeld uit de STAR-merkfilm" }),
     preview: { video: "star/loop.mp4", image: "star/loop-poster.webp" },
     hero: { video: "star/loop.mp4", poster: "star/loop-poster.webp", nameFont: "star" },
     tag: { en: "Creative direction, identity and film", fr: "Direction créative, identité et film", nl: "Creatieve regie, identiteit en film" },
+    year: "2025",
     place: { en: "Tokyo", fr: "Tokyo", nl: "Tokio" },
-    client: { en: "With and for YF Agency", fr: "Avec et pour YF Agency", nl: "Met en voor YF Agency" },
+    client: { en: "For Soudesune, a YF Agency label", fr: "Pour Soudesune, un label de YF Agency", nl: "Voor Soudesune, een label van YF Agency" },
     credits: [
       { role: { en: "Creative direction", fr: "Direction créative", nl: "Creatieve regie" } },
       { role: { en: "Identity and logos", fr: "Identité et logos", nl: "Identiteit en logo's" } },
@@ -79,6 +83,11 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "A streetwear collection born in a sketchbook, in Tokyo.", fr: "Une collection streetwear née dans un carnet, à Tokyo.", nl: "Een streetwearcollectie die begon in een schetsboek, in Tokio." },
         text: { en: "A doctrine, a hand-drawn typeface, a collection and a film, for those who move forward their own way.", fr: "Une doctrine, une police faite main, une collection et un film, pour celles et ceux qui avancent à leur façon.", nl: "Een doctrine, een handgetekend lettertype, een collectie en een film, voor wie op zijn eigen manier vooruitgaat." } },
+      { type: "points", items: [
+        { title: { en: "The brief", fr: "La demande", nl: "De vraag" }, text: { en: "YF Agency wanted a new collection for Soudesune, its streetwear label. They had seen Igor's sketchbook and wanted those drawings on clothes.", fr: "YF Agency voulait une nouvelle collection pour Soudesune, son label streetwear. L'agence avait vu le carnet de croquis d'Igor et voulait ces dessins sur des vêtements.", nl: "YF Agency wilde een nieuwe collectie voor Soudesune, zijn streetwearlabel. Het bureau had Igors schetsboek gezien en wilde die tekeningen op kleding." } },
+        { title: { en: "What Igor made", fr: "Ce qu'Igor a fait", nl: "Wat Igor maakte" }, text: { en: "The creative direction, a hand-drawn typeface, the logos, the collection in 2D and 3D, a brand film and the campaign visuals.", fr: "La direction créative, une police dessinée à la main, les logos, la collection en 2D et en 3D, un film de marque et les visuels de campagne.", nl: "De creatieve regie, een handgetekend lettertype, de logo's, de collectie in 2D en 3D, een merkfilm en de campagnebeelden." } },
+        { title: { en: "The result", fr: "Le résultat", nl: "Het resultaat" }, text: { en: "A complete collection, from the first sketch to the campaign, in four months.", fr: "Une collection complète, du premier croquis à la campagne, en quatre mois.", nl: "Een volledige collectie, van de eerste schets tot de campagne, in vier maanden." } },
+      ] },
       { type: "quote", text: "STAR isn't just clothing, it's direction. A symbol for those building in silence and shining on purpose." },
       { type: "specimen", text: "A STAR IS BORN IN TOKYO", font: "star", color: "#DE1F26" },
       { type: "colors", items: [
@@ -136,14 +145,15 @@ export const projects: Project[] = [
     slug: "sparx",
     name: "SPARX",
     kind: "case",
-    where: { en: "Smart punching bag. Own project.", fr: "Sac de frappe intelligent. Projet personnel.", nl: "Slimme bokszak. Eigen project." },
+    where: { en: "Smart punching bag. Final-year project.", fr: "Sac de frappe intelligent. Projet de fin d'études.", nl: "Slimme bokszak. Afstudeerproject." },
     roles: { en: "Product, electronics, app, identity", fr: "Produit, électronique, application, identité", nl: "Product, elektronica, app, identiteit" },
     cover: i("sparx/gym.webp", { en: "The SPARX bag in the corner of a boxing ring", fr: "Le sac SPARX dans le coin d'un ring de boxe", nl: "De SPARX-zak in de hoek van een boksring" }),
     preview: { image: "sparx/gym.webp" },
     hero: { image: i("sparx/gym.webp", { en: "The SPARX bag in the corner of a boxing ring, the name SPARX painted on the wall", fr: "Le sac SPARX dans le coin d'un ring de boxe, le nom SPARX peint sur le mur", nl: "De SPARX-zak in de hoek van een boksring, de naam SPARX op de muur" }) },
     tag: { en: "Product, app and identity", fr: "Produit, application et identité", nl: "Product, app en identiteit" },
+    year: "2025",
     place: BRUSSELS,
-    client: { en: "Own project", fr: "Projet personnel", nl: "Eigen project" },
+    client: { en: "Final-year project, Erasmushogeschool Brussel", fr: "Projet de fin d'études, Erasmushogeschool Brussel", nl: "Afstudeerproject, Erasmushogeschool Brussel" },
     credits: [
       { role: { en: "Product concept", fr: "Concept produit", nl: "Productconcept" } },
       { role: { en: "Electronics: pressure sensors and ESP32", fr: "Électronique : capteurs de pression et ESP32", nl: "Elektronica: druksensoren en ESP32" } },
@@ -157,6 +167,11 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "The training partner hidden in a punching bag.", fr: "Le partenaire d'entraînement caché dans un sac de frappe.", nl: "De trainingspartner verstopt in een bokszak." },
         text: { en: "Born during lockdown, when Igor trained alone with no way to know if his punches landed. A sensor sleeve, an app and a brand, built as a real product.", fr: "Né pendant le confinement, quand Igor s'entraînait seul sans savoir si ses coups touchaient. Une housse à capteurs, une application et une marque, pensées comme un vrai produit.", nl: "Ontstaan tijdens de lockdown, toen Igor alleen trainde zonder te weten of zijn slagen raak waren. Een hoes met sensoren, een app en een merk, bedacht als een echt product." } },
+      { type: "points", items: [
+        { title: { en: "The brief", fr: "La demande", nl: "De vraag" }, text: { en: "Final-year project: find a problem worth solving in your own field. For Igor that was boxing, and the lockdown months spent training alone, with no coach to say if a punch landed.", fr: "Projet de fin d'études : trouver un problème qui vaut la peine d'être résolu dans son propre domaine. Pour Igor, c'était la boxe, et les mois de confinement à s'entraîner seul, sans coach pour dire si un coup portait.", nl: "Afstudeerproject: zoek een probleem in je eigen vakgebied dat het oplossen waard is. Voor Igor was dat boksen, en de lockdownmaanden waarin hij alleen trainde, zonder coach die zei of een stoot raak was." } },
+        { title: { en: "What Igor made", fr: "Ce qu'Igor a fait", nl: "Wat Igor maakte" }, text: { en: "A sensor sleeve for any punching bag, the electronics inside it, the app that reads every punch, and the brand around it.", fr: "Une housse à capteurs pour n'importe quel sac de frappe, l'électronique à l'intérieur, l'app qui lit chaque coup, et la marque autour.", nl: "Een sensorhoes voor elke bokszak, de elektronica erin, de app die elke stoot leest, en het merk eromheen." } },
+        { title: { en: "The result", fr: "Le résultat", nl: "Het resultaat" }, text: { en: "A working first prototype that logs every hit by zone, tested on a real bag.", fr: "Un premier prototype qui fonctionne et enregistre chaque coup par zone, testé sur un vrai sac.", nl: "Een werkend eerste prototype dat elke stoot per zone registreert, getest op een echte bokszak." } },
+      ] },
       { type: "images", layout: "wide", items: [ i("sparx/product.webp", { en: "The black SPARX sleeve with red zones, its strap and its box", fr: "La housse SPARX noire à zones rouges, avec sa sangle et son boîtier", nl: "De zwarte SPARX-hoes met rode zones, met riem en kastje" }) ] },
       { type: "points", items: [
         { title: { en: "See where you hit", fr: "Voir où l'on frappe", nl: "Zien waar je slaat" }, text: { en: "Every punch is logged on the zone it lands on.", fr: "Chaque coup est enregistré sur la zone touchée.", nl: "Elke slag wordt geregistreerd op de zone die je raakt." } },
@@ -194,8 +209,9 @@ export const projects: Project[] = [
     preview: { image: "numberone/site-home.webp" },
     hero: { image: i("numberone/numberone-1.webp", { en: "FB Logistics trucks at the loading docks", fr: "Camions FB Logistics aux quais de chargement", nl: "Vrachtwagens van FB Logistics aan de laadkaaien" }) },
     tag: { en: "Website, tools and photography", fr: "Site web, outils et photographie", nl: "Website, tools en fotografie" },
+    year: "2026",
     place: { en: "Machelen", fr: "Machelen", nl: "Machelen" },
-    client: { en: "In-house at the FB Logistics group, 2026", fr: "En interne au sein du groupe FB Logistics, 2026", nl: "Intern bij de FB Logistics-groep, 2026" },
+    client: { en: "In-house at the FB Logistics group", fr: "En interne au sein du groupe FB Logistics", nl: "Intern bij de FB Logistics-groep" },
     credits: [
       { role: { en: "Website, FR, NL and EN", fr: "Site web, FR, NL et EN", nl: "Website, FR, NL en EN" } },
       { role: { en: "Quote calculator", fr: "Calculateur de devis", nl: "Offertecalculator" } },
@@ -209,6 +225,11 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "From 1 gram to 30 tons.", fr: "De 1 gramme à 30 tonnes.", nl: "Van 1 gram tot 30 ton." },
         text: { en: "Number One is the express delivery brand of the FB Logistics group. As the first member of its new IT and digitalization department, Igor gave the brand a proper digital presence and practical tools for the team and for customers.", fr: "Number One est la marque de livraison express du groupe FB Logistics. Premier membre du nouveau département IT et digitalisation, Igor a donné à la marque une vraie présence en ligne et des outils pratiques pour l'équipe et pour les clients.", nl: "Number One is het expresleveringsmerk van de FB Logistics-groep. Als eerste lid van de nieuwe afdeling IT en digitalisering gaf Igor het merk een echte online aanwezigheid en praktische tools voor het team en voor klanten." } },
+      { type: "points", items: [
+        { title: { en: "The brief", fr: "La demande", nl: "De vraag" }, text: { en: "The FB Logistics group needed to go digital, and hired Igor as the first member of its new IT and digitalization department.", fr: "Le groupe FB Logistics devait passer au numérique et a engagé Igor comme premier membre de son nouveau département IT et digitalisation.", nl: "De FB Logistics-groep moest digitaliseren en nam Igor aan als eerste lid van de nieuwe afdeling IT en digitalisering." } },
+        { title: { en: "What Igor made", fr: "Ce qu'Igor a fait", nl: "Wat Igor maakte" }, text: { en: "A new website for Number One, a freight quote calculator, an email automation system and photos of the real fleet.", fr: "Un nouveau site pour Number One, un calculateur de devis de transport, un système d'automatisation des e-mails et des photos de la vraie flotte.", nl: "Een nieuwe website voor Number One, een offertecalculator voor vracht, een systeem dat e-mails automatiseert en foto's van de echte vloot." } },
+        { title: { en: "The result", fr: "Le résultat", nl: "Het resultaat" }, text: { en: "Everything delivered fully built and working, in two months.", fr: "Tout livré, complet et fonctionnel, en deux mois.", nl: "Alles volledig gebouwd en werkend opgeleverd, in twee maanden." } },
+      ] },
       { type: "screens", layout: "pair", items: [
         phone("numberone/mobile-home.webp", { en: "Number One website on a phone", fr: "Le site Number One sur téléphone", nl: "De website van Number One op een telefoon" }),
         web("numberone/site-home.webp", { en: "Number One website, home page", fr: "Site Number One, page d'accueil", nl: "Website van Number One, homepage" }, "lpsigorr.github.io/numberone_final"),
@@ -245,6 +266,7 @@ export const projects: Project[] = [
     cover: i("prolux/site-home-fr.webp", { en: "Prolux website, home page", fr: "Site Prolux, page d'accueil", nl: "Website van Prolux, homepage" }),
     preview: { image: "prolux/site-home-fr.webp" },
     tag: { en: "Website, Google Ads and tracking", fr: "Site web, Google Ads et suivi", nl: "Website, Google Ads en meting" },
+    year: "2026",
     place: { en: "Zaventem", fr: "Zaventem", nl: "Zaventem" },
     client: { en: "Prolux & Co SRL", fr: "Prolux & Co SRL", nl: "Prolux & Co SRL" },
     credits: [
@@ -257,6 +279,11 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "A roofing problem? Sorted.", fr: "Un problème de toiture ? On s'en occupe.", nl: "Een probleem met uw dak? Wij regelen het." },
         text: { en: "A French and Dutch website, Google Ads and visit tracking for a new roofing company. Services named as problems, the phone one tap away.", fr: "Un site en français et en néerlandais, Google Ads et suivi des visites pour une nouvelle société de toiture. Les services nommés comme des problèmes, le téléphone à un clic.", nl: "Een website in het Frans en Nederlands, Google Ads en bezoekersmeting voor een nieuw dakbedrijf. Diensten benoemd als problemen, de telefoon met één tik bereikbaar." } },
+      { type: "points", items: [
+        { title: { en: "The brief", fr: "La demande", nl: "De vraag" }, text: { en: "A new roofing company had to be found, fast, by people with a problem on their roof.", fr: "Une nouvelle entreprise de toiture devait être trouvée, vite, par les gens qui ont un problème de toit.", nl: "Een nieuw dakwerkbedrijf moest snel gevonden worden door mensen met een probleem aan hun dak." } },
+        { title: { en: "What Igor made", fr: "Ce qu'Igor a fait", nl: "Wat Igor maakte" }, text: { en: "The French and Dutch website, the Google Ads campaign and the visit tracking.", fr: "Le site en français et en néerlandais, la campagne Google Ads et le suivi des visites.", nl: "De Franse en Nederlandse website, de Google Ads-campagne en het bezoekersonderzoek." } },
+        { title: { en: "The result", fr: "Le résultat", nl: "Het resultaat" }, text: { en: "More than 1,000 appearances on Google, over 200 clicks to the site, and the first calls from new customers.", fr: "Plus de 1 000 affichages dans Google, plus de 200 clics vers le site et les premiers appels de nouveaux clients.", nl: "Meer dan 1.000 vertoningen in Google, meer dan 200 klikken naar de site en de eerste telefoontjes van nieuwe klanten." } },
+      ] },
       { type: "screens", layout: "one", items: [
         web("prolux/site-home-fr.webp", { en: "Prolux website, home page in French", fr: "Site Prolux, page d'accueil en français", nl: "Website van Prolux, homepage in het Frans" }, "proluxtoiture.be"),
       ] },
@@ -273,12 +300,12 @@ export const projects: Project[] = [
         web("prolux/site-work-2.webp", { en: "Work gallery: cleaning and moss removal", fr: "Galerie des travaux : nettoyage et démoussage", nl: "Galerij van het werk: reiniging en ontmossing" }, "proluxtoiture.be/nl/#travaux"),
       ] },
       { type: "stats", items: [
-        { num: "65", label: { en: "clicks from Google Ads in 7 days", fr: "clics depuis Google Ads en 7 jours", nl: "klikken via Google Ads in 7 dagen" } },
-        { num: "×3", label: { en: "compared with the week before", fr: "par rapport à la semaine précédente", nl: "tegenover de week ervoor" } },
-        { num: { en: "1,186", fr: "1 186", nl: "1.186" }, label: { en: "times shown on Google", fr: "affichages dans Google", nl: "vertoningen in Google" } },
-      ], note: { en: "30 October to 5 November 2026.", fr: "Du 30 octobre au 5 novembre 2026.", nl: "Van 30 oktober tot 5 november 2026." } },
+        { num: { en: "1,000+", fr: "1 000+", nl: "1.000+" }, label: { en: "times shown on Google", fr: "affichages dans Google", nl: "vertoningen in Google" } },
+        { num: "200+", label: { en: "clicks to the site from Google Ads", fr: "clics vers le site depuis Google Ads", nl: "klikken naar de site via Google Ads" } },
+        { num: "×3", label: { en: "clicks in the second week, compared with the first", fr: "clics la deuxième semaine, par rapport à la première", nl: "klikken in de tweede week, tegenover de eerste" } },
+      ], note: { en: "And the first phone calls from new customers.", fr: "Et les premiers appels de nouveaux clients.", nl: "En de eerste telefoontjes van nieuwe klanten." } },
     ],
-    end: { en: "Three times more clicks than the week before.", fr: "Trois fois plus de clics que la semaine précédente.", nl: "Drie keer meer klikken dan de week ervoor." },
+    end: { en: "Found on Google, and the phone started ringing.", fr: "Trouvé sur Google, et le téléphone a commencé à sonner.", nl: "Gevonden op Google, en de telefoon begon te rinkelen." },
   },
   {
     slug: "ehb-arcade",
@@ -291,6 +318,7 @@ export const projects: Project[] = [
     hero: { image: i("arcade/cabinet.webp", { en: "The EHB Arcade cabinet", fr: "La borne EHB Arcade", nl: "De EHB Arcade-kast" }) },
     tag: { en: "Cabinet, electronics and game", fr: "Meuble, électronique et jeu", nl: "Kast, elektronica en spel" },
     place: BRUSSELS,
+    client: { en: "Erasmushogeschool Brussel", fr: "Erasmushogeschool Brussel", nl: "Erasmushogeschool Brussel" },
     credits: [
       { role: { en: "Cabinet design and build", fr: "Conception et fabrication du meuble", nl: "Ontwerp en bouw van de kast" } },
       { role: { en: "Electronics: joystick and buttons", fr: "Électronique : joystick et boutons", nl: "Elektronica: joystick en knoppen" } },
@@ -300,6 +328,11 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "One machine: wood, wires and a game.", fr: "Une machine : du bois, des câbles et un jeu.", nl: "Eén machine: hout, kabels en een spel." },
         text: { en: "A full arcade machine that brings craft, electronics and software together, with a game made for it. The joystick and buttons answer the game the way a classic cabinet should.", fr: "Une borne d'arcade complète qui réunit fabrication, électronique et logiciel, avec un jeu créé pour elle. Le joystick et les boutons répondent au jeu comme sur une vraie borne.", nl: "Een volledige arcadekast die vakmanschap, elektronica en software samenbrengt, met een spel dat ervoor gemaakt is. De joystick en knoppen reageren zoals bij een klassieke kast." } },
+      { type: "points", items: [
+        { title: { en: "The brief", fr: "La demande", nl: "De vraag" }, text: { en: "Every student built an arcade machine. The best one would stand at the school fair to draw in future students.", fr: "Chaque étudiant construisait une borne d'arcade. La meilleure serait exposée au salon de l'école pour attirer de futurs étudiants.", nl: "Elke student bouwde een arcadekast. De beste zou op de schoolbeurs staan om toekomstige studenten aan te trekken." } },
+        { title: { en: "What Igor made", fr: "Ce qu'Igor a fait", nl: "Wat Igor maakte" }, text: { en: "The cabinet, the electronics and the game made for it.", fr: "La borne, l'électronique et le jeu conçu pour elle.", nl: "De kast, de elektronica en het spel dat ervoor gemaakt is." } },
+        { title: { en: "The result", fr: "Le résultat", nl: "Het resultaat" }, text: { en: "Igor's machine was selected for the fair, then moved to the school hallway, where students could play it any time.", fr: "La borne d'Igor a été choisie pour le salon, puis installée dans le couloir de l'école, où les étudiants pouvaient y jouer à tout moment.", nl: "Igors kast werd gekozen voor de beurs en kwam daarna in de gang van de school, waar studenten er altijd op konden spelen." } },
+      ] },
       { type: "images", layout: "three", items: [
         i("arcade/lettering.webp", { en: "The stencilled lettering on the cabinet", fr: "Le lettrage au pochoir sur la borne", nl: "De gesjabloneerde belettering op de kast" }),
         i("arcade/front.webp", { en: "The cabinet, front", fr: "La borne, de face", nl: "De kast, vooraanzicht" }),
@@ -319,6 +352,7 @@ export const projects: Project[] = [
     hero: { image: i("bees/scene-4.webp", { en: "A green landscape on screen", fr: "Un paysage vert à l'écran", nl: "Een groen landschap op het scherm" }) },
     tag: { en: "Installation and interaction", fr: "Installation et interaction", nl: "Installatie en interactie" },
     place: BRUSSELS,
+    client: { en: "School project", fr: "Projet d'école", nl: "Schoolproject" },
     credits: [
       { role: { en: "Concept", fr: "Concept", nl: "Concept" } },
       { role: { en: "Installation", fr: "Installation", nl: "Installatie" } },
@@ -330,6 +364,11 @@ export const projects: Project[] = [
       { type: "lead",
         line: { en: "Take the bees away, and the world goes grey.", fr: "Retirez les abeilles, et le monde devient gris.", nl: "Haal de bijen weg, en de wereld wordt grijs." },
         text: { en: "Bees pollinate around 70 of the 100 crop species that feed 90% of the world. Remove the bees from the hive and the landscape on screen empties and turns grey. Put them back and it comes alive again. Each bee carries a magnet: an Arduino reads which bees are home and sends the values to TouchDesigner, where the landscape is generated live.", fr: "Les abeilles pollinisent environ 70 des 100 espèces cultivées qui nourrissent 90 % de la planète. Retirez les abeilles de la ruche et le paysage à l'écran se vide et devient gris. Remettez-les et il reprend vie. Chaque abeille porte un aimant : un Arduino détecte les abeilles présentes et envoie les valeurs à TouchDesigner, qui génère le paysage en direct.", nl: "Bijen bestuiven ongeveer 70 van de 100 gewassen die 90% van de wereld voeden. Haal de bijen uit de bijenkorf en het landschap op het scherm loopt leeg en wordt grijs. Zet ze terug en het komt weer tot leven. Elke bij draagt een magneet: een Arduino leest welke bijen thuis zijn en stuurt de waarden naar TouchDesigner, dat het landschap live genereert." } },
+      { type: "points", items: [
+        { title: { en: "The brief", fr: "La demande", nl: "De vraag" }, text: { en: "Use an interactive installation to make people aware of a global issue.", fr: "Utiliser une installation interactive pour sensibiliser à un problème mondial.", nl: "Gebruik een interactieve installatie om mensen bewust te maken van een wereldwijd probleem." } },
+        { title: { en: "What Igor made", fr: "Ce qu'Igor a fait", nl: "Wat Igor maakte" }, text: { en: "A hive with magnetic bees, the electronics that read them, and a landscape generated live in TouchDesigner.", fr: "Une ruche avec des abeilles aimantées, l'électronique qui les détecte, et un paysage généré en direct dans TouchDesigner.", nl: "Een bijenkorf met magnetische bijen, de elektronica die ze leest, en een landschap dat live in TouchDesigner wordt gegenereerd." } },
+        { title: { en: "The result", fr: "Le résultat", nl: "Het resultaat" }, text: { en: "A message you understand in one gesture: take the bees away, and the world on screen dies.", fr: "Un message qui se comprend en un geste : retirez les abeilles, et le monde à l'écran meurt.", nl: "Een boodschap die je in één gebaar begrijpt: haal de bijen weg, en de wereld op het scherm sterft." } },
+      ] },
       { type: "images", layout: "two", items: [
         i("bees/hive-side.webp", { en: "The hive: yellow arcs on a black base, with copper bees between them", fr: "La ruche : des arcs jaunes sur un socle noir, avec des abeilles cuivrées entre eux", nl: "De bijenkorf: gele bogen op een zwarte sokkel, met koperen bijen ertussen" }),
         i("bees/hive-top.webp", { en: "The hive seen from above", fr: "La ruche vue du dessus", nl: "De bijenkorf van bovenaf" }),
@@ -345,7 +384,7 @@ export const projects: Project[] = [
   },
 
   // Lab
-  { slug: "mordida", name: "Mordida Records", kind: "lab", heroWhole: true,
+  { slug: "mordida", name: "Mordida Records", kind: "lab", context: "case", heroWhole: true,
     where: { en: "A small-batch hot sauce and chili crisp brand, dressed like a record shop.", fr: "Une marque de sauce piquante et de chili crisp en petites séries, habillée comme un disquaire.", nl: "Een merk van hete saus en chili crisp in kleine oplages, gekleed als een platenzaak." },
     roles: { en: "Identity, packaging", fr: "Identité, emballage", nl: "Identiteit, verpakking" }, cover: i("lab/mordida-cover.webp", { en: "The Double Release mailer, open, with both jars inside", fr: "La boîte Double Release ouverte, avec les deux pots", nl: "De Double Release-verzenddoos, open, met beide potjes" }), coverBg: "#302016",
     hero: { image: i("lab/mordida.webp", { en: "The mordida wordmark, Flavor. On repeat., and the cobalt record emblem", fr: "Le logotype mordida, Flavor. On repeat., et l'emblème disque cobalt", nl: "Het mordida-woordmerk, Flavor. On repeat., en het kobaltblauwe platenembleem" }) },
@@ -373,7 +412,7 @@ export const projects: Project[] = [
         caption: { en: "The Double Release mailer and the shop: Fermented heat. Roasted crunch.", fr: "La boîte Double Release et la boutique : Fermented heat. Roasted crunch.", nl: "De Double Release-verzenddoos en de webshop: Fermented heat. Roasted crunch." } },
     ],
     end: { en: "Flavour. On repeat.", fr: "La saveur, en boucle.", nl: "Smaak. Op repeat." } },
-  { slug: "silo", name: "Silo", kind: "lab", heroWhole: true,
+  { slug: "silo", name: "Silo", kind: "lab", context: "case", heroWhole: true,
     where: { en: "A distraction-free desktop workspace for deep solo work: identity and product concept.", fr: "Un espace de travail sans distraction pour le travail en solo : identité et concept produit.", nl: "Een werkplek zonder afleiding voor diep solowerk: identiteit en productconcept." },
     roles: { en: "Identity, product", fr: "Identité, produit", nl: "Identiteit, product" }, cover: i("lab/silo-cover.webp", { en: "The Silo workspace on a laptop", fr: "L'espace de travail Silo sur un ordinateur portable", nl: "De Silo-werkplek op een laptop" }),
     hero: { image: i("lab/silo.webp", { en: "The Silo symbol, the line A quieter place to work, and the four colours", fr: "Le symbole Silo, la phrase A quieter place to work et les quatre couleurs", nl: "Het Silo-symbool, de zin A quieter place to work en de vier kleuren" }) },
@@ -402,7 +441,7 @@ export const projects: Project[] = [
       { type: "images", layout: "wide", items: [ i("lab/silo-world.webp", { en: "Silo cards and a badge on a charcoal background", fr: "Des cartes Silo et un badge sur fond charbon", nl: "Silo-kaarten en een badge op een antraciet achtergrond" }) ] },
     ],
     end: { en: "Less noise. More focus.", fr: "Moins de bruit. Plus de concentration.", nl: "Minder ruis. Meer focus." } },
-  { slug: "tame-impala", name: "Tame Impala Experience", kind: "lab", heroWhole: true,
+  { slug: "tame-impala", name: "Tame Impala Experience", kind: "lab", context: "school", heroWhole: true,
     where: { en: "An interactive billboard that answers hand signs with the dates of a Tame Impala concert.", fr: "Un panneau interactif qui répond aux signes de la main avec les dates d'un concert de Tame Impala.", nl: "Een interactief reclamebord dat op handgebaren antwoordt met de data van een Tame Impala-concert." },
     roles: { en: "Interaction, motion", fr: "Interaction, motion", nl: "Interactie, motion" }, cover: i("lab/tame-impala.webp", { en: "A red eye on black, with the concert date and place", fr: "Un œil rouge sur fond noir, avec la date et le lieu du concert", nl: "Een rood oog op zwart, met de datum en plaats van het concert" }), coverBg: "#000000",
     hero: { image: i("lab/tame-impala.webp", { en: "A red eye on black, with the concert date and place", fr: "Un œil rouge sur fond noir, avec la date et le lieu du concert", nl: "Een rood oog op zwart, met de datum en plaats van het concert" }) },
@@ -421,22 +460,22 @@ export const projects: Project[] = [
         caption: { en: "The billboard reacting to hand signs.", fr: "Le panneau qui réagit aux signes de la main.", nl: "Het reclamebord dat reageert op handgebaren." } },
     ],
     end: { en: "Walk past, raise a hand, and the show starts.", fr: "Passez, levez la main, et le concert commence.", nl: "Loop voorbij, steek je hand op, en de show begint." } },
-  { slug: "infinite-corridor", name: "The Infinite Corridor", kind: "lab",
+  { slug: "infinite-corridor", name: "The Infinite Corridor", kind: "lab", hidden: true,
     where: { en: "An endless corridor of doors, each opening onto a small surreal world.", fr: "Un couloir sans fin, dont chaque porte ouvre sur un petit monde surréaliste.", nl: "Een eindeloze gang vol deuren, die elk openen op een kleine surrealistische wereld." },
     roles: { en: "Web", fr: "Web", nl: "Web" }, cover: i("lab/corridor.webp", { en: "The Infinite Corridor", fr: "The Infinite Corridor", nl: "The Infinite Corridor" }), link: { label: "visit", href: "https://lpsigorr.github.io/corridor/" } },
-  { slug: "forgotten-ideas", name: "The Internet Museum of Forgotten Ideas", kind: "lab",
+  { slug: "forgotten-ideas", name: "The Internet Museum of Forgotten Ideas", kind: "lab", hidden: true,
     where: { en: "A museum of inventions humanity almost built, each with its own small experiment.", fr: "Un musée des inventions que l'humanité a failli construire, chacune avec sa petite expérience.", nl: "Een museum van uitvindingen die de mensheid bijna bouwde, elk met een eigen klein experiment." },
     roles: { en: "Web", fr: "Web", nl: "Web" }, cover: i("lab/forgotten-ideas.webp", { en: "The Internet Museum of Forgotten Ideas", fr: "The Internet Museum of Forgotten Ideas", nl: "The Internet Museum of Forgotten Ideas" }), link: { label: "visit", href: "https://lpsigorr.github.io/forgottenideas/" } },
-  { slug: "accumulation-room", name: "The Accumulation Room", kind: "lab",
+  { slug: "accumulation-room", name: "The Accumulation Room", kind: "lab", hidden: true,
     where: { en: "A gallery that fills as you scroll, until you are asked to clear it.", fr: "Une galerie qui se remplit à mesure qu'on défile, jusqu'à ce qu'on vous propose de la vider.", nl: "Een galerij die zich vult terwijl je scrolt, tot je gevraagd wordt om ze leeg te maken." },
     roles: { en: "Web", fr: "Web", nl: "Web" }, cover: i("lab/accumulation-room.webp", { en: "The Accumulation Room", fr: "The Accumulation Room", nl: "The Accumulation Room" }), link: { label: "visit", href: "https://lpsigorr.github.io/artgallery/" } },
-  { slug: "road-to-utopia", name: "Road to Utopia", kind: "lab",
+  { slug: "road-to-utopia", name: "Road to Utopia", kind: "lab", context: "school",
     where: { en: "A motion piece on Travis Scott's road to Utopia.", fr: "Une pièce en motion sur la route de Travis Scott vers Utopia.", nl: "Een motionstuk over Travis Scotts weg naar Utopia." },
     roles: { en: "Motion", fr: "Motion", nl: "Motion" }, cover: i("lab/utopia.webp", { en: "TRAVIS SCOTT in melting white letters on black", fr: "TRAVIS SCOTT en lettres blanches fondues sur fond noir", nl: "TRAVIS SCOTT in smeltende witte letters op zwart" }), link: { label: "watch", href: "https://www.youtube.com/watch?v=KibzqZZqBv4" } },
-  { slug: "mbdtf", name: "MBDTF, how it was born", kind: "lab",
+  { slug: "mbdtf", name: "MBDTF, how it was born", kind: "lab", context: "school",
     where: { en: "A paper cutout collage animation on how an album was born.", fr: "Une animation en collage de papier découpé sur la naissance d'un album.", nl: "Een collageanimatie van uitgeknipt papier over hoe een album ontstond." },
     roles: { en: "Motion", fr: "Motion", nl: "Motion" }, cover: i("lab/mbdtf.webp", { en: "Collage animation frame", fr: "Image de l'animation en collage", nl: "Beeld uit de collageanimatie" }), link: { label: "watch", href: "https://youtu.be/hAqJbdYw_u8" } },
-  { slug: "cigusic", name: "Cigusic", kind: "lab", heroWhole: true,
+  { slug: "cigusic", name: "Cigusic", kind: "lab", context: "school", heroWhole: true,
     where: { en: "An electric cigarette holder that plays music matched to the brand you smoke.", fr: "Un fume-cigarette électrique qui joue une musique assortie à la marque fumée.", nl: "Een elektrisch sigarettenpijpje dat muziek speelt die past bij het merk dat je rookt." },
     roles: { en: "Product concept, visuals", fr: "Concept produit, visuels", nl: "Productconcept, beelden" }, cover: i("lab/cigusic-cover.webp", { en: "The Cigusic logo above the cigarette holders", fr: "Le logo Cigusic au-dessus des fume-cigarettes", nl: "Het Cigusic-logo boven de sigarettenpijpjes" }), coverBg: "#111111",
     hero: { image: i("lab/cigusic.webp", { en: "The Cigusic poster: the logo above three cigarette holders", fr: "L'affiche Cigusic : le logo au-dessus de trois fume-cigarettes", nl: "De Cigusic-affiche: het logo boven drie sigarettenpijpjes" }) },
@@ -459,7 +498,7 @@ export const projects: Project[] = [
         caption: { en: "A fake news page, made only for the concept. The story is invented, Johnny Depp has no link to Cigusic, and no money was made from it.", fr: "Une fausse page d'actualité, réalisée uniquement pour le concept. L'histoire est inventée, Johnny Depp n'a aucun lien avec Cigusic, et aucun argent n'en a été tiré.", nl: "Een nepnieuwspagina, enkel gemaakt voor het concept. Het verhaal is verzonnen, Johnny Depp heeft niets met Cigusic te maken, en er is geen geld mee verdiend." } },
     ],
     end: { en: "A musical twist on a classic habit.", fr: "Une touche musicale sur une vieille habitude.", nl: "Een muzikale twist aan een oude gewoonte." } },
-  { slug: "eregum", name: "Eregum", kind: "lab",
+  { slug: "eregum", name: "Eregum", kind: "lab", context: "school",
     where: { en: "A fictional chewing gum brand: name, logo, packaging and posters.", fr: "Une marque fictive de chewing-gum : nom, logo, emballage et affiches.", nl: "Een fictief kauwgommerk: naam, logo, verpakking en affiches." },
     roles: { en: "Identity, packaging", fr: "Identité, emballage", nl: "Identiteit, verpakking" }, cover: i("lab/eregum.webp", { en: "The Eregum logo", fr: "Le logo Eregum", nl: "Het Eregum-logo" }), coverBg: "#000000",
     // a lab entry with blocks gets its own page (same template as a case study) and is clickable in the lab
@@ -481,18 +520,18 @@ export const projects: Project[] = [
       ], caption: { en: "The packaging takes its cue from condom boxes. The gum comes in small sachets of ten pieces.", fr: "L'emballage s'inspire des boîtes de préservatifs. Les chewing-gums sont glissés dans de petits sachets de dix pièces.", nl: "De verpakking is geïnspireerd op condoomdoosjes. De kauwgom zit in kleine zakjes van tien stuks." } },
     ],
     end: { en: "A fictional product, a complete brand.", fr: "Un produit fictif, une marque complète.", nl: "Een fictief product, een compleet merk." } },
-  { slug: "soldias", name: "SOLDIAS", kind: "lab",
+  { slug: "soldias", name: "SOLDIAS", kind: "lab", hidden: true,
     where: { en: "A brand and its site, built on endurance and loyalty.", fr: "Une marque et son site, bâtis sur l'endurance et la loyauté.", nl: "Een merk en zijn website, gebouwd op uithouding en loyaliteit." },
     roles: { en: "Identity, web", fr: "Identité, web", nl: "Identiteit, web" }, cover: i("lab/soldias.webp", { en: "The SOLDIAS website", fr: "Le site SOLDIAS", nl: "De SOLDIAS-website" }), link: { label: "visit", href: "https://lpsigorr.github.io/soldias/#/" } },
-  { slug: "roast-and-ritual", name: "Roast and Ritual", kind: "lab",
+  { slug: "roast-and-ritual", name: "Roast and Ritual", kind: "lab", hidden: true,
     where: { en: "A website for a coffee shop concept.", fr: "Un site pour un concept de coffee shop.", nl: "Een website voor een koffiebarconcept." },
     roles: { en: "Web design", fr: "Webdesign", nl: "Webdesign" }, cover: i("lab/roast-and-ritual.webp", { en: "The Roast and Ritual website", fr: "Le site Roast and Ritual", nl: "De Roast and Ritual-website" }), link: { label: "visit", href: "https://lpsigorr.github.io/coffee/" } },
 ];
 
 export const cases = projects.filter((p) => p.kind === "case");
-export const lab = projects.filter((p) => p.kind === "lab");
+export const lab = projects.filter((p) => p.kind === "lab" && !p.hidden);
 /** Every project that has its own page: the case studies, and lab entries that have blocks. */
-export const pages = projects.filter((p) => p.kind === "case" || p.blocks);
+export const pages = projects.filter((p) => !p.hidden && (p.kind === "case" || p.blocks));
 
 export function nextCase(slug: string): Project {
   const idx = cases.findIndex((p) => p.slug === slug);

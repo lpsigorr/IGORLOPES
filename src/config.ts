@@ -9,7 +9,9 @@ export const SITE = {
   fullName: "Igor Lopes Oliveira",
   title: "Product Developer",
   city: "Brussels",
+  email: "i.lopesoliveira18@gmail.com",
   github: "https://github.com/lpsigorr",
+  youtube: "https://www.youtube.com/@lopesigor2076",
   linkedin: "https://www.linkedin.com/in/lpsigorr/",
   instagram: "https://www.instagram.com/lpsigorr/",
   // Where the contact form sends to (Formspree). Empty = the form says it is not connected yet.

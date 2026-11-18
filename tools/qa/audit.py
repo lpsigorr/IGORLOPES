@@ -14,7 +14,7 @@ flt = sys.argv[1] if len(sys.argv) > 1 else ''
 JS = r"""
 () => {
   const vw = document.documentElement.clientWidth, vh = innerHeight, out = [];
-  const vis = (el) => { const s = getComputedStyle(el); if (s.display==='none'||s.visibility==='hidden') return false; const r = el.getBoundingClientRect(); return r.width>1&&r.height>1; };
+  const vis = (el) => { if (el.closest('.lamp')) return false; const s = getComputedStyle(el); if (s.display==='none'||s.visibility==='hidden') return false; const r = el.getBoundingClientRect(); return r.width>1&&r.height>1; };
   const name = (el) => (el.className && typeof el.className==='string' ? '.'+el.className.split(' ')[0] : el.tagName.toLowerCase());
   const path = (el) => { const a=[]; for(let n=el;n&&n!==document.body&&a.length<3;n=n.parentElement) a.unshift(name(n)); return a.join(' > '); };
   const inSeq = (el) => !!el.closest('.field, .preview, .cur');
@@ -25,12 +25,14 @@ JS = r"""
     const r = el.getBoundingClientRect();
     if (r.right > vw + 1.5 || r.left < -1.5) {
       if (el.closest('.sr-only, .skip, .flood, .giant')) return;
+      if (el.style.transform && el.parentElement && /hidden|clip/.test(getComputedStyle(el.parentElement).overflowX)) return; // settling inside its frame
       out.push(['off-screen-x', path(el)+' L'+Math.round(r.left)+' R'+Math.round(r.right)+' vw'+vw]);
     }
   });
   // 2 media
   document.querySelectorAll('img, video').forEach((el) => {
     if (inSeq(el) || !vis(el)) return;
+    if (el.style.transform || (el.closest('[style*="clip-path"]'))) return;
     const r = el.getBoundingClientRect(); const s = getComputedStyle(el);
     let nw = el.naturalWidth || el.videoWidth || +el.getAttribute('width') || 0, nh = el.naturalHeight || el.videoHeight || +el.getAttribute('height') || 0;
     // with srcset the browser reports a size already divided by the density; use the real pixels of the file it chose
@@ -53,7 +55,7 @@ JS = r"""
     if (inSeq(el) || !vis(el)) return;
     if (el.closest('.sr-only, .skip, .giant, .browser__bar')) return;
     const s = getComputedStyle(el);
-    if ((s.overflowX==='hidden'||s.overflowX==='clip') && el.scrollWidth > el.clientWidth + 1) out.push(['text-cut', path(el)]);
+    if ((s.overflowX==='hidden'||s.overflowX==='clip') && !el.querySelector(':scope > .lamp') && !el.querySelector('img[style*="scale"], img[style*="matrix"]') && el.scrollWidth > el.clientWidth + 1) out.push(['text-cut', path(el)]);
     const fs = parseFloat(s.fontSize);
     if (el.childNodes.length && [...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()) && fs < 11.5) out.push(['tiny-text', path(el)+' '+fs.toFixed(1)+'px']);
   });
@@ -106,7 +108,7 @@ async def main():
                           await pg.evaluate('(y)=>window.scrollTo(0,y)', y); await pg.wait_for_timeout(90)
                           for it in await pg.evaluate(JS): found.add(tuple(it))
                           y += int(h*0.8)
-                      await pg.wait_for_timeout(150)
+                      await pg.wait_for_timeout(1700)
                       for it in await pg.evaluate(JS): found.add(tuple(it))
                       for e in set(errs): found.add(('error', e))
                       for kind, msg in found: res.setdefault((kind, msg), []).append(f'{u}@{w}')

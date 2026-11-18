@@ -26,7 +26,11 @@ video:focus-visible { outline: 2px solid #0C7C59; outline-offset: 3px; }
 
 /* Page to page: a soft cross-fade, no script needed */
 @view-transition { navigation: auto; }
-::view-transition-old(root), ::view-transition-new(root) { animation-duration: .4s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+/* the new page rises over the old one like a sheet being pulled up; the old one sinks back a little */
+@keyframes vt-rise { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes vt-sink { to { transform: translateY(-3vh) scale(.985); opacity: .55; } }
+::view-transition-old(root) { animation: vt-sink .75s cubic-bezier(.65, 0, .35, 1) both; }
+::view-transition-new(root) { animation: vt-rise .75s cubic-bezier(.65, 0, .35, 1) both; }
 ::view-transition-group(*) { animation-duration: .55s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 
@@ -39,7 +43,15 @@ video:focus-visible { outline: 2px solid #0C7C59; outline-offset: 3px; }
 .top > * { pointer-events: auto; }
 .top { transition: transform .5s cubic-bezier(.2,.7,.2,1), background-color .3s, color .3s; }
 html.top-away .top { transform: translateY(-105%); }
+/* once the page has moved, the bar turns to frosted glass tinted with the section under it */
 html.is-scrolled:not(.top-bare) .top { background: var(--top-bg, transparent); }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  /* the blur sits on a layer behind the bar: a blur on the bar itself would trap the full-screen phone menu inside the bar */
+  html.is-scrolled:not(.top-bare) .top { background: transparent; }
+  html.is-scrolled:not(.top-bare) .top::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: color-mix(in srgb, var(--top-bg, transparent) 62%, transparent); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
+  html.menu-open .top::before { display: none; }
+}
 .top a { text-decoration: none; }
 /* links get a taller touch area than they look */
 .top a, .top__menu { padding: .7rem .45rem; margin: -.7rem -.45rem; }
@@ -82,7 +94,11 @@ html.is-scrolled:not(.top-bare) .top { background: var(--top-bg, transparent); }
 .cur.is-on { opacity: 1; }
 .cur.is-typing { opacity: 0; }
 .cur__dot { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
-.cur.is-link .cur__dot { transform: scale(2.4); }
+.cur.is-link .cur__dot { transform: scale(.4); }
+/* a ring that follows the dot with a little delay; it opens around links */
+.cur__ring { position: absolute; left: -18px; top: -18px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid currentColor; opacity: .55; will-change: transform; }
+.cur__ring::before { content: ""; position: absolute; inset: 0; border-radius: 50%; transform: scale(var(--rs, 1)); transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.cur.is-link { --rs: 1.7; }
 .cur.is-down .cur__dot { transform: scale(.7); }
 .cur.is-link.is-down .cur__dot { transform: scale(1.9); }
 .cur__label { position: absolute; left: 18px; top: 14px; white-space: nowrap; font-size: .75rem; opacity: 0; transform: translateY(4px); transition: opacity .2s, transform .3s cubic-bezier(.2,.7,.2,1); }

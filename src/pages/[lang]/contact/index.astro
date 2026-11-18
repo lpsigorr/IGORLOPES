@@ -11,7 +11,10 @@ const lang = Astro.params.lang as Lang;
     <p>{t(lang, "contact.lead")}</p>
   </header>
   <section class="contact" data-theme="light">
-    <p class="contact__aside">{SITE.fullName}<br>{t(lang, "hero.title")}, {t(lang, "city")}</p>
+    <div class="contact__aside">
+      <p>{SITE.fullName}<br>{t(lang, "hero.title")}, {t(lang, "city")}</p>
+      <p class="contact__mail">{t(lang, "contact.or")}<br><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+    </div>
     <form method="post" action={SITE.formEndpoint || undefined} data-endpoint={SITE.formEndpoint}
       data-sending={t(lang, "status.sending")} data-ok={t(lang, "status.ok")} data-error={t(lang, "status.error")} data-notready={t(lang, "status.notready")}>
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" hidden>
@@ -28,7 +31,7 @@ const lang = Astro.params.lang as Lang;
         </select>
       </div>
       <div class="ff"><label for="f-message">{t(lang, "f.message")}</label><textarea id="f-message" name="message" required></textarea></div>
-      <button class="form__send" data-widen="parent" type="submit">{t(lang, "f.send")}</button>
+      <button class="form__send" data-widen="parent" data-magnet type="submit">{t(lang, "f.send")}</button>
       <p class="form__status" data-status role="status" aria-live="polite"></p>
       <p class="form__note">{t(lang, "f.privacy")}</p>
     </form>

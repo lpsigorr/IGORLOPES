@@ -50,7 +50,7 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
       <div class="reel__plain" aria-hidden="true"></div>
     )}
     <h1 class:list={["reel__name", { "is-star": p.hero?.nameFont === "star" }]} style={`view-transition-name: name-${p.slug}`}>{p.name}</h1>
-    <p class="reel__tag"><span>{tx(p.tag, lang)}</span>{p.place && <span>{tx(p.place, lang)}</span>}</p>
+    <p class="reel__tag"><span>{tx(p.tag, lang)}</span>{(p.place || p.year) && <span>{[p.place && tx(p.place, lang), p.year].filter(Boolean).join(", ")}</span>}</p>
   </section>
 
   <div class="case__body" data-theme="light">
@@ -65,17 +65,25 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
     </section>
 
     {p.credits && (
-      <section class="credits" aria-labelledby={`credits-${p.slug}`}>
+      <section class="credits" data-lamp aria-labelledby={`credits-${p.slug}`}>
         <h2 id={`credits-${p.slug}`} class="credits__title">{t(lang, "case.credits")}</h2>
-        <dl class="credits__list">
-          {p.credits.map((c) => (
-            <div class="credits__row" data-reveal>
-              <dt>{tx(c.role, lang)}</dt>
-              <dd>{c.name || CREDIT_NAME}</dd>
-            </div>
-          ))}
-        </dl>
-        {p.client && <p class="credits__client" data-reveal>{tx(p.client, lang)}</p>}
+        {p.credits.every((c) => !c.name || c.name === CREDIT_NAME) ? (
+          <div class="credits__solo" data-reveal>
+            <ul class="credits__roles">{p.credits.map((c) => <li>{tx(c.role, lang)}</li>)}</ul>
+            <p class="credits__by">{t(lang, "case.by")}</p>
+            <p class="credits__name">{CREDIT_NAME}</p>
+          </div>
+        ) : (
+          <dl class="credits__list">
+            {p.credits.map((c) => (
+              <div class="credits__row" data-reveal>
+                <dt>{tx(c.role, lang)}</dt>
+                <dd>{c.name || CREDIT_NAME}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+        {(p.client || p.context) && <p class="credits__client" data-reveal>{p.client ? tx(p.client, lang) : t(lang, `context.${p.context}`)}</p>}
       </section>
     )}
 
@@ -167,7 +175,7 @@ const share = (ar: number, sum: number) => `(max-width: 699px) 100vw, ${Math.max
     {p.footnote && <p class="case__foot">{tx(p.footnote, lang)}</p>}
   </div>
 
-  <a class="next" href={url(`/${lang}/work/${next.slug}/`)} data-theme="dark" data-bare data-cursor={`${t(lang, "work.open")} ${next.name}`}>
+  <a class="next" data-lamp href={url(`/${lang}/work/${next.slug}/`)} data-theme="dark" data-bare data-cursor={`${t(lang, "work.open")} ${next.name}`}>
     <span class="next__label">{t(lang, "case.next")}</span>
     {next.cover && nextPic ? (
       <span class="next__thumb" style={`--ar:${nextPic.ar.toFixed(4)};--nw:${nextPic.width}px`}>

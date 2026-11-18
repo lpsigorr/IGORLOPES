@@ -4,11 +4,11 @@ import { t } from "../i18n";
 interface Props { lang: Lang; cta?: boolean } // cta: the big "Send a brief" line (not on the contact page itself)
 const { lang, cta = true } = Astro.props;
 ---
-<footer class:list={["foot", { "foot--plain": !cta }]} data-theme="dark">
+<footer class:list={["foot", { "foot--plain": !cta }]} data-theme="dark" data-lamp>
   {cta && (
     <div class="foot__cta">
       <p>{t(lang, "cta.text")}</p>
-      <a class="foot__big" data-widen="beside" href={url(`/${lang}/contact/`)}>{t(lang, "cta.button")}</a>
+      <a class="foot__big" data-widen="beside" data-magnet href={url(`/${lang}/contact/`)}>{t(lang, "cta.button")}</a>
     </div>
   )}
   <div class="foot__line">

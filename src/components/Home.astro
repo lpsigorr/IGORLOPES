@@ -27,13 +27,13 @@ const fly = [
   { src: "numberone/site-home.webp", w: 30, f: "x=.34;y=-.52;a=0.63;b=0.79;r=-2", name: "Number One", what: { en: "Website", fr: "Site web", nl: "Website" }, alt: "Number One website" },
   { src: "star/alphabet.webp", w: 17, f: "x=-.56;y=.22;a=0.666;b=0.826;r=3", name: "STAR", what: { en: "Typeface", fr: "Typographie", nl: "Lettertype" }, alt: "STAR alphabet", m: 0 },
   { src: "sparx/mark-boxer.webp", w: 14, f: "x=.6;y=-.06;a=0.702;b=0.862;r=-3", name: "SPARX", what: { en: "Mark", fr: "Symbole", nl: "Beeldmerk" }, alt: "SPARX boxer mark" },
-  { src: "lab/corridor.webp", w: 26, f: "x=-.1;y=-.34;a=0.738;b=0.898;r=1", name: "Infinite Corridor", what: { en: "Web", fr: "Web", nl: "Web" }, alt: "The Infinite Corridor", m: 0 },
+  { src: "lab/mordida-pack.webp", w: 26, f: "x=-.1;y=-.34;a=0.738;b=0.898;r=1", name: "Mordida Records", what: { en: "Packaging", fr: "Emballage", nl: "Verpakking" }, alt: "Mordida Records labels and jars", m: 0 },
 ];
 const words = t(lang, "words").split("|");
 // one word at a time, in the middle of the screen
 const wordTimes = [[.3, .41], [.41, .52], [.52, .63], [.63, .74], [.74, .85]];
 ---
-<section class="seq" data-theme="light" data-theme-switch="flood:.5:dark" data-bare data-seq="tunnel" data-ramps="hero:0:.05,flood:.02:.12,name:.05:.24,gone:.25:.31,end:.87:.97" aria-label={SITE.fullName}>
+<section class="seq" data-theme="light" data-theme-switch="flood:.5:dark" data-bare data-seq="tunnel" data-ramps="hero:0:.05,flood:.05:.13,name:.05:.24,gone:.25:.31,end:.87:.97" aria-label={SITE.fullName}>
   <div class="stage">
     <div class="hero">
       <h1 class="sr-only">{SITE.fullName}, {SITE.title}</h1>
@@ -46,6 +46,7 @@ const wordTimes = [[.3, .41], [.41, .52], [.52, .63], [.63, .74], [.74, .85]];
     </div>
 
     <div class="flood hide-still" aria-hidden="true"></div>
+    <div class="cube hide-still" aria-hidden="true"><div class="cube__spin"><i class="cube__f cube__f--front"></i><i class="cube__f cube__f--back"></i><i class="cube__f cube__f--right"></i><i class="cube__f cube__f--left"></i><i class="cube__f cube__f--top"></i><i class="cube__f cube__f--bottom"></i></div></div>
     <p class="giant" data-fit="100" aria-hidden="true">Igor Lopes</p>
 
     <div class="field">
@@ -74,7 +75,7 @@ const wordTimes = [[.3, .41], [.41, .52], [.52, .63], [.63, .74], [.74, .85]];
 
 <WorkRows lang={lang} />
 
-<section class="more" data-theme="dark" aria-label={t(lang, "lab.title")}>
+<section class="more" data-theme="dark" data-lamp aria-label={t(lang, "lab.title")}>
   <div class="more__lab">
     <h2><a href={url(`/${lang}/lab/`)}>{t(lang, "lab.title")}</a></h2>
     <ul>

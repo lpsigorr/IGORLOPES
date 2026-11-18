@@ -1,13 +1,13 @@
 ---
 import Pic from "./Pic.astro";
 import { lab } from "../data/projects";
-import { url, type Lang } from "../config";
+import { SITE, url, type Lang } from "../config";
 import { t, tx } from "../i18n";
 interface Props { lang: Lang; heading?: "h1" | "h2"; lead?: boolean }
 const { lang, heading = "h2", lead = true } = Astro.props;
 const H = heading;
 ---
-<section class="lab" data-theme="dark" id="lab" aria-labelledby="lab-title">
+<section class="lab" data-theme="dark" data-lamp id="lab" aria-labelledby="lab-title">
   <div class="lab__head">
     <H id="lab-title">{t(lang, "lab.title")}</H>
     {lead && <p>{t(lang, "lab.lead")}</p>}
@@ -23,7 +23,7 @@ const H = heading;
           )}
           <span class="lab__name">{p.name}</span>
           <span class="lab__what">{tx(p.where, lang)}</span>
-          <span class="lab__kind">{tx(p.roles, lang)}{p.link && <> &middot; {t(lang, p.link.label === "watch" ? "lab.watch" : "lab.visit")}</>}</span>
+          <span class="lab__kind">{p.context && <>{t(lang, `context.${p.context}`)} &middot; </>}{tx(p.roles, lang)}{p.link && <> &middot; {t(lang, p.link.label === "watch" ? "lab.watch" : "lab.visit")}</>}</span>
         </>
       );
       return (
@@ -35,4 +35,5 @@ const H = heading;
       );
     })}
   </ul>
+  <p class="lab__more"><a href={SITE.youtube} target="_blank" rel="noopener" data-widen="self" data-cursor="YouTube">{t(lang, "lab.channel")} &rarr;</a></p>
 </section>

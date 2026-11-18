@@ -121,17 +121,50 @@ function build(q: Seq) {
   const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
   tl.set({}, {}, 1); // the timeline runs from 0 to 1, like the scroll
 
-  // the green square opens into the whole screen
+  /* The green cube: it turns slowly on its own (and leans toward the mouse). The first bit of scroll
+     straightens it to face you and brings it closer; then its front face opens into the whole screen. */
   const flood = q.el.querySelector<HTMLElement>(".flood");
-  if (flood) {
-    const f = { v: 0 };
-    const draw = () => {
+  const cube = q.el.querySelector<HTMLElement>(".cube");
+  const spin = cube?.querySelector<HTMLElement>(".cube__spin");
+  if (flood && cube && spin) {
+    const P = 900, GROW = vw < 700 ? 2.6 : 3.2; // perspective, and how much bigger it gets
+    const c = { v: 0 }, f = { v: 0 };
+    cube.style.setProperty("--g", String(GROW));
+    let ax = -22, ay = 32, tx = 0, ty = 0, last = 0;
+    const cubeAt = () => {
       const rem = parseFloat(getComputedStyle(root).fontSize) || 16;
-      const k = 1 - f.v, cx = q.sw / 2, cy = q.sh / 2 + 3.4 * rem, r = 7;
-      flood.style.clipPath = `inset(${((cy - r) * k).toFixed(1)}px ${((q.sw - cx - r) * k).toFixed(1)}px ${((q.sh - cy - r) * k).toFixed(1)}px ${((cx - r) * k).toFixed(1)}px)`;
+      const size = cube.offsetWidth || 56;
+      return { cx: q.sw / 2, cy: q.sh / 2 + 6 * rem, size };
     };
-    redraws.push(draw);
-    tl.to(f, { v: 1, ease: "expo.inOut", duration: 0.1, onUpdate: draw }, 0.02);
+    const place = () => {
+      const k = c.v, s = 1 + (GROW - 1) * k * k * (3 - 2 * k);
+      // the turn unwinds to zero, so the front face ends flat and square
+      const nx = ((ax % 360) + 540) % 360 - 180, ny = ((ay % 360) + 540) % 360 - 180;
+      const rx = (nx + ty) * (1 - k), ry = (ny + tx) * (1 - k);
+      const z = (s / GROW).toFixed(4);
+      spin.style.transform = `scale3d(${z},${z},${z}) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+    };
+    const draw = () => {
+      const { cx, cy, size } = cubeAt();
+      // where the front face appears when it is flat: its size, enlarged by the perspective
+      const half = (size * GROW) / 2, r = half * (P / (P - half));
+      const k = 1 - f.v;
+      flood.style.clipPath = `inset(${((cy - r) * k).toFixed(1)}px ${((q.sw - cx - r) * k).toFixed(1)}px ${((q.sh - cy - r) * k).toFixed(1)}px ${((cx - r) * k).toFixed(1)}px)`;
+      flood.style.visibility = f.v > 0 ? "visible" : "hidden";
+      cube.style.visibility = f.v > 0 ? "hidden" : "visible";
+    };
+    redraws.push(draw, place);
+    tl.to(c, { v: 1, ease: "power2.inOut", duration: 0.05, onUpdate: place }, 0);
+    tl.to(f, { v: 1, ease: "expo.inOut", duration: 0.08, onUpdate: draw }, 0.05);
+    draw(); place();
+    // idle turn, only while the cube is on screen and not yet straightened
+    gsap.ticker.add((t) => {
+      const dt = last ? Math.min(64, t * 1000 - last) : 16; last = t * 1000;
+      if (c.v > 0.001 || f.v > 0) return;
+      ay += dt * 0.012; ax = -22 + Math.sin(t * 0.5) * 10;
+      if (fine) { tx = lerp(tx, ((mx / vw) - 0.5) * 30, 0.06); ty = lerp(ty, -((my / vh) - 0.5) * 22, 0.06); }
+      place();
+    });
   }
 
   // the name rises letter by letter, holds, then leaves upward
@@ -261,16 +294,18 @@ try {
   const saved = JSON.parse(sessionStorage.getItem(POS_KEY) || "null");
   if (Array.isArray(saved)) { mx = clamp(saved[0], 0, vw); my = clamp(saved[1], 0, vh); seen = true; }
 } catch { /* storage can be blocked; the cursor simply waits for the first move */ }
-let cur: HTMLElement | null = null, curLabel: HTMLElement | null = null;
+let cur: HTMLElement | null = null, curLabel: HTMLElement | null = null, curRing: HTMLElement | null = null;
+let rx = mx, ry = my; // the ring trails the dot
 const moveCursor = () => { if (cur) cur.style.transform = `translate3d(${mx}px,${my}px,0)`; };
 if (fine && !reduce) {
   cur = document.createElement("div");
   cur.className = "cur";
   cur.setAttribute("aria-hidden", "true");
-  cur.innerHTML = '<span class="cur__dot"></span><span class="cur__label"></span>';
+  cur.innerHTML = '<span class="cur__ring"></span><span class="cur__dot"></span><span class="cur__label"></span>';
   document.body.appendChild(cur);
   root.classList.add("has-cursor"); // only now is the system pointer hidden
   curLabel = cur.querySelector(".cur__label");
+  curRing = cur.querySelector(".cur__ring");
   if (seen) { cur.classList.add("is-on"); moveCursor(); }
   document.addEventListener("pointermove", (e) => {
     if (e.pointerType === "touch") return;
@@ -438,6 +473,10 @@ function frame(time: number) {
   if (themeDirty && tick % 2 === 0) { updateTheme(); themeDirty = false; }
   if (cursorDirty && tick % 3 === 0) { updateCursorTone(); cursorDirty = false; }
 
+  if (curRing && (Math.abs(mx - rx) > 0.2 || Math.abs(my - ry) > 0.2)) {
+    rx = lerp(rx, mx, 0.2); ry = lerp(ry, my, 0.2);
+    curRing.style.transform = `translate3d(${(rx - mx).toFixed(1)}px,${(ry - my).toFixed(1)}px,0)`;
+  }
   if (pv && (pvOn || Math.abs(mx - px) > 0.5 || Math.abs(my - py) > 0.5)) {
     px = lerp(px, mx, 0.16); py = lerp(py, my, 0.16);
     const tilt = clamp((mx - px) * 0.06, -8, 8);

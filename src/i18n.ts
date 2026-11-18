@@ -29,15 +29,15 @@ const ui = {
   "nav.menu": { en: "Menu", fr: "Menu", nl: "Menu" },
 
   "meta.home": {
-    en: "Igor Lopes Oliveira, product developer in Brussels. Design, code, video, motion and prototyping in the same hands.",
-    fr: "Igor Lopes Oliveira, développeur produit à Bruxelles. Design, code, vidéo, motion et prototypage dans les mêmes mains.",
-    nl: "Igor Lopes Oliveira, productontwikkelaar in Brussel. Design, code, video, motion en prototyping in één paar handen.",
+    en: "Igor Lopes Oliveira, product developer in Brussels. Design, code, video, prototypes and products, from concept to launch.",
+    fr: "Igor Lopes Oliveira, développeur produit à Bruxelles. Design, code, vidéo, prototypes et produits, du concept au lancement.",
+    nl: "Igor Lopes Oliveira, productontwikkelaar in Brussel. Design, code, video, prototypes en producten, van concept tot lancering.",
   },
 
   "hero.line": {
-    en: "Design, code, video, motion and prototyping in the same hands.",
-    fr: "Design, code, vidéo, motion et prototypage dans les mêmes mains.",
-    nl: "Design, code, video, motion en prototyping in één paar handen.",
+    en: "I build things. Design, code, video, prototypes and products, from concept to launch.",
+    fr: "Je construis des choses. Design, code, vidéo, prototypes et produits, du concept au lancement.",
+    nl: "Ik bouw dingen. Design, code, video, prototypes en producten, van concept tot lancering.",
   },
   "hero.scroll": { en: "Scroll", fr: "Défiler", nl: "Scroll" },
   "hero.langs": {
@@ -63,11 +63,15 @@ const ui = {
 
   "lab.title": { en: "Lab", fr: "Lab", nl: "Lab" },
   "lab.lead": {
-    en: "Experiments, small sites, motion and brands made for the fun of it.",
-    fr: "Des expériences, des petits sites, du motion et des marques, faits pour le plaisir.",
-    nl: "Experimenten, kleine websites, motion en merken, gemaakt voor de lol.",
+    en: "School projects and self-initiated case studies: brands, objects, motion and interaction.",
+    fr: "Projets d'école et études de cas personnelles : marques, objets, motion et interaction.",
+    nl: "Schoolprojecten en eigen case studies: merken, objecten, motion en interactie.",
   },
   "lab.visit": { en: "Visit", fr: "Voir", nl: "Bekijk" },
+  "context.school": { en: "School project", fr: "Projet d'école", nl: "Schoolproject" },
+  "context.case": { en: "Case study", fr: "Étude de cas", nl: "Case study" },
+  "lab.channel": { en: "More motion work on YouTube", fr: "Plus de motion sur YouTube", nl: "Meer motion op YouTube" },
+  "case.by": { en: "All by", fr: "Entièrement par", nl: "Volledig door" },
   "lab.watch": { en: "Watch", fr: "Regarder", nl: "Kijk" },
 
   "about.title": { en: "About", fr: "À propos", nl: "Over" },
@@ -77,9 +81,9 @@ const ui = {
     nl: "Igor Lopes Oliveira, productontwikkelaar. Geboren en getogen in Brussel.",
   },
   "about.short2": {
-    en: "Design, code, video, motion and prototyping in the same hands, so nothing gets lost between the idea and the result.",
-    fr: "Design, code, vidéo, motion et prototypage dans les mêmes mains : rien ne se perd entre l'idée et le résultat.",
-    nl: "Design, code, video, motion en prototyping in één paar handen, zodat er niets verloren gaat tussen het idee en het resultaat.",
+    en: "Design, code, video, prototypes and products, from concept to launch, in one pair of hands. Nothing gets lost between the idea and the result.",
+    fr: "Design, code, vidéo, prototypes et produits, du concept au lancement, dans les mêmes mains. Rien ne se perd entre l'idée et le résultat.",
+    nl: "Design, code, video, prototypes en producten, van concept tot lancering, in één paar handen. Er gaat niets verloren tussen het idee en het resultaat.",
   },
   "about.more": { en: "More about Igor", fr: "En savoir plus sur Igor", nl: "Meer over Igor" },
 
@@ -98,6 +102,7 @@ const ui = {
   "case.watch": { en: "Watch the film", fr: "Voir le film", nl: "Bekijk de film" },
 
   "contact.title": { en: "Send a brief", fr: "Envoyer un brief", nl: "Stuur een briefing" },
+  "contact.or": { en: "Or write directly to", fr: "Ou écrivez directement à", nl: "Of mail rechtstreeks naar" },
   "contact.lead": {
     en: "A few lines are enough. Igor answers personally, in French, Dutch, English or Portuguese.",
     fr: "Quelques lignes suffisent. Igor répond lui-même, en français, néerlandais, anglais ou portugais.",
