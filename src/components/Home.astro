@@ -14,7 +14,7 @@ const { lang } = Astro.props;
 // The work that comes out of the middle. x, y: where it lands, from the centre, in half-screens (the engine keeps it whole on screen).
 // a, b: when it shows (0 to 1 of the scroll). r: tilt. w: width, in hundredths of the screen.
 const fly = [
-  { video: "star/loop.mp4", poster: "star/loop-poster.webp", w: 34, f: "x=-.42;y=-.2;a=0.27;b=0.43;r=-2", name: "STAR", what: { en: "Brand film", fr: "Film de marque", nl: "Merkfilm" } },
+  { src: "star/cover.webp", w: 34, f: "x=-.42;y=-.2;a=0.27;b=0.43;r=-2", name: "STAR", what: { en: "Campaign", fr: "Campagne", nl: "Campagne" }, alt: "The STAR sketchbook held open in front of the face" },
   { src: "sparx/mag-cover.webp", w: 17, f: "x=.56;y=.36;a=0.306;b=0.466;r=4", name: "SPARX", what: { en: "Editorial", fr: "Édition", nl: "Editorial" }, alt: "SPARX magazine cover" },
   { src: "numberone/numberone-2.webp", w: 26, f: "x=.6;y=-.48;a=0.342;b=0.502;r=-3", name: "Number One", what: { en: "Photography", fr: "Photographie", nl: "Fotografie" }, alt: "Number One delivery van" },
   { src: "star/poster.webp", w: 16, f: "x=-.72;y=.5;a=0.378;b=0.538;r=3", name: "STAR", what: { en: "Poster", fr: "Affiche", nl: "Affiche" }, alt: "STAR poster" },
