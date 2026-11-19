@@ -134,7 +134,8 @@ function build(q: Seq) {
     const cubeAt = () => {
       const rem = parseFloat(getComputedStyle(root).fontSize) || 16;
       const size = cube.offsetWidth || 56;
-      return { cx: q.sw / 2, cy: q.sh / 2 + 6 * rem, size };
+      const off = parseFloat(getComputedStyle(cube).getPropertyValue("--cy")) || 6; // in rem, same as the CSS
+      return { cx: q.sw / 2, cy: q.sh / 2 + off * rem, size };
     };
     const place = () => {
       const k = c.v, s = 1 + (GROW - 1) * k * k * (3 - 2 * k);

@@ -39,7 +39,8 @@ const ui = {
     fr: "Je construis des choses. Design, code, vidéo, prototypes et produits, du concept au lancement.",
     nl: "Ik bouw dingen. Design, code, video, prototypes en producten, van concept tot lancering.",
   },
-  "hero.scroll": { en: "Scroll", fr: "Défiler", nl: "Scroll" },
+  "hero.scroll": { en: "Scroll down", fr: "Faites défiler", nl: "Scroll naar beneden" },
+  "hero.keep": { en: "Keep scrolling", fr: "Continuez à défiler", nl: "Blijf scrollen" },
   "hero.langs": {
     en: "Works in French, Dutch, English and Portuguese",
     fr: "Travaille en français, néerlandais, anglais et portugais",

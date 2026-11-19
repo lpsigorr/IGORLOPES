@@ -94,3 +94,24 @@ if (!reduce) {
 } else {
   document.querySelectorAll(".row").forEach((r) => r.classList.add("is-in"));
 }
+
+// ---------- Scroll cue on the home intro ----------
+// "Scroll down" until the visitor moves, then "Keep scrolling". If they stop before the end, the pill nudges.
+{
+  const seq = document.querySelector<HTMLElement>(".seq[data-seq]");
+  const cue = seq?.querySelector<HTMLElement>(".cue");
+  if (seq && cue && !document.documentElement.classList.contains("is-still")) {
+    const prog = () => parseFloat(seq.style.getPropertyValue("--p")) || 0;
+    let idle = 0;
+    const wait = () => {
+      cue.classList.remove("is-idle");
+      clearTimeout(idle);
+      idle = window.setTimeout(() => { if (prog() < 0.87) cue.classList.add("is-idle"); }, prog() < 0.01 ? 3200 : 2400);
+    };
+    const check = () => { seq.classList.toggle("has-started", prog() > 0.01); };
+    window.addEventListener("scroll", () => { check(); wait(); }, { passive: true });
+    // the engine smooths the scroll, so read the settled progress a moment later too
+    window.addEventListener("scroll", () => { setTimeout(check, 400); }, { passive: true });
+    check(); wait();
+  }
+}

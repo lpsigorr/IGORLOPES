@@ -40,7 +40,6 @@ const wordTimes = [[.3, .41], [.41, .52], [.52, .63], [.63, .74], [.74, .85]];
       <p class="hero__line">{t(lang, "hero.line")}</p>
       <div class="hero__foot">
         <p class="hero__who"><strong>{SITE.fullName}</strong>{t(lang, "hero.title")}, {t(lang, "city")}</p>
-        <span class="hero__scroll" aria-hidden="true">{t(lang, "hero.scroll")}<i></i></span>
         <p class="hero__langs">{t(lang, "hero.langs")}</p>
       </div>
     </div>
@@ -63,6 +62,13 @@ const wordTimes = [[.3, .41], [.41, .52], [.52, .63], [.63, .74], [.74, .85]];
       {words.map((w, i) => (
         <p class="fly word hide-still" data-fly={`word=1;a=${wordTimes[i][0]};b=${wordTimes[i][1]}`} aria-hidden="true">{w}</p>
       ))}
+    </div>
+
+    <!-- stays on screen until the intro is over: says what to do and how far there is to go -->
+    <div class="cue hide-still" aria-hidden="true">
+      <span class="cue__text"><span class="cue__a">{t(lang, "hero.scroll")}</span><span class="cue__b">{t(lang, "hero.keep")}</span></span>
+      <svg class="cue__arrow" viewBox="0 0 12 16" width="12" height="16"><path d="M6 1v13M1.5 9.5 6 14l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <i class="cue__bar"></i>
     </div>
 
     <div class="outro">
