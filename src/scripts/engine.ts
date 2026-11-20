@@ -144,6 +144,8 @@ function build(q: Seq) {
       const rx = (nx + ty) * (1 - k), ry = (ny + tx) * (1 - k);
       const z = (s / GROW).toFixed(4);
       spin.style.transform = `scale3d(${z},${z},${z}) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+      cube.style.setProperty("--s", s.toFixed(3));
+      cube.style.setProperty("--k", k.toFixed(3));
     };
     const draw = () => {
       const { cx, cy, size } = cubeAt();
@@ -433,7 +435,10 @@ function setMenu(open: boolean) {
   menuBtn.setAttribute("aria-expanded", String(open));
   root.classList.toggle("menu-open", open);
   if (lenis) open ? lenis.stop() : lenis.start();
+  // touch screens: a swipe while the menu is open must not move the page behind it (Safari ignores overflow alone)
+  open ? document.addEventListener("touchmove", holdPage, { passive: false }) : document.removeEventListener("touchmove", holdPage);
 }
+function holdPage(e: TouchEvent) { e.preventDefault(); }
 if (menuBtn) {
   menuBtn.addEventListener("click", () => setMenu(menuBtn.getAttribute("aria-expanded") !== "true"));
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && root.classList.contains("menu-open")) { setMenu(false); menuBtn.focus(); } });

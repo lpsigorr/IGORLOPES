@@ -64,9 +64,12 @@ html.is-scrolled:not(.top-bare) .top { background: var(--top-bg, transparent); }
   .top__nav { display: none; }
   .top__menu { display: block; }
   .menu-open .top__nav {
-    display: flex; flex-direction: column; gap: .4rem;
+    display: flex; flex-direction: column; gap: .4rem; align-items: flex-start; /* each link only as wide as its word */
     position: fixed; inset: 0; z-index: -1; padding: 6rem var(--side) var(--side); justify-content: flex-end;
+    overscroll-behavior: contain; touch-action: none;
   }
+  /* the page behind stays still while the menu is open */
+  html.menu-open, html.menu-open body { overflow: hidden; overscroll-behavior: none; }
 }
 
 /* ---------- pinned sequence ---------- */

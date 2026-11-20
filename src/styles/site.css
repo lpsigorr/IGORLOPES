@@ -430,7 +430,10 @@ body::after { content: ""; position: fixed; inset: 0; z-index: 390; pointer-even
 .cube__f--top    { transform: rotateX(90deg) translateZ(calc(var(--big) / 2)); filter: brightness(1.12); }
 .cube__f--bottom { transform: rotateX(-90deg) translateZ(calc(var(--big) / 2)); filter: brightness(.7); }
 /* its shadow on the mat */
-.cube::after { content: ""; position: absolute; left: 50%; top: 135%; width: 140%; height: 22%; translate: -50% 0; border-radius: 50%; background: radial-gradient(closest-side, rgba(43,48,58,.28), transparent); opacity: calc(1 - var(--flood, 0) * 8); }
+/* the floor shadow is painted under the cube, grows and drops with it, and fades out as the cube straightens,
+   so it never shows through the big front face */
+.cube::before { content: ""; position: absolute; left: 50%; top: calc(50% + var(--cs) * .85 * var(--s, 1)); width: calc(var(--cs) * 1.4 * var(--s, 1)); height: calc(var(--cs) * .22 * var(--s, 1));
+  translate: -50% 0; border-radius: 50%; background: radial-gradient(closest-side, rgba(43,48,58,.28), transparent); opacity: calc(1 - var(--k, 0) * 1.6); pointer-events: none; }
 
 /* ---------- glass ---------- */
 .glass { background: rgba(246, 244, 241, .14); -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
